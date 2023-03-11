@@ -15,7 +15,7 @@ Pilha create_pilha();
 /**
   Empilha o item na pilha.
  */
-void push(Pilha *pilha, Item item);
+void push(Pilha pilha, Item item);
 
 /**
   Retira o item que está no topo da pilha e retorna o seu valor.
