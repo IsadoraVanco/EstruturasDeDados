@@ -7,16 +7,22 @@ int main(int argc, char const *argv[]){
     int valor;
 
     pilhaExemplo = create_pilha(); //recebe o ponteiro para o primeiro elemento
-    push(pilhaExemplo, 100);
-    push(pilhaExemplo, 200);
-    push(pilhaExemplo, 300);
-    push(pilhaExemplo, 400);
+    valor = pop(&pilhaExemplo); //erro?
+    push(&pilhaExemplo, 100);
+    push(&pilhaExemplo, 200);
+    push(&pilhaExemplo, 300);
+    push(&pilhaExemplo, 400);
 
-    valor = pop(pilhaExemplo);
-    valor = pop(pilhaExemplo);
-    valor = pop(pilhaExemplo);
-    valor = pop(pilhaExemplo);
-    valor = pop(pilhaExemplo); //erro?
+    valor = pop(&pilhaExemplo);
+    printf("item %d ...\n", valor);
+    valor = pop(&pilhaExemplo);
+    printf("item %d ...\n", valor);
+    valor = pop(&pilhaExemplo);
+    printf("item %d ...\n", valor);
+    valor = pop(&pilhaExemplo);
+    printf("item %d ...\n", valor);
+    valor = pop(&pilhaExemplo); //erro?
+    printf("item %d ...\n", valor);
 
     free(pilhaExemplo);
     printf("pilha apagada.\n");

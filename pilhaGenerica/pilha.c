@@ -39,6 +39,8 @@ Item pop(Pilha *pilha){ //pq por referencia?
         
         printf("item removido\n");
         return valor;
+    }else{
+        printf("metodo pop() invalido: lista vazia.\n");
     }
 }
 
