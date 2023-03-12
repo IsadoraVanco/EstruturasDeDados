@@ -4,75 +4,45 @@
 #include "pilha.h"
 
 //Novo elemento que será adicionado na pilha
-typedef struct {
+typedef struct item{
   Item info; //informação/conteudo do elemento
-  NovoItem *proximo; //ponteiro para o proximo elemento
+  struct item *proximo; //ponteiro para o proximo elemento
 }NovoItem;
 
 Pilha create_pilha(){
-    // NovoItem *pointer;
-    
-    // pointer = (NovoItem*) malloc(sizeof(NovoItem));
-    // pointer->proximo = NULL;
-
-    // return pointer; //retorna o ponteiro para a nova pilha
-
-    return NULL; //não preciso do primeiro ponteiro? (coisa do Evandro)
+    printf("pilha criada.\n");
+    return NULL; 
+    //o primeiro elemento representa o topo da pilha, como ainda não há elementos, então é NULL
 }
 
-void push(Pilha pilha, Item item){ //pq por referencia? (tirei)
-    NovoItem *pointer = (NovoItem**) pilha;
+void push(Pilha *pilha, Item item){ //pq por referencia?
+    NovoItem **pointer = (NovoItem**) pilha;
     NovoItem *novo;
 
     novo = (NovoItem *) malloc(sizeof(NovoItem));
     novo->info = item;
-    novo->proximo = NULL;
-
-    //percorrer até o ultimo elemento 
-    while(pointer->proximo != NULL){
-        pointer = pointer->proximo;
-    }
-    
-    //adiciona elemento no final
-    pointer->proximo = novo; 
-
-    //coisa do Evandro...
-    // sNoItem **tp = (sNoItem **)p;
-    // sNoItem *novo;
-
-    // novo = (sNoItem *) malloc(sizeof(sNoItem));
-    // novo->info = i;
-    // novo->prox = *tp;
-    // *tp = novo;
+    printf("item adicionado\n");
+    novo->proximo = *pointer; //agora o novo aponta para o elemento que estava no topo
+    *pointer = novo; //e o topo agora aponta para o novo elemento adicionado
 }
 
-Item pop(Pilha pilha){ //pq por referencia? (tirei)
-    NovoItem *retirar = (NovoItem*) pilha;
+Item pop(Pilha *pilha){ //pq por referencia?
+    NovoItem **pointer = (NovoItem**) pilha;
 
-    if(!empty(retirar)){
-        NovoItem *pointer;
+    if(!empty(*pointer)){
         Item valor;
+        NovoItem *retirar = *pointer;
 
-        //percorrer até o ultimo elemento 
-        while(retirar->proximo != NULL){
-            pointer = retirar; 
-            retirar = retirar->proximo;
-        }
-
-        //retira o ultimo elemento 
-        pointer->proximo = NULL; //retira a conexão com o ultimo elemento
-        valor = retirar->info;
+        valor = (*pointer)->info;
+        *pointer = (*pointer)->proximo; //o topo agora apontara para o elemento que estava antes do ultimo
         free(retirar);
-        return valor;
         
-    }else{
-        printf("pilha vazia.\n");
+        printf("item removido\n");
+        return valor;
     }
 }
 
 int empty(Pilha pilha){
-    NovoItem *pointer = (NovoItem*) pilha;
-
-    return pointer->proximo == NULL; //se não tiver o proximo  
-    // return pilha == (Pilha) NULL;  //coisa do Evandro ??
+    printf("verificando se a pilha esta vazia.\n");
+    return pilha == (Pilha) NULL;  //se o topo apontar pra NULL, então a pilha está vazia
 }

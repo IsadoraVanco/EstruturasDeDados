@@ -3,7 +3,7 @@
 #include "pilha.h"
 
 int main(int argc, char const *argv[]){
-    Pilha pilhaExemplo;
+    Pilha pilhaExemplo; //representa o topo da pilha
     int valor;
 
     pilhaExemplo = create_pilha(); //recebe o ponteiro para o primeiro elemento

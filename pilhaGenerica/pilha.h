@@ -15,13 +15,13 @@ Pilha create_pilha();
 /**
   Empilha o item na pilha.
  */
-void push(Pilha pilha, Item item);
+void push(Pilha *pilha, Item item);
 
 /**
   Retira o item que está no topo da pilha e retorna o seu valor.
   A pilha nao pode estar vazia.
  */
-Item pop(Pilha pilha);
+Item pop(Pilha *pilha);
 
 /**
   Retorna verdadeiro(1) se a pilha está vazia ou 
