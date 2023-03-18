@@ -5,7 +5,7 @@
 #define _PILHA_GENERICA__
 
 typedef int Item; //cria um tipo inteiro Item
-typedef void *Pilha; //cria um tipo void pointer Pilha = o tipo pilha
+typedef void* Pilha; //cria um tipo void pointer Pilha = o tipo pilha
 
  /**
    Cria uma pilha vazia e retorna o ponteiro para a pilha criada.
