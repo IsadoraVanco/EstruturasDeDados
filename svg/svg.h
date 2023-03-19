@@ -66,23 +66,20 @@ podem preparadas por meio da operacao preparaDecoracao.
  */
 void escreveLinhaSvg(ArqSvg fsvg, double x1, double y1, double x2, double y2, char *deco);
 
-// erro de multiplas definições ????????????????????????
-
 /* Font style: */
-// const char *FS_NORMAL = "normal";
-// const char *FS_ITALIC = "italic";
-// const char *FS_OBLIQUE = "oblique";
+#define FS_NORMAL "normal"
+#define FS_ITALIC "italic"
+#define FS_OBLIQUE "oblique"
 
 /* Font weight */
-// const char *FW_NORMAL = "normal";
-// const char *FW_BOLD = "bold";
-// const char *FW_BOLDER = "bolder";
-// const char *FW_LIGHTER = "lighter";
+#define FW_NORMAL "normal"
+#define FW_BOLD "bold"
+#define FW_BOLDER "bolder"
+#define FW_LIGHTER "lighter"
 
-// const char *TA_START = "start";
-// const char *TA_MIDDLE = "middle";
-// const char *TA_END = "end";
-
+#define TA_START "start"
+#define TA_MIDDLE "middle"
+#define TA_END "end"
 
 /*
   Preenche o vetor "deco" (com capacidade de "decoLen" caracteres) com atributos
