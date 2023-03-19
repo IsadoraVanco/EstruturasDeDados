@@ -8,9 +8,14 @@
 // por meio dos comandos de 'svg.h'
 int main(int argc, char const *argv[]){
     ArqSvg arquivo = abreEscritaSvg("arquivo");
+    char* decoImagens;
+    char* decoTexto;
 
     escreveRetanguloSvg(arquivo, 0, 0, 5, 10, NULL);
     escreveRetanguloSvg(arquivo, 50, 0, 10, 10, NULL);
+    escreveCirculoSvg(arquivo, 30, 40, 20, NULL);
+    escreveLinhaSvg(arquivo, 0, 0, 70, 70, NULL);
+    escreveTextoSvg(arquivo, 2, 88, "HELLO WORLD!", NULL);
 
     fechaSvg(arquivo);    
     return 0;

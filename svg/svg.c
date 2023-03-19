@@ -26,14 +26,14 @@ ArqSvg abreEscritaSvg(char* fn){
     //tags iniciais do arquivo SVG
     // fprintf(arquivo, "frase teste\n");
     fputs("<?xml version='1.0' encoding='ISO-8859-1' standalone='no'?>\n", arquivo);
-    fputs("<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 20010904//EN'", arquivo);
+    fputs("<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 20010904//EN'\n", arquivo);
     fputs("\t'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>\n", arquivo);
     fputs("<svg xmlns='http://www.w3.org/2000/svg'\n", arquivo);
     fputs("\txmlns:xlink='http://www.w3.org/1999/xlink' xml:space='preserve'\n", arquivo);
     fputs("\twidth='500px' height='500px'\n \tviewBox='-20 -20 300 300'\n", arquivo);
     fputs("\tzoomAndPan='disable'\n \tstyle='background-color:grey'>\n\n", arquivo);   
 
-    printf("inicio\n");
+    // printf("inicio\n");
     //retorna o ponteiro para o arquivo
     return arquivo;
 }
@@ -71,19 +71,44 @@ void preparaDecoracao(ArqSvg fsvg, char *deco, int decoLen, char *corBorda, char
 }
 
 void escreveCirculoSvg(ArqSvg fsvg, double xc, double yc, double r, char *deco){
+
+    char texto[350];
+    char valor[20];
+
+    //faz as conversões para string 
+    strcpy(texto, ""); //garante que não terá lixo 
+    strcat(texto, "\t<circle cx='");
+    sprintf(valor, "%lf", xc);
+    strcat(texto, valor);
+    strcat(texto, "' cy='");
+    sprintf(valor, "%lf", yc);
+    strcat(texto, valor);
+    strcat(texto, "' r='");
+    sprintf(valor, "%lf", r);
+    strcat(texto, valor);
+    strcat(texto, "' ");
+
+    // printf("%s", texto);
+    fputs(texto, fsvg);
+
     //se o vetor deco for NULL, não tem decoração
+    // if(strcmp(deco, "NULL") != 0){
+    //     for(int i = 0; i < 6; i++){ //até 6 atributos a mais
+    //         if(strcmp(deco[i], "") != 0){
+    //             fputs(deco[i], fsvg);
+    //         }
+    //     }
+    // }
 
-    //escreve um circulo no fsvg
-
+    fputs("></circle>\n", fsvg);
 }
 
 void escreveRetanguloSvg(ArqSvg fsvg, double x, double y, double larg, double alt, char *deco){
 
-    //se o vetor deco for NULL, não tem decoração
-    //escreve um retangulo no fsvg
     char texto[350];
     char valor[20];
 
+    //faz as conversões para string 
     strcpy(texto, ""); //garante que não terá lixo 
     strcat(texto, "\t<rect x='");
     sprintf(valor, "%lf", x);
@@ -102,6 +127,7 @@ void escreveRetanguloSvg(ArqSvg fsvg, double x, double y, double larg, double al
     // printf("%s", texto);
     fputs(texto, fsvg);
     
+    //se o vetor deco for NULL, não tem decoração
     // if(strcmp(deco, "NULL") != 0){
     //     for(int i = 0; i < 6; i++){ //até 6 atributos a mais
     //         if(strcmp(deco[i], "") != 0){
@@ -116,9 +142,40 @@ void escreveRetanguloSvg(ArqSvg fsvg, double x, double y, double larg, double al
 }
 
 void escreveLinhaSvg(ArqSvg fsvg, double x1, double y1, double x2, double y2, char *deco){
-    //se o vetor deco for NULL, não tem decoração
 
-    //escreve um texto no fsvg
+    char texto[350];
+    char valor[20];
+
+    //faz as conversões para string 
+    strcpy(texto, ""); //garante que não terá lixo 
+    strcat(texto, "\t<line x1='");
+    sprintf(valor, "%lf", x1);
+    strcat(texto, valor);
+    strcat(texto, "' y1='");
+    sprintf(valor, "%lf", y1);
+    strcat(texto, valor);
+    strcat(texto, "' x2='");
+    sprintf(valor, "%lf", x2);
+    strcat(texto, valor);
+    strcat(texto, "' y2='");
+    sprintf(valor, "%lf", y2);
+    strcat(texto, valor);
+    strcat(texto, "' ");
+
+    // printf("%s", texto);
+    fputs(texto, fsvg);
+
+    //se o vetor deco for NULL, não tem decoração
+    // if(strcmp(deco, "NULL") != 0){
+    //     for(int i = 0; i < 6; i++){ //até 6 atributos a mais
+    //         if(strcmp(deco[i], "") != 0){
+    //             fputs(deco[i], fsvg);
+    //         }
+    //     }
+    // }
+
+    fputs("/>\n", fsvg);
+
 }
 
 void preparaDecoracaoTexto(ArqSvg fsvg, char *deco, int decoLen, char *fontFamily, char *fontStyle,
@@ -131,7 +188,39 @@ void preparaDecoracaoTexto(ArqSvg fsvg, char *deco, int decoLen, char *fontFamil
 }
 
 void escreveTextoSvg(ArqSvg fsvg, double x, double y, char *txt, char *decoTxt){
-    //insere no fsvg o texto
+    
+    char texto[350];
+    char valor[20];
+
+    //faz as conversões para string 
+    strcpy(texto, ""); //garante que não terá lixo 
+    strcat(texto, "\t<text x='");
+    sprintf(valor, "%lf", x);
+    strcat(texto, valor);
+    strcat(texto, "' y='");
+    sprintf(valor, "%lf", y);
+    strcat(texto, valor);
+    strcat(texto, "' ");
+    
+    fputs(texto, fsvg);
+
+    //se o vetor deco for NULL, não tem decoração
+    // if(strcmp(deco, "NULL") != 0){
+    //     for(int i = 0; i < 6; i++){ //até 6 atributos a mais
+    //         if(strcmp(deco[i], "") != 0){
+    //             fputs(deco[i], fsvg);
+    //         }
+    //     }
+    // }
+
+    // printf("%s", texto);
+    // fputs(texto, fsvg);
+
+    strcpy(texto, ">");
+    strcat(texto, txt);
+    strcat(texto, "</text>\n");
+
+    fputs(texto, fsvg);
 }
 
 void fechaSvg(ArqSvg fsvg){
