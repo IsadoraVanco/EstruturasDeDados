@@ -2,18 +2,20 @@ PROJ_NAME=ted
 ALUNO=
 LIBS=
 OBJETOS=
+
 # compilador
 CC=gcc
-# Flags
 
-CFLAGS= -ggdb -O0 -std=c99 -fstack-protector-all -Werror=implicit-function-
-declaration
+# Flags
+CFLAGS= -ggdb -O0 -std=c99 -fstack-protector-all -Werror=implicit-function-declaration
 
 LDFLAGS=-O0
+
 $(PROJ_NAME): $(OBJETOS)
 $(CC) -o $(PROJ_NAME)$(LDFLAGS) $(OBJETOS) $(LIBS)
 %.o : %.c
 $(CC) -c $(CFLAGS) $< -o $@
+
 #
 # COLOCAR DEPENDENCIAS DE CADA MODULO
 #
@@ -33,5 +35,4 @@ rm -f ../$(ALUNO).zip
 echo $(ALUNO)
 date >> .entrega
 
-cd ..; zip $(ALUNO).zip -r src/*.c src/*.h src/Makefile LEIA-
-ME.txt .entrega
+cd ..; zip $(ALUNO).zip -r src/*.c src/*.h src/Makefile LEIA-ME.txt .entrega

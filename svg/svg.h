@@ -1,7 +1,6 @@
 #ifndef ARQSVG__
 #define ARQSVG__
 
-
 /*
   Provê operações para escrita de arquivos básicos no formato SVG.
 
@@ -21,14 +20,13 @@ formato ou tutoriais, como:
      https://developer.mozilla.org/pt-BR/docs/Web/SVG/Tutorial
  */
 
-typedef void *ArqSvg;
+typedef void* ArqSvg; //se refere ao arquivo SVG
 
 /*
   Cria o arquivo "fn" para escrita. Substitui o arquivo, caso exista.
   Retorna NULL, caso nao tenha sido possivel criar arquivo.
  */
-ArqSvg abreEscritaSvg(char *fn);
-
+ArqSvg abreEscritaSvg(char* fn);
 
 /*
   Preenche o vetor "deco" (com capacidade de "decoLen" caracteres) com atributos
@@ -71,22 +69,22 @@ podem preparadas por meio da operacao preparaDecoracao.
  */
 void escreveLinhaSvg(ArqSvg fsvg, double x1, double y1, double x2, double y2, char *deco);
 
+// erro de multiplas definições
 
 /* Font style: */
-const char *FS_NORMAL = "normal";
-const char *FS_ITALIC = "italic";
-const char *FS_OBLIQUE = "oblique";
+// const char *FS_NORMAL = "normal";
+// const char *FS_ITALIC = "italic";
+// const char *FS_OBLIQUE = "oblique";
 
 /* Font weight */
+// const char *FW_NORMAL = "normal";
+// const char *FW_BOLD = "bold";
+// const char *FW_BOLDER = "bolder";
+// const char *FW_LIGHTER = "lighter";
 
-const char *FW_NORMAL = "normal";
-const char *FW_BOLD = "bold";
-const char *FW_BOLDER = "bolder";
-const char *FW_LIGHTER = "lighter";
-
-const char *TA_START = "start";
-const char *TA_MIDDLE = "middle";
-const char *TA_END = "end";
+// const char *TA_START = "start";
+// const char *TA_MIDDLE = "middle";
+// const char *TA_END = "end";
 
 
 /*
