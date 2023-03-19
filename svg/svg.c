@@ -6,6 +6,7 @@
 
 ArqSvg abreEscritaSvg(char* fn){
     //fn já estará com a extensão .svg?
+
     //cria o arquivo para escrita
     char nome[strlen(fn) + 5];
     strcpy(nome, fn);
@@ -38,36 +39,84 @@ ArqSvg abreEscritaSvg(char* fn){
     return arquivo;
 }
 
-void preparaDecoracao(ArqSvg fsvg, char *deco, int decoLen, char *corBorda, char *corPreenchimento,
-	char* larguraBorda, double transparencia, double transparenciaPreenchimento, double transparenciaBorda){
-    //deco[decoLen] = vetor de decoração
+void preparaDecoracao(ArqSvg fsvg, char* deco, int decoLen, char *corBorda, char *corPreenchimento,
+	double larguraBorda, double transparencia, double transparenciaPreenchimento, double transparenciaBorda){
+    // pq precisa do argumento fsvg? chama a função de escreve aqui dentro?
+    //deco[decoLen] = vetor de decoração ??
+
+    int indice = 0;
+    char texto[decoLen];
+    char valor[20];
 
     //limpa o vetor de decoração 
-    strcpy(deco, "");
-    char* decos[decoLen]; //vetor com valores 
-
-    //faz tudo a caralhada de comparação e atribuição
+    // for(int i = 0; i < decoLen; i++){
+    //     strcpy(&deco[i], "");
+    // }
+    // strcpy(deco, "");
+    strcpy(texto, "");
+    
+    //faz comparação e atribuição
     if(strcmp(corBorda, "NULL") != 0){ //caso o atributo não seja NULL, adiciona no vetor 
-
+        strcat(texto, "stroke='");
+        strcat(texto, corBorda);
+        strcat(texto, "' ");
+        // char* cb = texto;
+        // strcpy(&deco[indice], cb);
+        // indice++;
     }
     if(strcmp(corPreenchimento, "NULL") != 0){
-
+        strcat(texto, "fill='");
+        strcat(texto, corPreenchimento);
+        strcat(texto, "' ");
+        // char* cp = texto;
+        // strcpy(&deco[indice], cp);
+        // indice++;
     }
-    if(strcmp(larguraBorda, "NULL") != 0){
-
+    if(larguraBorda >= 0){
+        strcat(texto, "stroke-width='");
+        sprintf(valor, "%lf", larguraBorda);
+        strcat(texto, valor);
+        strcat(texto, "' ");
+        // char* lb = texto;
+        // strcpy(&deco[indice], lb);
+        // indice++;
     }
     if(transparencia >= 0){
-
+        strcat(texto, "opacity='");
+        sprintf(valor, "%lf", transparencia);
+        strcat(texto, valor);
+        strcat(texto, "' ");
+        // char* t = texto;
+        // strcpy(&deco[indice], t);
+        // indice++;
     }
     if(transparenciaPreenchimento >= 0){
-
+        strcat(texto, "fill-opacity='");
+        sprintf(valor, "%lf", transparenciaPreenchimento);
+        strcat(texto, valor);
+        strcat(texto, "' ");
+        // char* tp = texto;
+        // strcpy(&deco[indice], tp);
+        // indice++;
     }
     if(transparenciaBorda >= 0){
-
+        strcat(texto, "stroke-opacity='");
+        sprintf(valor, "%lf", transparenciaBorda);
+        strcat(texto, valor);
+        strcat(texto, "' ");
+        // char* tb = texto;
+        // strcpy(&deco[indice], tb);
+        // indice++;
     }
 
-    //modifica o vetor e o arquivo 
-                
+    // for(int i = 0; i < decoLen; i++){
+    //     printf("%s ui\n", &deco[i]);
+    // }
+    // fputs(texto, fsvg);
+    // deco = texto;    
+    strcpy(deco, texto);
+    // printf("%s\n", deco);
+   
 }
 
 void escreveCirculoSvg(ArqSvg fsvg, double xc, double yc, double r, char *deco){
@@ -75,6 +124,7 @@ void escreveCirculoSvg(ArqSvg fsvg, double xc, double yc, double r, char *deco){
     char texto[350];
     char valor[20];
 
+    printf("cir\n");
     //faz as conversões para string 
     strcpy(texto, ""); //garante que não terá lixo 
     strcat(texto, "\t<circle cx='");
@@ -89,17 +139,15 @@ void escreveCirculoSvg(ArqSvg fsvg, double xc, double yc, double r, char *deco){
     strcat(texto, "' ");
 
     // printf("%s", texto);
+
+    // se o vetor deco for NULL, não tem decoração
+    if(strcmp(deco, "NULL") != 0){
+        strcat(texto, deco);
+        printf("cir\n");
+        // printf("ei %s", texto);
+    }
+
     fputs(texto, fsvg);
-
-    //se o vetor deco for NULL, não tem decoração
-    // if(strcmp(deco, "NULL") != 0){
-    //     for(int i = 0; i < 6; i++){ //até 6 atributos a mais
-    //         if(strcmp(deco[i], "") != 0){
-    //             fputs(deco[i], fsvg);
-    //         }
-    //     }
-    // }
-
     fputs("></circle>\n", fsvg);
 }
 
@@ -108,6 +156,7 @@ void escreveRetanguloSvg(ArqSvg fsvg, double x, double y, double larg, double al
     char texto[350];
     char valor[20];
 
+    printf("ret2\n");
     //faz as conversões para string 
     strcpy(texto, ""); //garante que não terá lixo 
     strcat(texto, "\t<rect x='");
@@ -123,19 +172,18 @@ void escreveRetanguloSvg(ArqSvg fsvg, double x, double y, double larg, double al
     sprintf(valor, "%lf", alt);
     strcat(texto, valor);
     strcat(texto, "' ");
-
-    // printf("%s", texto);
-    fputs(texto, fsvg);
     
-    //se o vetor deco for NULL, não tem decoração
-    // if(strcmp(deco, "NULL") != 0){
-    //     for(int i = 0; i < 6; i++){ //até 6 atributos a mais
-    //         if(strcmp(deco[i], "") != 0){
-    //             fputs(deco[i], fsvg);
-    //         }
-    //     }
-    // }
+    printf("%s\n", texto);
 
+    printf("%s\n", deco);
+    //se o vetor deco for NULL, não tem decoração
+    if(strcmp(deco, "NULL") != 0){
+        strcat(texto, deco);
+        printf("ret\n");
+        // printf("ei %s", texto);
+    }
+
+    fputs(texto, fsvg);
     fputs("></rect>\n", fsvg);
 
     // printf("adicionado rect\n");
@@ -146,6 +194,7 @@ void escreveLinhaSvg(ArqSvg fsvg, double x1, double y1, double x2, double y2, ch
     char texto[350];
     char valor[20];
 
+    printf("lin2\n");
     //faz as conversões para string 
     strcpy(texto, ""); //garante que não terá lixo 
     strcat(texto, "\t<line x1='");
@@ -163,27 +212,89 @@ void escreveLinhaSvg(ArqSvg fsvg, double x1, double y1, double x2, double y2, ch
     strcat(texto, "' ");
 
     // printf("%s", texto);
-    fputs(texto, fsvg);
 
     //se o vetor deco for NULL, não tem decoração
-    // if(strcmp(deco, "NULL") != 0){
-    //     for(int i = 0; i < 6; i++){ //até 6 atributos a mais
-    //         if(strcmp(deco[i], "") != 0){
-    //             fputs(deco[i], fsvg);
-    //         }
-    //     }
-    // }
+    if(strcmp(deco, "NULL") != 0){
+        strcat(texto, deco);
+        printf("lin\n");
+        // printf("ei %s", texto);
+    }
 
+    fputs(texto, fsvg);
     fputs("/>\n", fsvg);
 
 }
 
 void preparaDecoracaoTexto(ArqSvg fsvg, char *deco, int decoLen, char *fontFamily, char *fontStyle,
-    char *fontWeight, char *fontSize, char *fontColor, char *textAnchor){
+    char *fontWeight, double fontSize, char *fontColor, char *textAnchor){
+    // pq precisa do argumento fsvg?
 
-        //faz todas as comparações como no prepara decoração pra imagens
+    int indice = 0;
+    char texto[decoLen];
+    char valor[20];
 
-        //modifica o vetor de decorações
+    strcpy(texto, "");
+    
+    if(strcmp(fontFamily, "NULL") != 0){ //caso o atributo não seja NULL, adiciona no vetor 
+        strcat(texto, "font-family='");
+        strcat(texto, fontFamily);
+        strcat(texto, "' ");
+        // char* cb = texto;
+        // strcpy(&deco[indice], cb);
+        // indice++;
+    }
+    if(strcmp(fontStyle, "NULL") != 0){
+        strcat(texto, "font-style='");
+        strcat(texto, fontStyle);
+        strcat(texto, "' ");
+        // char* cp = texto;
+        // strcpy(&deco[indice], cp);
+        // indice++;
+    }
+    if(strcmp(fontWeight, "NULL") != 0){
+        strcat(texto, "font-weight='");
+        strcat(texto, fontWeight);
+        strcat(texto, "' ");
+        // char* cp = texto;
+        // strcpy(&deco[indice], cp);
+        // indice++;
+    }
+    //faz comparação e atribuição
+    if(fontSize >= 0){
+        strcat(texto, "font-size='");
+        sprintf(valor, "%lf", fontSize);
+        strcat(texto, valor);
+        strcat(texto, "' ");
+        // char* lb = texto;
+        // strcpy(&deco[indice], lb);
+        // indice++;
+    }
+    if(strcmp(fontColor, "NULL") != 0){
+        strcat(texto, "fill='");
+        strcat(texto, fontColor);
+        strcat(texto, "' ");
+        // char* cp = texto;
+        // strcpy(&deco[indice], cp);
+        // indice++;
+    }
+    if(strcmp(textAnchor, "NULL") != 0){
+        strcat(texto, "text-anchor='");
+        strcat(texto, textAnchor);
+        strcat(texto, "' ");
+        // char* cp = texto;
+        // strcpy(&deco[indice], cp);
+        // indice++;
+    }
+    
+
+    // for(int i = 0; i < decoLen; i++){
+    //     printf("%s ui\n", &deco[i]);
+    // }
+    // fputs(texto, fsvg);
+    // deco = texto;    
+    strcpy(deco, texto);
+    // printf("%s\n", deco);
+   
 
 }
 
@@ -192,6 +303,7 @@ void escreveTextoSvg(ArqSvg fsvg, double x, double y, char *txt, char *decoTxt){
     char texto[350];
     char valor[20];
 
+    printf("txt2\n");
     //faz as conversões para string 
     strcpy(texto, ""); //garante que não terá lixo 
     strcat(texto, "\t<text x='");
@@ -202,20 +314,18 @@ void escreveTextoSvg(ArqSvg fsvg, double x, double y, char *txt, char *decoTxt){
     strcat(texto, valor);
     strcat(texto, "' ");
     
-    fputs(texto, fsvg);
 
     //se o vetor deco for NULL, não tem decoração
-    // if(strcmp(deco, "NULL") != 0){
-    //     for(int i = 0; i < 6; i++){ //até 6 atributos a mais
-    //         if(strcmp(deco[i], "") != 0){
-    //             fputs(deco[i], fsvg);
-    //         }
-    //     }
-    // }
+    if(strcmp(decoTxt, "NULL") != 0){
+        strcat(texto, decoTxt);
+        printf("txt\n");
+        // printf("ei %s", texto);
+    }
 
     // printf("%s", texto);
     // fputs(texto, fsvg);
 
+    fputs(texto, fsvg);
     strcpy(texto, ">");
     strcat(texto, txt);
     strcat(texto, "</text>\n");

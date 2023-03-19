@@ -36,13 +36,10 @@ escreveLinhaSvg. Para não incluir algum dos parâmetros na decoracao,
 atribuir NULL (para char *) ou valores negativos (double) ao respectivo parametro.
 
     Nao considerar valor: NULL para char * e valores negativos para double
-    font style: normal | italic | oblique
-    font weight: normal | bold | bolder | lighter
-    text anchor: start | middle |end
  */
 void preparaDecoracao(ArqSvg fsvg, char *deco, int decoLen,
 		      char *corBorda, char *corPreenchimento,
-		      char *larguraBorda, double transparencia,
+		      double larguraBorda, double transparencia,
 		      double transparenciaPreenchimento, double transparenciaBorda);
 
 /*
@@ -69,7 +66,7 @@ podem preparadas por meio da operacao preparaDecoracao.
  */
 void escreveLinhaSvg(ArqSvg fsvg, double x1, double y1, double x2, double y2, char *deco);
 
-// erro de multiplas definições
+// erro de multiplas definições ????????????????????????
 
 /* Font style: */
 // const char *FS_NORMAL = "normal";
@@ -103,7 +100,7 @@ acima.
  */
 void preparaDecoracaoTexto(ArqSvg fsvg, char *deco, int decoLen,
 			   char *fontFamily, char *fontStyle,
-			   char *fontWeight, char *fontSize,
+			   char *fontWeight, double fontSize,
 			   char *fontColor, char *textAnchor);
 
 /*
