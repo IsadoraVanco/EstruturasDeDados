@@ -7,7 +7,7 @@
 // depois verificar padrão e melhorar o codigo -_-
 void getPath(char *fullPath, char *path, int* lenPath){
     // lenPath => transformado em ponteiro para atualizar o valor dele...
-    printf("********* GETPATH ********\n");
+    printf("\n********* GETPATH ********\n");
 
     char* ultimoCaractere = fullPath + (strlen(fullPath) - 1);
 
@@ -93,6 +93,33 @@ void getPath(char *fullPath, char *path, int* lenPath){
     *(lenPath) = strlen(path);
 }
 
+void normalizePath(char *path, char *normPath, int* lenNormPath){
+    // lenNormPath => transformado em int* para modificar o valor
+    printf("\n********* NORMALIZEPATH ********\n");
+    
+    // encontra a ultima barra
+    char* ptrUltimo = strrchr(path, '\\');
+    int posicaoUltima = ptrUltimo - path;
+    int posicaoUltimoCaractere = strlen(path) - 1;
+    printf("ultima barra em %d\n", posicaoUltima);
+    
+    int nElementos = strlen(path);
+    char caminho[nElementos];
+    
+    // se a ultima barra for o ultimo caractere 
+    if(posicaoUltima == posicaoUltimoCaractere){
+        printf("ultimo caractere\n");
+
+        strncpy(caminho, path, nElementos - 1);
+        caminho[nElementos - 1] = '\0';
+        strcpy(normPath, caminho);
+        
+    }else{ //se ja esta normalizado
+        strcpy(normPath, path);
+    }
+    *(lenNormPath) = strlen(normPath);
+}
+
 void getFileName(char *fullPath, char *fileName, char *lenFileName){
 
 }
@@ -112,7 +139,3 @@ void joinAll(char *path, char *fileName, char *ext, char *fullPath, int lenFullP
 }
 
 
-
-void normalizePath(char *path, char *normPath, int lenNormPath){
-
-}

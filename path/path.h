@@ -25,6 +25,28 @@
 */
 
 /*
+   Dado um caminho completo, retorna seu respectivo path.
+
+   fullPath           => path
+   ================================
+   "aaa/bbb/ccc.txt"  => "aab/bbb"
+   "ccc.txt"          => ""
+   "aaa/bbb/ccc"      => "aaa/bbb"
+ */
+void getPath(char *fullPath, char *path, int* lenPath);
+
+/*
+   Dado um caminho (path), (supostamente) sem nome de arquivo, 
+   copia em normPath o caminho, sem o separador do final (se existir).
+
+   path         => normPath
+   ==========================
+   "aa/bb/cc"   => "aa/bb/cc"
+   "aa/bb/cc/"  => "aa/bb/cc" 
+ */
+void normalizePath(char *path, char *normPath, int* lenNormPath);
+
+/*
     Dado um caminho (fullPath), copia cada um de seus componentes
     nos parametros path (caminho do arquivo), nomeArq (nome do arquivo, sem
     seu path e sem sua extensao) e extArq (extensao do arquivo).
@@ -84,26 +106,5 @@ void joinAll(char *path, char *fileName, char *ext, char *fullPath, int lenFullP
  */
 void getFileName(char *fullPath, char *fileName, char *lenFileName);
 
-/*
-   Dado um caminho completo, retorna seu respectivo path.
-
-   fullPath           => path
-   ================================
-   "aaa/bbb/ccc.txt"  => "aab/bbb"
-   "ccc.txt"          => ""
-   "aaa/bbb/ccc"      => "aaa/bbb"
- */
-void getPath(char *fullPath, char *path, int* lenPath);
-
-/*
-   Dado um caminho (path), (supostamente) sem nome de arquivo, 
-   copia em normPath o caminho, sem o separador do final (se existir).
-
-   path         => normPath
-   ==========================
-   "aa/bb/cc"   => "aa/bb/cc"
-   "aa/bb/cc/"  => "aa/bb/cc" 
- */
-void normalizePath(char *path, char *normPath, int lenNormPath);
 
 #endif
