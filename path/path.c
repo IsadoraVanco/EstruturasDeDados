@@ -4,13 +4,13 @@
 #include <string.h>
 #include "path.h"
 
-void getPath(char *fullPath, char *path, int lenPath){
-    // para que o lenPath?
+// depois verificar padrão e melhorar o codigo -_-
+void getPath(char *fullPath, char *path, int* lenPath){
+    // lenPath => transformado em ponteiro para atualizar o valor dele...
     printf("********* GETPATH ********\n");
 
     char* ultimoCaractere = fullPath + (strlen(fullPath) - 1);
 
-    // printf("%d\n", strrchr(fullPath, '\\'));
     // considerando desde o diretorio raiz 
     if(strrchr(fullPath, '\\') > 0){ //verifica se existe uma barra
         // encontra a primeira ocorrência
@@ -59,32 +59,26 @@ void getPath(char *fullPath, char *path, int lenPath){
             if(posicaoUltima == posicaoUltimoCaractere){ //se a ultima barra for o ultimo caractere
                 printf("barra eh o ultimo caractere\n");
                 
-                //retira a ultima barra (apenas para procurar)
-                char novoCaminho[nElementos - 1];
-                strncpy(novoCaminho, fullPath, nElementos - 2); //copia sem a ultima barra
-                novoCaminho[nElementos - 1] = '\0';
-                printf("NOVO caminho %s => %d\n", novoCaminho, strlen(novoCaminho));
-                
-                //procura a penultima barra (1) tentativa
-                // printf("ultimo %d\n", ptrUltimo);
-                // ptrUltimo = strrchr(fullPath, '\\');
-                // posicaoUltima = ptrUltimo - fullPath;
-                // printf("NOVO ultimo %d\n", ptrUltimo);
-                // nElementos = posicaoUltima + 1;
-                // printf("NOVA ultima barra em %d\n", posicaoUltima);
-
-                //(2) tentativa 
-                while(){ //começa da ultima barra e vai até a anterior
-                    
+                //começa do caractere anterior a ultima barra e encontra a barra anterior
+                for(int i = strlen(fullPath) - 2; i >= 0; i--){ 
+                    if(fullPath[i] == '\\'){
+                        posicaoUltima = i;
+                        break;
+                    }
                 }
+                printf("NOVA ultima barra em %d\n", posicaoUltima);
                 
-                // strcpy(caminho, novoCaminho);
-                // strncpy(caminho, fullPath, nElementos);
-                // caminho[nElementos] = '\0';
-                // strcpy(path, caminho);
+                nElementos = posicaoUltima + 1;
 
-                strcpy(path, "");
-
+                //se a barra achada for a primeira e for o primeiro caractere, então não tem path
+                if(posicaoPrimeira == posicaoUltima && posicaoPrimeira == 0){ 
+                    printf("sem path.");
+                    strcpy(path, "");
+                }else{
+                    strncpy(caminho, fullPath, nElementos);
+                    caminho[nElementos] = '\0';
+                    strcpy(path, caminho);
+                }
             }else{
                 strncpy(caminho, fullPath, nElementos);
                 caminho[nElementos] = '\0';
@@ -96,6 +90,7 @@ void getPath(char *fullPath, char *path, int lenPath){
         printf("sem path.");
         strcpy(path, "");
     }
+    *(lenPath) = strlen(path);
 }
 
 void getFileName(char *fullPath, char *fileName, char *lenFileName){

@@ -93,7 +93,7 @@ void getFileName(char *fullPath, char *fileName, char *lenFileName);
    "ccc.txt"          => ""
    "aaa/bbb/ccc"      => "aaa/bbb"
  */
-void getPath(char *fullPath, char *path, int lenPath);
+void getPath(char *fullPath, char *path, int* lenPath);
 
 /*
    Dado um caminho (path), (supostamente) sem nome de arquivo, 
