@@ -120,8 +120,48 @@ void normalizePath(char *path, char *normPath, int* lenNormPath){
     *(lenNormPath) = strlen(normPath);
 }
 
-void getFileName(char *fullPath, char *fileName, char *lenFileName){
+void getFileName(char *fullPath, char *fileName, int *lenFileName){
+    // lenFileName => transformado em int* para modificar o valor
+    printf("\n********* GETFILENAME ********\n");
 
+    // considerando desde o diretorio raiz 
+    if(strrchr(fullPath, '\\') > 0){ //verifica se existe uma barra
+
+        // encontra a ultima barra
+        char* ptrUltimo = strrchr(fullPath, '\\');
+        int posicaoUltima = ptrUltimo - fullPath;
+        printf("ultima barra em %d\n", posicaoUltima);
+        
+        // int posicaoUltimoCaractere = strlen(fullPath) - 1;
+        int nElementos = strlen(fullPath) - posicaoUltima - 1;
+        char arquivo[nElementos + 1]; //numero de elementos + caractere nulo
+
+        //verificar se existe uma barra no final
+        if(posicaoUltima == strlen(fullPath) - 1){ 
+           
+            // procura a penultima barra
+            for(int i = strlen(fullPath) - 2; i >= 0; i--){ 
+                if(fullPath[i] == '\\'){
+                    posicaoUltima = i;
+                    break;
+                }
+            }
+            printf("NOVA ultima barra em %d\n", posicaoUltima);
+
+            //retira a ultima barra
+            nElementos = strlen(fullPath) - posicaoUltima - 2;
+        }
+        
+        strncpy(arquivo, fullPath + posicaoUltima + 1, nElementos);
+        arquivo[nElementos] = '\0';
+        strcpy(fileName, arquivo);
+
+    }else{ //se não tem barra, não tem diretório, logo é apenas o nome do arquivo
+        printf("sem path.");
+        strcpy(fileName, fullPath);
+
+    }
+    *(lenFileName) = strlen(fileName);
 }
 
 void splitPath(char *fullPath, char *path, int lenPath, 

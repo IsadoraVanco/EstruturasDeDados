@@ -47,6 +47,20 @@ void getPath(char *fullPath, char *path, int* lenPath);
 void normalizePath(char *path, char *normPath, int* lenNormPath);
 
 /*
+    Dado um caminho completo (fullPath), copia em fileName o nome do arquivo 
+    (possivelmente) com sua extensao. Exemplos:
+
+    fullPath          => fileName
+    ==============================
+    "aaa/bb/cc.txt"   => "cc.txt"
+    "cc.txt"          => "cc.txt"
+    "cc."             => "cc."
+    "cc"              => "cc"
+    ".txt"            => ".txt"
+ */
+void getFileName(char *fullPath, char *fileName, int *lenFileName);
+
+/*
     Dado um caminho (fullPath), copia cada um de seus componentes
     nos parametros path (caminho do arquivo), nomeArq (nome do arquivo, sem
     seu path e sem sua extensao) e extArq (extensao do arquivo).
@@ -91,20 +105,5 @@ void joinFilePath(char *path, char *fileName, char *fullPath, int lenFullPath);
    "aaa/bbb"  "ccc"     ""      => "aaa/bbb/ccc"
  */
 void joinAll(char *path, char *fileName, char *ext, char *fullPath, int lenFullPath);
-
-/*
-    Dado um caminho completo (fullPath), copia em fileName o nome do arquivo 
-    (possivelmente) com sua extensao. Exemplos:
-
-    fullPath          => fileName
-    ==============================
-    "aaa/bb/cc.txt"   => "cc.txt"
-    "cc.txt"          => "cc.txt"
-    "cc."             => "cc."
-    "cc"              => "cc"
-    ".txt"            => ".txt"
- */
-void getFileName(char *fullPath, char *fileName, char *lenFileName);
-
 
 #endif
