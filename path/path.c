@@ -164,18 +164,33 @@ void getFileName(char *fullPath, char *fileName, int *lenFileName){
     *(lenFileName) = strlen(fileName);
 }
 
-void splitPath(char *fullPath, char *path, int lenPath, 
-    char *nomeArq, int lenNomeArq, char *extArq, int lenExtArq){
+void joinFilePath(char *path, char *fileName, char *fullPath, int* lenFullPath){
+    // lenFullName => transformado em int* para modificar o valor
+    printf("\n********* JOINFILEPATH ********\n");
 
+    int lenPath = strlen(path);
+    int lenFile = strlen(fileName);
+    char full[lenFile + lenPath + 1]; //o tamanho de cada string + caractere nulo
 
-}
+    strcpy(full, path);
 
-void joinFilePath(char *path, char *fileName, char *fullPath, int lenFullPath){
+    // verifica se existe um '/' no final do path 
+    if(path[lenPath - 1] != '\\'){
+        strcat(full, "\\");
+    }
 
+    strcat(full, fileName);
+    strcpy(fullPath, full);
+
+    *(lenFullPath) = strlen(fullPath);
 }
 
 void joinAll(char *path, char *fileName, char *ext, char *fullPath, int lenFullPath){
 
 }
 
+void splitPath(char *fullPath, char *path, int lenPath, 
+    char *nomeArq, int lenNomeArq, char *extArq, int lenExtArq){
 
+
+}

@@ -20,12 +20,25 @@ int main(int argc, char const *argv[]){
     getPath(teste, path, &lenPath);
     normalizePath(path, normPath, &lenNormPath);
     getFileName(teste, fileName, &lenFileName);
+
+    // *******************************************************
+    // inicialmente estático
+    char fullTeste[50];
+    char* pathTeste = "aaa\\bbb\\";
+    char* fileTeste = "c.txt";
+    int lenFullTeste = 0;
+
+    joinFilePath(pathTeste, fileTeste, fullTeste, &lenFullTeste);
     
     printf("\n******** TESTE *********\n");
     printf("fullpath: %s => %d \n", teste, lenFullPath);
     printf("path: %s => %d \n", path, lenPath);
     printf("normPath: %s => %d \n", normPath, lenNormPath);
     printf("fileName: %s => %d \n", fileName, lenFileName);
+    // pritnf("=> splitPath:\n");
+
+    printf("\n******* TESTE 2 ********\n");
+    printf("joinPath: %s => %d \n", fullTeste, lenFullTeste);
 
     return 0;
 }

@@ -61,6 +61,19 @@ void normalizePath(char *path, char *normPath, int* lenNormPath);
 void getFileName(char *fullPath, char *fileName, int *lenFileName);
 
 /*
+  Dado um caminho (path) e um nome de arquivo (possivelmente, com sua extensao),
+  copia para fullPath o caminho completo do arquivo. Exemplos:
+
+   path         fileName =>  fullPath
+   =============================================
+   "aaa/bbb"    "c.txt"  =>  "aaa/bbb/c.txt"
+   "aaa/bbb/"   "c.txt"  =>  "aaa/bbb/c.txt"
+   ""           "c.txt"  =>  "c.txt"
+   "aaa/bbb"    "c"      =>  "aaa/bbb/c"
+ */
+void joinFilePath(char *path, char *fileName, char *fullPath, int* lenFullPath);
+
+/*
     Dado um caminho (fullPath), copia cada um de seus componentes
     nos parametros path (caminho do arquivo), nomeArq (nome do arquivo, sem
     seu path e sem sua extensao) e extArq (extensao do arquivo).
@@ -80,18 +93,6 @@ void splitPath(char *fullPath,
 	       char *nomeArq, int lenNomeArq,
 	       char *extArq, int lenExtArq);
 
-/*
-  Dado um caminho (path) e um nome de arquivo (possivelmente, com sua extensao),
-  copia para fullPath o caminho completo do arquivo. Exemplos:
-
-   path         fileName =>  fullPath
-   =============================================
-   "aaa/bbb"    "c.txt"  =>  "aaa/bbb/c.txt"
-   "aaa/bbb/"   "c.txt"  =>  "aaa/bbb/c.txt"
-   ""           "c.txt"  =>  "c.txt"
-   "aaa/bbb"    "c"      =>  "aaa/bbb/c"
- */
-void joinFilePath(char *path, char *fileName, char *fullPath, int lenFullPath);
 
 /*
    Semelhante a joinFilePath, porem, a extensao do arquivo e´ informado explicitamente
