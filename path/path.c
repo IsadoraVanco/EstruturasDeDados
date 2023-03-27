@@ -166,7 +166,7 @@ void getFileName(char *fullPath, char *fileName, int *lenFileName){
 
 void joinFilePath(char *path, char *fileName, char *fullPath, int* lenFullPath){
     // lenFullName => transformado em int* para modificar o valor
-    printf("\n********* JOINFILEPATH ********\n");
+    // printf("\n********* JOINFILEPATH ********\n");
 
     int lenPath = strlen(path);
     int lenFile = strlen(fileName);
@@ -174,8 +174,8 @@ void joinFilePath(char *path, char *fileName, char *fullPath, int* lenFullPath){
 
     strcpy(full, path);
 
-    // verifica se existe um '/' no final do path 
-    if(path[lenPath - 1] != '\\'){
+    // verifica se existe um '/' no final do path e se o path existe
+    if(path[lenPath - 1] != '\\' && lenPath > 0){
         strcat(full, "\\");
     }
 
@@ -189,8 +189,28 @@ void joinAll(char *path, char *fileName, char *ext, char *fullPath, int lenFullP
 
 }
 
-void splitPath(char *fullPath, char *path, int lenPath, 
-    char *nomeArq, int lenNomeArq, char *extArq, int lenExtArq){
+void splitPath(char *fullPath, char *path, int* lenPath, 
+    char *nomeArq, int* lenNomeArq, char *extArq, int* lenExtArq){
+    // todos len... => transformado em int* para modificar o valor
+    printf("\n********* SPLITPATH ********\n");
 
+    getPath(fullPath, path, lenPath);
+    getFileName(fullPath, nomeArq, lenNomeArq);
 
+    // encontrar a extensão e separar
+    char* ptrUltimo = strrchr(nomeArq, '.'); //ultimo ponto
+    int posicaoUltimo = ptrUltimo - nomeArq;
+    printf("ultimo ponto em %d\n", posicaoUltimo); 
+
+    if(strrchr(nomeArq, '.') > 0){ //se existe um ponto
+        int posicaoUltimoCaractere = strlen(nomeArq) - 1;
+        int nElementos = posicaoUltimo + 1; //caso o ultimo esteja em 0
+        char ext[nElementos + 1];
+
+        
+
+    }else{
+        extArq = "";
+        printf("sem extensao\n");
+    }
 }

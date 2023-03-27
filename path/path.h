@@ -89,9 +89,9 @@ void joinFilePath(char *path, char *fileName, char *fullPath, int* lenFullPath);
     "ccc"             =>   ""          "ccc"      ""  
  */
 void splitPath(char *fullPath,
-	       char *path, int lenPath,
-	       char *nomeArq, int lenNomeArq,
-	       char *extArq, int lenExtArq);
+	       char *path, int* lenPath,
+	       char *nomeArq, int* lenNomeArq,
+	       char *extArq, int* lenExtArq);
 
 
 /*
