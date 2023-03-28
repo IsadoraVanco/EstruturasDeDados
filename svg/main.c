@@ -21,10 +21,10 @@ int main(int argc, char const *argv[]){
     escreveCirculoSvg(arquivo, 30, 40, 20, decoImagens);
 
     escreveLinhaSvg(arquivo, 0, 0, 70, 70, "NULL");
-    escreveTextoSvg(arquivo, 2, 88, "HELLO WORLD!", "NULL");
+    escreveTextoSvg(arquivo, 2, 88, 180, "HELLO WORLD!", "NULL");
 
     preparaDecoracaoTexto(arquivo, decoTexto, 200, "sans-serif", FS_ITALIC, FW_BOLD, 14, "green", TA_START);
-    escreveTextoSvg(arquivo, 40, 20, "TESTE", decoTexto);
+    escreveTextoSvg(arquivo, 40, 20, 0, "TESTE", decoTexto);
 
     fechaSvg(arquivo);    
     return 0;

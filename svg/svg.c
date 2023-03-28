@@ -213,7 +213,7 @@ void preparaDecoracaoTexto(ArqSvg fsvg, char *deco, int decoLen, char *fontFamil
     strcpy(deco, texto);
 }
 
-void escreveTextoSvg(ArqSvg fsvg, double x, double y, char *txt, char *decoTxt){
+void escreveTextoSvg(ArqSvg fsvg, double x, double y, double rotate, char *txt, char *decoTxt){
     
     char texto[350];
     char valor[20];
@@ -227,6 +227,18 @@ void escreveTextoSvg(ArqSvg fsvg, double x, double y, char *txt, char *decoTxt){
     sprintf(valor, "%lf", y);
     strcat(texto, valor);
     strcat(texto, "' ");
+
+    // rotate
+    strcat(texto, "transform='rotate(");
+    sprintf(valor, "%lf", rotate);
+    strcat(texto, valor);
+    strcat(texto, ", ");
+    sprintf(valor, "%lf", x);
+    strcat(texto, valor);
+    strcat(texto, ", ");
+    sprintf(valor, "%lf", y);
+    strcat(texto, valor);
+    strcat(texto, ")' ");
     
     //se o vetor deco for NULL, não tem decoração
     if(strcmp(decoTxt, "NULL") != 0){

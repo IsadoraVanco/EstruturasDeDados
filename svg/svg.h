@@ -66,6 +66,8 @@ podem preparadas por meio da operacao preparaDecoracao.
  */
 void escreveLinhaSvg(ArqSvg fsvg, double x1, double y1, double x2, double y2, char *deco);
 
+// alterei pra define pois dava erro de multiplas definições 
+
 /* Font style: */
 #define FS_NORMAL "normal"
 #define FS_ITALIC "italic"
@@ -100,13 +102,14 @@ void preparaDecoracaoTexto(ArqSvg fsvg, char *deco, int decoLen,
 			   char *fontWeight, double fontSize,
 			   char *fontColor, char *textAnchor);
 
+// adicionado o atributo "rotate"
 /*
   Insere no arquivo svg o texto txt na coordenada (x,y).
 Atributos de formatacao (cores, fonte, etc) podem ser informados pela string 
 deco (atribuir NULL, caso nao queira atribuir decoracao). As formatacoes mais usuais 
 podem preparadas por meio da operacao preparaDecoracaoTexto.
  */
-void escreveTextoSvg(ArqSvg fsvg, double x, double y, char *txt, char *decoTxt);
+void escreveTextoSvg(ArqSvg fsvg, double x, double y, double rotate, char *txt, char *decoTxt);
 
 /* Fecha o arquivo fsvg. */
 void fechaSvg(ArqSvg fsvg);
