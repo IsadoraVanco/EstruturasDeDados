@@ -116,8 +116,10 @@ Posic getPrevious(Lista L,Posic p){
  */
 
  Item getIteratorNext(Lista L, Iterador it){
+  
    IteratorImpl *itimpl = (IteratorImpl *)it;
    Item valor =itimpl->curr->info
+   
    if (itimpl->reverso){
      itimpl->curr = (Node *)getPrevious(L,itimpl->curr);
    }

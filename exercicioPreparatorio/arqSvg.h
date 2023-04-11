@@ -1,6 +1,7 @@
 #ifndef ARQSVG__
 #define ARQSVG__
 
+
 /*
   Provê operações para escrita de arquivos básicos no formato SVG.
 
@@ -20,13 +21,13 @@ formato ou tutoriais, como:
      https://developer.mozilla.org/pt-BR/docs/Web/SVG/Tutorial
  */
 
-typedef void* ArqSvg; //se refere ao arquivo SVG
+typedef void *ArqSvg;
 
 /*
   Cria o arquivo "fn" para escrita. Substitui o arquivo, caso exista.
   Retorna NULL, caso nao tenha sido possivel criar arquivo.
  */
-ArqSvg abreEscritaSvg(char* fn);
+ArqSvg abreEscritaSvg(char *fn);
 
 /*
   Preenche o vetor "deco" (com capacidade de "decoLen" caracteres) com atributos
@@ -36,10 +37,13 @@ escreveLinhaSvg. Para não incluir algum dos parâmetros na decoracao,
 atribuir NULL (para char *) ou valores negativos (double) ao respectivo parametro.
 
     Nao considerar valor: NULL para char * e valores negativos para double
+    font style: normal | italic | oblique
+    font weight: normal | bold | bolder | lighter
+    text anchor: start | middle |end
  */
 void preparaDecoracao(ArqSvg fsvg, char *deco, int decoLen,
 		      char *corBorda, char *corPreenchimento,
-		      double larguraBorda, double transparencia,
+		      char *larguraBorda, double transparencia,
 		      double transparenciaPreenchimento, double transparenciaBorda);
 
 /*
@@ -66,22 +70,23 @@ podem preparadas por meio da operacao preparaDecoracao.
  */
 void escreveLinhaSvg(ArqSvg fsvg, double x1, double y1, double x2, double y2, char *deco);
 
-// alterei pra define pois dava erro de multiplas definições 
 
 /* Font style: */
-#define FS_NORMAL "normal"
-#define FS_ITALIC "italic"
-#define FS_OBLIQUE "oblique"
+const char *FS_NORMAL = "normal";
+const char *FS_ITALIC = "italic";
+const char *FS_OBLIQUE = "oblique";
 
 /* Font weight */
-#define FW_NORMAL "normal"
-#define FW_BOLD "bold"
-#define FW_BOLDER "bolder"
-#define FW_LIGHTER "lighter"
 
-#define TA_START "start"
-#define TA_MIDDLE "middle"
-#define TA_END "end"
+const char *FW_NORMAL = "normal";
+const char *FW_BOLD = "bold";
+const char *FW_BOLDER = "bolder";
+const char *FW_LIGHTER = "lighter";
+
+const char *TA_START = "start";
+const char *TA_MIDDLE = "middle";
+const char *TA_END = "end";
+
 
 /*
   Preenche o vetor "deco" (com capacidade de "decoLen" caracteres) com atributos
@@ -97,19 +102,19 @@ acima.
     font weight: normal | bold | bolder | lighter
     text anchor: start | middle |end
  */
+
 void preparaDecoracaoTexto(ArqSvg fsvg, char *deco, int decoLen,
 			   char *fontFamily, char *fontStyle,
-			   char *fontWeight, double fontSize,
+			   char *fontWeight, char *fontSize,
 			   char *fontColor, char *textAnchor);
 
-// adicionado o atributo "rotate"
 /*
   Insere no arquivo svg o texto txt na coordenada (x,y).
 Atributos de formatacao (cores, fonte, etc) podem ser informados pela string 
 deco (atribuir NULL, caso nao queira atribuir decoracao). As formatacoes mais usuais 
 podem preparadas por meio da operacao preparaDecoracaoTexto.
  */
-void escreveTextoSvg(ArqSvg fsvg, double x, double y, double rotate, char *txt, char *decoTxt);
+void escreveTextoSvg(ArqSvg fsvg, double x, double y, char *txt; char *decoTxt);
 
 /* Fecha o arquivo fsvg. */
 void fechaSvg(ArqSvg fsvg);
