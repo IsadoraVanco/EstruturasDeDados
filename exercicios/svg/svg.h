@@ -99,7 +99,7 @@ acima.
  */
 void preparaDecoracaoTexto(ArqSvg fsvg, char *deco, int decoLen,
 			   char *fontFamily, char *fontStyle,
-			   char *fontWeight, double fontSize,
+			   char *fontWeight, char *fontSize,
 			   char *fontColor, char *textAnchor);
 
 // adicionado o atributo "rotate"
