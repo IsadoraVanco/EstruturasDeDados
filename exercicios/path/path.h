@@ -33,7 +33,7 @@
    "ccc.txt"          => ""
    "aaa/bbb/ccc"      => "aaa/bbb"
  */
-void getPath(char *fullPath, char *path, int* lenPath);
+void getPath(char *fullPath, char *path, int lenPath);
 
 /*
    Dado um caminho (path), (supostamente) sem nome de arquivo, 
@@ -44,7 +44,7 @@ void getPath(char *fullPath, char *path, int* lenPath);
    "aa/bb/cc"   => "aa/bb/cc"
    "aa/bb/cc/"  => "aa/bb/cc" 
  */
-void normalizePath(char *path, char *normPath, int* lenNormPath);
+void normalizePath(char *path, char *normPath, int lenNormPath);
 
 /*
     Dado um caminho completo (fullPath), copia em fileName o nome do arquivo 
@@ -58,7 +58,7 @@ void normalizePath(char *path, char *normPath, int* lenNormPath);
     "cc"              => "cc"
     ".txt"            => ".txt"
  */
-void getFileName(char *fullPath, char *fileName, int *lenFileName);
+void getFileName(char *fullPath, char *fileName, int lenFileName);
 
 /*
   Dado um caminho (path) e um nome de arquivo (possivelmente, com sua extensao),
@@ -71,7 +71,7 @@ void getFileName(char *fullPath, char *fileName, int *lenFileName);
    ""           "c.txt"  =>  "c.txt"
    "aaa/bbb"    "c"      =>  "aaa/bbb/c"
  */
-void joinFilePath(char *path, char *fileName, char *fullPath, int* lenFullPath);
+void joinFilePath(char *path, char *fileName, char *fullPath, int lenFullPath);
 
 /*
     Dado um caminho (fullPath), copia cada um de seus componentes
@@ -89,7 +89,7 @@ void joinFilePath(char *path, char *fileName, char *fullPath, int* lenFullPath);
     "ccc"             =>   ""          "ccc"      ""  
  */
 void splitPath(char *fullPath,
-	       char *path, int* lenPath,
+	       char *path, int lenPath,
 	       char *nomeArq, int* lenNomeArq,
 	       char *extArq, int* lenExtArq);
 

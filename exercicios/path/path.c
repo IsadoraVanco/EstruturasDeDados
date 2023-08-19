@@ -4,15 +4,47 @@
 #include <string.h>
 #include "path.h"
 
-// depois verificar padrão e melhorar o codigo -_-
-void getPath(char *fullPath, char *path, int* lenPath){
-    // lenPath => transformado em ponteiro para atualizar o valor dele...
+#ifdef _WIN32
+    #define BARRA "\\"
+#else
+    #define BARRA "/"
+#endif
+
+void getPath(char *fullPath, char *path, int lenPath){
     printf("\n********* GETPATH ********\n");
+
+    strcpy(path, "");
+
+    //para percorrer o path
+    int i = lenPath - 1;
+    while(i <= 0){
+
+        if(strcmp(fullPath[i], BARRA) == 0){
+
+            //copia o path
+            #if _WIN32
+                //barra dupla da raiz
+                if(strcmp(fullPath[i - 1], BARRA) == 0){ 
+                    i++;
+                }
+            #endif
+
+            int p = i - 1;
+
+            while(p <= 0){
+
+                
+                p--;
+            }
+        }
+
+        i--;
+    }
 
     char* ultimoCaractere = fullPath + (strlen(fullPath) - 1);
 
     // considerando desde o diretorio raiz 
-    if(strrchr(fullPath, '\\') > 0){ //verifica se existe uma barra
+    if(strrchr(fullPath, BARRA) > 0){ //verifica se existe uma barra
         // encontra a primeira ocorrência
         char* ptrPrimeiro = strchr(fullPath, '\\');
         int posicaoPrimeira = ptrPrimeiro - fullPath;
@@ -93,7 +125,7 @@ void getPath(char *fullPath, char *path, int* lenPath){
     *(lenPath) = strlen(path);
 }
 
-void normalizePath(char *path, char *normPath, int* lenNormPath){
+void normalizePath(char *path, char *normPath, int lenNormPath){
     // lenNormPath => transformado em int* para modificar o valor
     printf("\n********* NORMALIZEPATH ********\n");
     
@@ -120,7 +152,7 @@ void normalizePath(char *path, char *normPath, int* lenNormPath){
     *(lenNormPath) = strlen(normPath);
 }
 
-void getFileName(char *fullPath, char *fileName, int *lenFileName){
+void getFileName(char *fullPath, char *fileName, int lenFileName){
     // lenFileName => transformado em int* para modificar o valor
     printf("\n********* GETFILENAME ********\n");
 
@@ -164,7 +196,7 @@ void getFileName(char *fullPath, char *fileName, int *lenFileName){
     *(lenFileName) = strlen(fileName);
 }
 
-void joinFilePath(char *path, char *fileName, char *fullPath, int* lenFullPath){
+void joinFilePath(char *path, char *fileName, char *fullPath, int lenFullPath){
     // lenFullName => transformado em int* para modificar o valor
     // printf("\n********* JOINFILEPATH ********\n");
 
@@ -189,7 +221,7 @@ void joinAll(char *path, char *fileName, char *ext, char *fullPath, int lenFullP
 
 }
 
-void splitPath(char *fullPath, char *path, int* lenPath, 
+void splitPath(char *fullPath, char *path, int lenPath, 
     char *nomeArq, int* lenNomeArq, char *extArq, int* lenExtArq){
     // todos len... => transformado em int* para modificar o valor
     printf("\n********* SPLITPATH ********\n");

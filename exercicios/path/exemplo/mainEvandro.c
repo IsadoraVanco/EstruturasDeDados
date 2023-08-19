@@ -1,3 +1,6 @@
+/*
+Exemplo utilizando os métodos path criado pelo Evandro
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
