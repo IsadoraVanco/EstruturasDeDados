@@ -13,3 +13,16 @@ Créditos ao profº Gilberto, autor dos exercícios.
     1. Faça um programa para determinar a próxima jogada em um Jogo da Velha. Assumir que o tabuleiro é representado por uma matriz de 3x3, onde cada posição representa uma das casas do tabuleiro. A matriz pode conter os seguintes valores: -1, 0, 1 (representando respectivamente uma casa contendo uma peça minha (-1), uma casa vazia do tabuleiro (0), e uma casa contendo uma peça do meu oponente (1)).
 
     2. Faça um programa que leia/gere uma matriz 4x4 e transforme-a em uma matriz triangular inferior, ou seja, atribuindo zero a todos os elementos acima da diagonal principal. Imprima a matriz original e a matriz transformada.
+
+* TAD: numeroComplexo
+    1. Implemente um TAD “Número Complexo” e implemente as seguintes operações:
+        • Inicializa: atribui valores para os campos
+        • Imprime: imprime o número da forma “R + Ci”
+        • Copia: Copia o valor de um número para outro
+        • Soma: Soma dois números complexos
+        • EhReal: testa se um número é real
+
+        • Por fim, faça um pequeno programa para testar o seu TAD
+
+        *Lembre-se que em números complexos, cada número possui os campos real e
+        imaginário
