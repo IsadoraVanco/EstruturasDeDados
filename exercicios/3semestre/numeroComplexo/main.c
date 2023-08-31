@@ -1,4 +1,7 @@
-/*1. Implemente um TAD “Número Complexo” e implemente as seguintes operações:
+/*
+Créditos ao profº Gilberto, autor do exercício.
+
+1. Implemente um TAD “Número Complexo” e implemente as seguintes operações:
     * Inicializa: atribui valores para os campos
     * Imprime: imprime o número da forma “R + Ci”
     * Copia: Copia o valor de um número para outro
