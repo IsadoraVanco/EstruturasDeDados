@@ -18,17 +18,20 @@ Pilha* NEW_PILHA(){
 
 int POP(Pilha* pilha) {
 
-    if (pilha->tamanho < 1)
-    return NULL; // vazia
+    if (pilha->tamanho < 1){
+        printf("Pilha vazia\n");
+        return 0; // vazia
+    }
 
-    int v = pilha->topo->valor;
+    int valor = pilha->topo->valor;
     Celula* cel_topo = pilha->topo;
 
     pilha->topo = cel_topo->proximo;
     pilha->tamanho -= 1; // um a menos;
     free(cel_topo); // adeus celula
 
-    return v;
+    printf("%d\n", valor);
+    return valor;
 }
 
 int PUSH(int v, Pilha* pilha) {
@@ -41,4 +44,8 @@ int PUSH(int v, Pilha* pilha) {
     pilha->tamanho += 1;
 
     return 0;
+}
+
+int DELETE_PILHA(Pilha *pilha){
+    free(pilha);
 }
