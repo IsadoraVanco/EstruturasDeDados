@@ -1,3 +1,4 @@
+//Exemplo de Pilha do profº Evandro
 #include <stdio.h>
 #include <stdlib.h>
 #include "pilha.h"
