@@ -1,5 +1,12 @@
 /*
-Estrutura de Pilha utiizando ponteiros
+Créditos ao profº Gilberto, autor do exercício.
+
+Implemente uma pilha encadeada com as seguintes funções básicas:
+-Criar pilha;
+-Verificar se a pilha está vazia;
+-Push
+-Pop
+-Retornar o tamanho da pilha
 */
 typedef struct cel{
     int data;

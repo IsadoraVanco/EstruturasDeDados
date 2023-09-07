@@ -1,3 +1,6 @@
+/*
+Implementações das funções para a estrtura de uma pilha.
+*/
 #include <stdlib.h>
 #include <stdio.h>
 #include "pilha.h"

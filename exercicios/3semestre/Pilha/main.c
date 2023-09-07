@@ -1,7 +1,5 @@
 /*
-Implemente uma pilha encadeada com as seguintes funçõ es
-básicas:
-Criar pilha, verificar se a pilha está vazia, push, pop, retornar tamanho da pilha
+Um teste para a estrutura de pilha.
 */
 #include <stdio.h>
 #include "pilha.h"
