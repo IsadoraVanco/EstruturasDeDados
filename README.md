@@ -15,4 +15,3 @@ Aqui você poderá ver tudo que aprendi (e estou aprendendo) nas matérias de Es
 
 * Tipo Abstrato de Dados;
 * Arquivo Makefile;
-* Revisão de Algoritmos;
