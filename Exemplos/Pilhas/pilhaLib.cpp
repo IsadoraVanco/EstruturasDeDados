@@ -1,3 +1,6 @@
+/*
+Exemplo de Pilha utilizando as implementações da biblioteca
+*/
 #include <iostream>
 #include <stack>
 

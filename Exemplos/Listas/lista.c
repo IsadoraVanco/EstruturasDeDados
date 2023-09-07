@@ -1,3 +1,6 @@
+/*
+Exemplo de implementação de Lista.
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include "lista.h"

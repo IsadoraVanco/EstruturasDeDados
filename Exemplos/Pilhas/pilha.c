@@ -1,3 +1,6 @@
+/*
+Exemplo de implementação de uma Pilha em C.
+*/
 #include <stdio.h>
 #include <stdlib.h>
 
