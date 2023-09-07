@@ -1,7 +1,5 @@
 /*
-Implemente uma Dila encadeada com com as seguintes funçõ es
-básicas:
-Criar Rila, veriRicar Rila vazia, enRileirar, desenRileirar
+Teste para a estrutura de Fila.
 */
 #include <stdio.h>
 #include "fila.h"

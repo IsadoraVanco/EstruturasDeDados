@@ -1,3 +1,6 @@
+/*
+Implementações da estrutura de Fila.
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include "fila.h"
@@ -22,11 +25,9 @@ int dequeue(Queue *queue){
 
     int data = queue->head->data;
     Celula *newHead = queue->tail;
-    // printf("%d\n", newHead->data);
 
     for(int i = 1; i < queue->length - 1; i++){
         newHead = newHead->next;
-        // printf("%d\n", newHead->data);
     }
 
     newHead->next = NULL;

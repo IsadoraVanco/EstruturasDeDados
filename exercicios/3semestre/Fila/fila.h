@@ -1,5 +1,11 @@
 /*
-Estrutura de Fila utilizando ponteiros
+Créditos ao profº Gilberto, autor do exercício.
+
+Implemente uma Fila encadeada com as seguintes funções básicas:
+-Criar Fila
+-Verificar se a Fila está vazia
+-Enfileirar
+-Desenfileirar
 */
 
 /*
