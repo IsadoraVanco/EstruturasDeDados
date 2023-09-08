@@ -1,3 +1,4 @@
+// Implementação da estrutura de Pilha
 #include <stdlib.h>
 #include <stdio.h>
 #include "pilha.h"

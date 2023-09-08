@@ -1,4 +1,4 @@
-
+// Exemplo de Pilha do profº Gilberto
 typedef struct cel{
     int valor;
     struct cel* proximo;
