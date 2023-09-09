@@ -4,5 +4,5 @@ Aqui você poderá ver tudo que aprendi (e estou aprendendo) nas matérias de Es
 
 ## Conteúdo
 
-* **[Exemplos](https://github.com/isadoravanco/EstruturasDeDados/tree/main/Exemplos)**: Exemplos de aulas e retirados por aí
-* **[Exercícios](https://github.com/isadoravanco/EstruturasDeDados/tree/main/Exercicios)**: Listas de exercícios
+* **[Exemplos](https://github.com/IsadoraVanco/EstruturasDeDados/tree/main/Exemplos)**: Exemplos de aulas e retirados por aí
+* **[Exercícios](https://github.com/IsadoraVanco/EstruturasDeDados/tree/main/Exercicios)**: Listas de exercícios
