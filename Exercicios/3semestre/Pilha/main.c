@@ -16,11 +16,12 @@ int main(int argc, char const *argv[]){
     printf("O tamanho da pilha é %d\n", getLengthStack(pilha));
     
     searchInStack(pilha, 1, &posicao);
-    searchInStack(pilha, 0, &posicao);
     searchInStack(pilha, 3, &posicao);
+    searchInStack(pilha, 0, &posicao);
+    searchInStack(pilha, 10, &posicao);
 
-    getElementInStack(pilha, 10, &valor);
     getElementInStack(pilha, posicao, &valor);
+    getElementInStack(pilha, 10, &valor);
     
     printStack(pilha);
 

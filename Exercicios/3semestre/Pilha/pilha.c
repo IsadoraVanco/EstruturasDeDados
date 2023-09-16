@@ -69,31 +69,27 @@ int searchInStack(Stack *stack, int data, int *position){
         if(elemento->data == data){
             printf("Elemento %d encontrado na posição [%d] a partir do topo\n", data, i);
             *position = i;
-            break;
+            return 0;
         }
         elemento = elemento->next;
     }
 
-    if(elemento->data != data){
-        printf("Elemento %d não encontrado na Pilha\n", data);
-        return 1;
-    }
-
-    return 0;
+    printf("Elemento %d não encontrado na Pilha\n", data);
+    return 1;
 }
 
 int getElementInStack(Stack *stack, int position, int *data){
     if(isEmptyStack(stack)){
         printf("Não é possível procurar uma posição de elemento na Pilha vazia\n");
         return 1;
-    }else if(position < 0 || position > (stack->length - 1)){
+    }else if(position < 0 || position >= stack->length){
         printf("Posição %d não existente\n", position);
         return 1;
     }
 
     Celula *elemento = stack->top;
 
-    for(int i = 0; i > position; i++){
+    for(int i = 0; i < position; i++){
         elemento = elemento->next;
     }
 
