@@ -42,17 +42,23 @@ int getLengthStack(Stack *Stack);
 
 /*
 Procura na Pilha uma informação, copia a posição (a 
-partir do primeiro elemento colocado na Pilha) caso 
-a ache na estrutura e retorna 0, se não, retorna 1.
+partir do topo) em 'position' caso a ache na estrutura 
+e retorna 0, se não, retorna 1.
 */
 int searchInStack(Stack *stack, int data, int *position);
 
 /*
-Copia a informação que está na posição indicada da Pilha.
-Caso não haja a posição indicada (a partir do primeiro 
-elemento colocado na Pilha), retorna 1, se não, retorna 0.
+Copia a informação que está na posição indicada da Pilha em 'data'.
+Caso não haja a posição indicada (a partir do topo), retorna 1, 
+se a operação foi concluída com sucesso, retorna 0.
 */
 int getElementInStack(Stack *stack, int position, int *data);
+
+/*
+Imprime os elementos da Pilha. Caso a estrutura esteja vazia,
+retorna 1, se o processo for concluído com sucesso, retorna 0.
+*/
+int printStack(Stack *stack);
 
 /*
 Apaga a estrutura da Pilha da memória e todas as células.

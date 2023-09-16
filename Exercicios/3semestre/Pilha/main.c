@@ -7,15 +7,22 @@ Um teste para a estrutura de pilha.
 int main(int argc, char const *argv[]){
     int posicao, valor = 0;
     Stack *pilha = newStack();
+    
     push(pilha, 0);
     push(pilha, 1);
     push(pilha, 2);
     push(pilha, 3);
 
     printf("O tamanho da pilha é %d\n", getLengthStack(pilha));
-    searchInStack(pilha, valor, &posicao);
+    
+    searchInStack(pilha, 1, &posicao);
+    searchInStack(pilha, 0, &posicao);
+    searchInStack(pilha, 3, &posicao);
+
+    getElementInStack(pilha, 10, &valor);
     getElementInStack(pilha, posicao, &valor);
-    getElementInStack(pilha, 3, &valor);
+    
+    printStack(pilha);
 
     pop(pilha);
     pop(pilha);

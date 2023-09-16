@@ -59,15 +59,15 @@ int getLengthStack(Stack *stack){
 
 int searchInStack(Stack *stack, int data, int *position){
     if(isEmptyStack(stack)){
-        printf("Pilha vazia.\n");
+        printf("Não é possível procurar um elemento em uma Pilha vazia\n");
         return 1;
     }
 
     Celula *elemento = stack->top;
 
-    for(int i = stack->length - 1; i >= 0; i--){
+    for(int i = 0; i < stack->length; i++){
         if(elemento->data == data){
-            printf("Elemento %d encontrado na posição %d.\n", data, i);
+            printf("Elemento %d encontrado na posição [%d] a partir do topo\n", data, i);
             *position = i;
             break;
         }
@@ -75,7 +75,7 @@ int searchInStack(Stack *stack, int data, int *position){
     }
 
     if(elemento->data != data){
-        printf("Elemento %d não encontrado na Pilha.\n", data);
+        printf("Elemento %d não encontrado na Pilha\n", data);
         return 1;
     }
 
@@ -84,21 +84,38 @@ int searchInStack(Stack *stack, int data, int *position){
 
 int getElementInStack(Stack *stack, int position, int *data){
     if(isEmptyStack(stack)){
-        printf("Pilha vazia.\n");
+        printf("Não é possível procurar uma posição de elemento na Pilha vazia\n");
         return 1;
     }else if(position < 0 || position > (stack->length - 1)){
-        printf("Posição %d não existente.\n", position);
+        printf("Posição %d não existente\n", position);
         return 1;
     }
 
     Celula *elemento = stack->top;
 
-    for(int i = stack->length - 1; i > position; i--){
+    for(int i = 0; i > position; i++){
         elemento = elemento->next;
     }
 
     *data = elemento->data;
-    printf("Encontrado elemento %d em %d.\n", *data, position);
+    printf("Elemento %d encontrado na posição [%d] a partir do topo\n", *data, position);
+
+    return 0;
+}
+
+int printStack(Stack *stack){
+    if(isEmptyStack(stack)){
+        printf("Não é possível imprimir uma Pilha vazia\n");
+        return 1;
+    }
+
+    Celula *elemento = stack->top;
+
+    printf("IMPRIMINDO PILHA:\n");
+    for(int i = 0; i < getLengthStack(stack); i++){
+        printf("[%d] %d\n", i, elemento->data);
+        elemento = elemento->next;
+    }
 
     return 0;
 }
