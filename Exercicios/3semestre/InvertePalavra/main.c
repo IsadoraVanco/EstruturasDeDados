@@ -16,12 +16,18 @@ deve produzir uma saı́da como:
 #include "pilha.h"
 
 /*
-A função recebe uma frase e imprime-a com as palavras invertidas.
-Retorna 1 caso tenha erro, senão, retorna 0.
+A função recebe uma frase e imprime-a com as palavras invertidas, 
+utilizando a estrutura de Pilha. Retorna 1 caso tenha erro, 
+senão, retorna 0.
 */
 int inverteFrase(char *frase){
     char *letra = frase; //ponteiro para um caractere da frase
     Stack *pilha = newStack(); //cria uma nova pilha
+
+    if(!pilha){
+        printf("Erro ao inverter a frase\n");
+        return 1;
+    }
 
     for(int i = 0; i <= strlen(frase); i++){
         
@@ -56,8 +62,8 @@ int main(int argc, char const *argv[]){
     printf("\nFrase inicial: \n%s\n", frase);
 
     printf("Frase Final: \n");
+    
     if(inverteFrase(frase)){
-        printf("Erro ao inverter a frase.\n");
         return 1;
     }
 
