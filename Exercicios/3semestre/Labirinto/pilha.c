@@ -3,6 +3,7 @@ Implementações das funções para a estrtura de uma pilha.
 */
 #include <stdlib.h>
 #include <stdio.h>
+#include "main.c" //mudar dps
 #include "pilha.h"
 
 Stack* newStack(){
@@ -23,26 +24,27 @@ int isEmptyStack(Stack *stack){
     return stack->length == 0;
 }
 
-int push(Stack* stack, int data) {
+int push(Stack* stack, Ponto *ponto) {
     Celula* nova = (Celula *) malloc(sizeof(Celula));
 
-    nova->data = data;
+    nova->coordenadas.x = ponto->x;
+    nova->coordenadas.y = ponto->y;
     nova->next = stack->top;
 
     stack->top = nova;
-    stack->length += 1;
+    stack->length++;
 
     return 0;
 }
 
-int pop(Stack* stack) {
+Ponto* pop(Stack* stack) {
 
     if (isEmptyStack(stack)){
         printf("Não é possível retirar um elemento da pilha vazia.\n");
         return 0; // vazia
     }
 
-    int valor = stack->top->data;
+    Ponto ponto = 
     Celula* topCel = stack->top;
 
     stack->top = topCel->next;

@@ -2,6 +2,9 @@
     Módulos com todas as funções para manipulação de 
     uma Estrutura de Pilha
 */
+#ifndef PILHA_H
+#define PILHA_H
+
 #include "labirinto.h"
 
 //******************** DEFINIÇÕES ********************
@@ -11,9 +14,6 @@ Celula representa cada elemento que está na Pilha.
 */
 typedef struct cel{
     Ponto coordenadas; //As coordenadas do ponto no mapa
-    //Representa se o ponto já foi percorrido ou não.
-    //Se sim, o tipo é 1, se não, 0. Caso o ponto seja uma encruzilhada, é o tipo 2.
-    int tipoCaminho;
     struct cel* next;
 } Celula;
 
@@ -41,7 +41,7 @@ int isEmptyStack(Stack *Stack);
 Adiciona o valor no topo da Pilha, caso tenha espaço.
 Retorna 0 se teve sucesso, e 1, caso contrário.
 */
-int push(Stack* Stack, int x, int y, int tipoCaminho);
+int push(Stack* Stack, Ponto *ponto);
 
 /*
 Retira o último elemento da Pilha e o retorna.
@@ -77,3 +77,5 @@ int printStack(Stack *stack);
 Apaga a estrutura da Pilha da memória e todas as células.
 */
 int deleteStack(Stack *Stack);
+
+#endif

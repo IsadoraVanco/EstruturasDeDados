@@ -17,6 +17,7 @@ Cada instância de entrada é dada por um arquivo texto chamado "labirinto.txt" 
 - 0 – Caminho livre/vazio.
 - 2 – Posição inicial do personagem.
 - 3 – Posição de chegada.
+
 Este arquivo será lido a partir do mesmo diretório onde se encontra o programa principal. No programa, ao imprimir o labirinto, utilize sua criatividade para substituir os números acima por caracteres/elementos de acordo com sua imaginação.
 
 Segue um exemplo do arquivo de entrada "labirinto.txt":
@@ -42,7 +43,7 @@ Que poderia ser impresso da seguinte maneira (sugestão):
     # # # # #   # @ # 
     # # # # #   # # #
     #               #
-    #   # # # # # # #
+    # #   # # # # # #
     # # # # # # # # #
 
 ## Saída:
