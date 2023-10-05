@@ -13,8 +13,13 @@
 #define PAREDE 1
 #define PERSONAGEM 2
 #define CHEGADA 3
-#define CAMINHO_EXPLORADO 8 
-#define CAMINHO_PERCORRIDO 9
+#define CAMINHO_PERCORRIDO 9 //Caminho que está na pilha
+
+/*
+    Caracteres que vão definir caminhos já percorridos no labirinto
+*/
+#define CAMINHO_EXPLORADO 1 //Caminho já explorado
+#define BLOQUEIO 4 //Flag para não passar pelo caminho
 
 /*
     Caracteres para mostrar o tabuleiro
@@ -28,6 +33,18 @@
 //******************** VARIÁVEIS GLOBAIS ********************
 
 int tamanhoLabirinto = 0;
+int **caminhos; //Representa os caminhos percorridos e as encruzilhadas
+
+//******************** BORDAS ********************
+
+int ehBorda(int x, int y){
+    return x == 0 || x == (tamanhoLabirinto - 1) || 
+            y == 0 || y == (tamanhoLabirinto - 1);
+}
+
+int faltaBorda(int x, int y, int ponto){
+    return ehBorda(x, y) && ponto != PAREDE;
+}
 
 //******************** TABULEIRO ********************
 
@@ -51,9 +68,6 @@ void mostraTabuleiro(int **matriz){
                 case CAMINHO_LIVRE:
                     desenho = DESENHO_CAMINHO_LIVRE;
                     break;
-                case CAMINHO_EXPLORADO:
-                    desenho = DESENHO_CAMINHO_LIVRE;
-                    break;
                 case CHEGADA:
                     desenho = DESENHO_CHEGADA;
                     break;
@@ -71,7 +85,7 @@ void mostraTabuleiro(int **matriz){
     }
 }
 
-int **armazenaTabuleiro(char *nomeArquivo, Ponto *coordenadaPersonagem){
+int **armazenaTabuleiro(char *nomeArquivo, Personagem *personagem){
     FILE *arquivo = fopen(nomeArquivo, "r");
 
     if(!arquivo){
@@ -120,8 +134,8 @@ int **armazenaTabuleiro(char *nomeArquivo, Ponto *coordenadaPersonagem){
             }else if(matriz[i][j] == CHEGADA && !temChegada){ //Verifica se tem ponto de chegada
                 temChegada = 1;
             }else if(matriz[i][j] == PERSONAGEM && !temPartida){ //Armazena o ponto de partida (primeiro que encontrar)
-                coordenadaPersonagem->x = i;
-                coordenadaPersonagem->y = j;
+                personagem->x = i;
+                personagem->y = j;
 
                 temPartida = 1;
             }
@@ -129,6 +143,13 @@ int **armazenaTabuleiro(char *nomeArquivo, Ponto *coordenadaPersonagem){
     }
 
     fclose(arquivo);
+
+    //Inicializa a matriz de caminhos percorridos
+    caminhos = malloc(tamanhoLabirinto * sizeof(int *));
+
+    for(int i = 0; i < tamanhoLabirinto; i++){
+        caminhos[i] = calloc(tamanhoLabirinto, sizeof(int));
+    }
     
     //Verifica se a matriz tem os pontos de partida e chegada
     if(!temChegada || !temPartida){
@@ -141,41 +162,46 @@ int **armazenaTabuleiro(char *nomeArquivo, Ponto *coordenadaPersonagem){
     return matriz;
 }
 
-//******************** BORDAS ********************
-
-int ehBorda(int x, int y){
-    return x == 0 || x == (tamanhoLabirinto - 1) || 
-            y == 0 || y == (tamanhoLabirinto - 1);
-}
-
-int faltaBorda(int x, int y, int ponto){
-    return ehBorda(x, y) && ponto != PAREDE;
-}
-
 //******************** CAMINHOS ********************
 
-int verificaCoordenada(int **matriz, Ponto *coordenadaPersonagem){
-    if(matriz[coordenadaPersonagem->x][coordenadaPersonagem->y] == CHEGADA){
+int verificaCoordenada(int **matriz, Personagem *personagem){
+
+    int x = personagem->x;
+    int y = personagem->y;
+
+    //Verifica se o personagem está no ponto de chegada
+    if(matriz[x][y] == CHEGADA){
         return 1;
     }
 
-    //Verifica se há caminhos disponíveis para andar
-    if(matriz[coordenadaPersonagem->x + 1][coordenadaPersonagem->y] == CHEGADA ||
-        matriz[coordenadaPersonagem->x + 1][coordenadaPersonagem->y] == CAMINHO_LIVRE){ //cima
-        andar();
-    }else if(matriz[coordenadaPersonagem->x][coordenadaPersonagem->y + 1] == CHEGADA ||
-        matriz[coordenadaPersonagem->x][coordenadaPersonagem->y + 1] == CAMINHO_LIVRE){ //direita
-        andar();
-    }else if(matriz[coordenadaPersonagem->x - 1][coordenadaPersonagem->y] == CHEGADA ||
-        matriz[coordenadaPersonagem->x - 1][coordenadaPersonagem->y] == CAMINHO_LIVRE){ //baixo
-        andar();
-    }else if(matriz[coordenadaPersonagem->x][coordenadaPersonagem->y - 1] == CHEGADA ||
-        matriz[coordenadaPersonagem->x][coordenadaPersonagem->y - 1] == CAMINHO_LIVRE){ //esquerda
-        andar();
-    }else{
-        voltar();
+    int direcoes[4][2] = {
+        {x, y + 1}, //Direita
+        {x + 1, y}, //Cima
+        {x, y - 1}, //Esquerda
+        {x - 1, y} //Baixo
+    };
+
+    //Número de direções válidas para percorrer a partir do ponto
+    int numeroDirecoes = 0;
+
+    //Classifica se é uma encruzilhada
+    for(int i = 0; i < 4; i++){
+        if(matriz[direcoes[i][0]][direcoes[i][1]] == CAMINHO_LIVRE){
+            personagem->x = direcoes[i][0]; //Coordenada do personagem atualizadas
+            personagem->y = direcoes[i][1];
+            numeroDirecoes++;
+        }
     }
 
+    //Classifica o ponto como encruzilhada ou ponto para andar
+    if(numeroDirecoes == 0){
+        //voltar
+    }else if(numeroDirecoes == 1){
+        matriz[x][y] = CAMINHO_PERCORRIDO;
+        caminhos[x][y] = ;
+    }else{
+        caminhos[x][y] = numeroDirecoes;
+    }
 
     return 0;
 }

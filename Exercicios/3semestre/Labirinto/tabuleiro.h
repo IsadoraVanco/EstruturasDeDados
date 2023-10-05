@@ -1,12 +1,17 @@
 #ifndef TABULEIRO_H
 #define TABULEIRO_H
 
+#include "pilha.h"
+
 /*
     Representa um ponto no tabuleiro
 */
 typedef struct {
     int x, y;
-}Ponto;
+    int dx = 0;
+    int dy = 0;
+    Pilha *caminhos;
+}Personagem;
 
 //******************** TABULEIRO ********************
 
@@ -25,7 +30,7 @@ Armazena o tabuleiro em uma matriz, retornando seu ponteiro
 caso prossiga com sucesso, senão, retorna 0. Além disso,
 guarda a coordenada inicial do persongem.
 */
-int **armazenaTabuleiro(char *nomeArquivo, Ponto *coordenadaPersonagem);
+int **armazenaTabuleiro(char *nomeArquivo, Personagem *coordenadaPersonagem);
 
 
 //******************** BORDAS ********************

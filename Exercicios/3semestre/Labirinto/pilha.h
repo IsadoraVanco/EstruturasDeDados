@@ -5,13 +5,17 @@
 #ifndef PILHA_H
 #define PILHA_H
 
-#include "tabuleiro.h"
 
 //******************** DEFINIÇÕES ********************
 
 /*
 Celula representa cada elemento que está na Pilha.
 */
+typedef struct {
+    int x, y;
+} Ponto;
+
+
 typedef struct cel{
     Ponto coordenadas; //As coordenadas do ponto no mapa
     struct cel* proxima;
