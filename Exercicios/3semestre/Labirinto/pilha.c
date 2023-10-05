@@ -3,129 +3,109 @@ Implementações das funções para a estrtura de uma pilha.
 */
 #include <stdlib.h>
 #include <stdio.h>
-#include "main.c" //mudar dps
 #include "pilha.h"
+#include "tabuleiro.h"
 
-Stack* newStack(){
-    Stack* new = (Stack *) malloc(sizeof(Stack));
+Pilha* criaPilha(){
+    Pilha* nova = (Pilha *) malloc(sizeof(Pilha));
 
-    if(!new){
+    if(!nova){
         printf("Erro ao alocar espaço para a pilha.\n");
         return NULL;
     }
 
-    new->length = 0;
-    new->top = NULL;
+    nova->tamanho = 0;
+    nova->topo = NULL;
 
-    return new;
+    return nova;
 }
 
-int isEmptyStack(Stack *stack){
-    return stack->length == 0;
+int ehPilhaVazia(Pilha *pilha){
+    return pilha->tamanho == 0;
 }
 
-int push(Stack* stack, Ponto *ponto) {
+int obtemTamanhoPilha(Pilha *pilha){
+    return pilha->tamanho;
+}
+
+int adicionaPilha(Pilha* pilha, Ponto *ponto) {
     Celula* nova = (Celula *) malloc(sizeof(Celula));
 
     nova->coordenadas.x = ponto->x;
     nova->coordenadas.y = ponto->y;
-    nova->next = stack->top;
+    nova->proxima = pilha->topo;
 
-    stack->top = nova;
-    stack->length++;
+    pilha->topo = nova;
+    pilha->tamanho++;
 
     return 0;
 }
 
-Ponto* pop(Stack* stack) {
+Ponto* retiraPilha(Pilha* pilha) {
 
-    if (isEmptyStack(stack)){
+    if(ehPilhaVazia(pilha)){
         printf("Não é possível retirar um elemento da pilha vazia.\n");
         return 0; // vazia
     }
 
-    Ponto ponto = 
-    Celula* topCel = stack->top;
+    Celula* celulaTopo = pilha->topo;
 
-    stack->top = topCel->next;
-    stack->length -= 1; // um a menos;
-    free(topCel); // adeus celula
+    Ponto *ponto = (Ponto *) malloc(sizeof(Ponto));
+    ponto->x = celulaTopo->coordenadas.x;
+    ponto->y = celulaTopo->coordenadas.y;
 
-    printf("%d\n", valor);
-    return valor;
+    pilha->topo = celulaTopo->proxima;
+    pilha->tamanho--;
+    free(celulaTopo); 
+
+    return ponto;
 }
 
-int getLengthStack(Stack *stack){
-    return stack->length;
-}
-
-int searchInStack(Stack *stack, int data, int *position){
-    if(isEmptyStack(stack)){
-        printf("Não é possível procurar um elemento em uma Pilha vazia\n");
+int imprimePilha(Pilha *pilha){
+    if(ehPilhaVazia(pilha)){
+        printf("\n=>Sem solução\n");
         return 1;
     }
 
-    Celula *elemento = stack->top;
+    Celula *elemento = pilha->topo;
 
-    for(int i = 0; i < stack->length; i++){
-        if(elemento->data == data){
-            printf("Elemento %d encontrado na posição [%d] a partir do topo\n", data, i);
-            *position = i;
-            return 0;
-        }
-        elemento = elemento->next;
+    printf("\n=>Caminho completo:\n");
+    for(int i = 0; i < obtemTamanhoPilha(pilha); i++){
+        printf("(%d, %d) ", elemento->coordenadas.x, elemento->coordenadas.y);
+        elemento = elemento->proxima;
     }
-
-    printf("Elemento %d não encontrado na Pilha\n", data);
-    return 1;
-}
-
-int getElementInStack(Stack *stack, int position, int *data){
-    if(isEmptyStack(stack)){
-        printf("Não é possível procurar uma posição de elemento na Pilha vazia\n");
-        return 1;
-    }else if(position < 0 || position >= stack->length){
-        printf("Posição %d não existente\n", position);
-        return 1;
-    }
-
-    Celula *elemento = stack->top;
-
-    for(int i = 0; i < position; i++){
-        elemento = elemento->next;
-    }
-
-    *data = elemento->data;
-    printf("Elemento %d encontrado na posição [%d] a partir do topo\n", *data, position);
+    printf("\n");
 
     return 0;
 }
 
-int printStack(Stack *stack){
-    if(isEmptyStack(stack)){
-        printf("Sem solução\n");
-        return 1;
-    }
+int apagaPilha(Pilha *pilha){
+    Celula *elemento = pilha->topo;
 
-    Celula *elemento = stack->top;
-
-    printf("Caminho completo:\n");
-    for(int i = 0; i < getLengthStack(stack); i++){
-        printf("[%d] %d\n", i, elemento->data);
-        elemento = elemento->next;
-    }
-
-    return 0;
-}
-
-int deleteStack(Stack *stack){
-    Celula *elemento = stack->top;
-
-    for(int i = 1; i <= stack->length; i++){
-        stack->top = elemento->next;
+    for(int i = 1; i <= pilha->tamanho; i++){
+        pilha->topo = elemento->proxima;
         free(elemento);
-        elemento = stack->top;
+        elemento = pilha->topo;
     }
 
-    free(stack);
+    free(pilha);
+}
+
+//******************** CAMINHO ********************
+
+void mostraCaminho(Pilha *pilha){
+    Pilha *nova = criaPilha();
+
+    //Desempilha em uma outra pilha
+    for(int i = 1; i <= obtemTamanhoPilha(pilha); i++){
+        Ponto *ponto;
+        ponto = retiraPilha(pilha);
+        adicionaPilha(nova, ponto);
+        free(ponto);
+    }
+
+    //Imprime a pilha
+    imprimePilha(nova);
+
+    apagaPilha(nova);
 }
