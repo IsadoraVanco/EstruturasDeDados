@@ -9,6 +9,7 @@
 int main(int argc, char const *argv[]){
     //Representa se o jogo acabou
     int acabou = 0;
+
     //Guarda as coordenadas do personagem
     Personagem personagem = {0};
 
@@ -30,20 +31,21 @@ int main(int argc, char const *argv[]){
         //Mostra o tabuleiro 
         mostraTabuleiro(tabuleiro);
         
-        //Anda para uma posição válida
-        // acabou = verificaCoordenada(tabuleiro, &coordenadasPersonagem, caminhoPercorrido);
+        //Verifica se ele andará ou encerrará
+        acabou = verificaCoordenada(tabuleiro, &personagem);
 
         //Espera
         delay(200);
-        acabou = 1;
 
     }while(!acabou);
 
     //Mostra todo o caminho percorrido
     mostraCaminho(personagem.caminhos);
+    mostraMatriz();
 
     apagaPilha(personagem.caminhos);
     apagaTabuleiro(tabuleiro);
+    apagaCaminhos();
 
     return 0;
 }

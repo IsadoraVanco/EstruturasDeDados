@@ -4,14 +4,25 @@
 #include "pilha.h"
 
 /*
-    Representa um ponto no tabuleiro
+    Representa o personagem do tabuleiro
 */
 typedef struct {
     int x, y;
-    int dx = 0;
-    int dy = 0;
+    int dx, dy;
     Pilha *caminhos;
 }Personagem;
+
+//******************** BORDAS ********************
+
+/*
+Verifica se as coordenadas fazem parte da borda do tabuleiro.
+*/
+int ehBorda(int x, int y);
+
+/*
+Verifica se falta caractere de parede na borda do tabuleiro.
+*/
+int faltaBorda(int x, int y, int ponto);
 
 //******************** TABULEIRO ********************
 
@@ -32,17 +43,22 @@ guarda a coordenada inicial do persongem.
 */
 int **armazenaTabuleiro(char *nomeArquivo, Personagem *coordenadaPersonagem);
 
-
-//******************** BORDAS ********************
-
-/*
-Verifica se as coordenadas fazem parte da borda do tabuleiro.
-*/
-int ehBorda(int x, int y);
+//******************** CAMINHOS ********************
 
 /*
-Verifica se falta caractere de parede na borda do tabuleiro.
+Escolhe a próxima coordenada para o personagem andar, caso ainda haja, retorna 0,
+senão, retorna 1.
 */
-int faltaBorda(int x, int y, int ponto);
+int verificaCoordenada(int **matriz, Personagem *personagem);
+
+/*
+Libera o espaço alocado pela matriz auxiliar de caminhos.
+*/
+void apagaCaminhos();
+
+/*
+Mostra a matriz de caminhos.
+*/
+void mostraMatriz();
 
 #endif

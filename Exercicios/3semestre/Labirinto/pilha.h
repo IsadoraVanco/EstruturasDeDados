@@ -5,17 +5,18 @@
 #ifndef PILHA_H
 #define PILHA_H
 
-
 //******************** DEFINIÇÕES ********************
 
 /*
-Celula representa cada elemento que está na Pilha.
+Representa um ponto no mapa
 */
 typedef struct {
     int x, y;
 } Ponto;
 
-
+/*
+Celula representa cada elemento que está na Pilha.
+*/
 typedef struct cel{
     Ponto coordenadas; //As coordenadas do ponto no mapa
     struct cel* proxima;

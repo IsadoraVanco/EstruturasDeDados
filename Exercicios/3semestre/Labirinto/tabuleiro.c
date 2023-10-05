@@ -7,28 +7,27 @@
 #define TAMANHO_MINIMO_TABULEIRO 4
 
 /*
-    Caracteres de conversão para a leitura do tabuleiro
+    Caracteres de conversão para a leitura e impressão do mapa (vísiveis)
 */
 #define CAMINHO_LIVRE 0 
 #define PAREDE 1
 #define PERSONAGEM 2
 #define CHEGADA 3
-#define CAMINHO_PERCORRIDO 9 //Caminho que está na pilha
+#define CAMINHO_PERCORRIDO 9 //Caminho que está na pilha (rastro)
 
 /*
-    Caracteres que vão definir caminhos já percorridos no labirinto
+    Caracteres que vão definir caminhos já percorridos no labirinto (não visíveis)
 */
-#define CAMINHO_EXPLORADO 1 //Caminho já explorado
 #define BLOQUEIO 4 //Flag para não passar pelo caminho
 
 /*
     Caracteres para mostrar o tabuleiro
 */
 #define DESENHO_CAMINHO_LIVRE ' '
-#define DESENHO_CAMINHO_PERCORRIDO '.'
-#define DESENHO_PERSONAGEM '@'
 #define DESENHO_PAREDES '#'
+#define DESENHO_PERSONAGEM '@'
 #define DESENHO_CHEGADA 'x'
+#define DESENHO_CAMINHO_PERCORRIDO '.'
 
 //******************** VARIÁVEIS GLOBAIS ********************
 
@@ -103,10 +102,16 @@ int **armazenaTabuleiro(char *nomeArquivo, Personagem *personagem){
         return 0;
     }
 
+    //Aloca um espaço para a matriz do labirinto
     int** matriz = (int **) malloc(tamanhoLabirinto * sizeof(int *));
-
     for(int i = 0; i < tamanhoLabirinto; i++){
         matriz[i] = (int *) malloc(tamanhoLabirinto * sizeof(int));
+    }
+
+    //Inicializa a matriz de caminhos percorridos
+    caminhos = malloc(tamanhoLabirinto * sizeof(int *));
+    for(int i = 0; i < tamanhoLabirinto; i++){
+        caminhos[i] = calloc(tamanhoLabirinto, sizeof(int));
     }
 
     int temChegada = 0;
@@ -132,6 +137,7 @@ int **armazenaTabuleiro(char *nomeArquivo, Personagem *personagem){
 
                 return 0;
             }else if(matriz[i][j] == CHEGADA && !temChegada){ //Verifica se tem ponto de chegada
+                caminhos[i][j] = BLOQUEIO; //Inicia com uma flag na chegada
                 temChegada = 1;
             }else if(matriz[i][j] == PERSONAGEM && !temPartida){ //Armazena o ponto de partida (primeiro que encontrar)
                 personagem->x = i;
@@ -143,13 +149,6 @@ int **armazenaTabuleiro(char *nomeArquivo, Personagem *personagem){
     }
 
     fclose(arquivo);
-
-    //Inicializa a matriz de caminhos percorridos
-    caminhos = malloc(tamanhoLabirinto * sizeof(int *));
-
-    for(int i = 0; i < tamanhoLabirinto; i++){
-        caminhos[i] = calloc(tamanhoLabirinto, sizeof(int));
-    }
     
     //Verifica se a matriz tem os pontos de partida e chegada
     if(!temChegada || !temPartida){
@@ -174,34 +173,75 @@ int verificaCoordenada(int **matriz, Personagem *personagem){
         return 1;
     }
 
+    //Verifica se o ponto com o deslocamento anterior é válido, se não, testa outros
+
+
     int direcoes[4][2] = {
         {x, y + 1}, //Direita
-        {x + 1, y}, //Cima
+        {x + 1, y}, //Baixo
         {x, y - 1}, //Esquerda
-        {x - 1, y} //Baixo
+        {x - 1, y} //Cima
     };
 
     //Número de direções válidas para percorrer a partir do ponto
     int numeroDirecoes = 0;
 
-    //Classifica se é uma encruzilhada
+    //Classifica o tipo do caminho e atualiza a coordenada caso haja um válido
     for(int i = 0; i < 4; i++){
-        if(matriz[direcoes[i][0]][direcoes[i][1]] == CAMINHO_LIVRE){
-            personagem->x = direcoes[i][0]; //Coordenada do personagem atualizadas
+        if(matriz[direcoes[i][0]][direcoes[i][1]] == CAMINHO_LIVRE &&
+            caminhos[direcoes[i][0]][direcoes[i][1]] != BLOQUEIO){
+            //Atualiza as novas coordenadas do personagem
+            personagem->x = direcoes[i][0]; 
             personagem->y = direcoes[i][1];
+
+            //Atualiza a direção que está seguindo (dx dy)
+
             numeroDirecoes++;
         }
     }
 
-    //Classifica o ponto como encruzilhada ou ponto para andar
-    if(numeroDirecoes == 0){
-        //voltar
-    }else if(numeroDirecoes == 1){
-        matriz[x][y] = CAMINHO_PERCORRIDO;
-        caminhos[x][y] = ;
-    }else{
-        caminhos[x][y] = numeroDirecoes;
+    //mudar o ponto no personagem (depois)
+    Ponto ponto = {personagem->x, personagem->y};
+
+    //Atualiza o mapa de caminhos  
+    caminhos[x][y] = numeroDirecoes;
+    
+    //Adiciona o personagem na matriz do labirinto
+    matriz[personagem->x][personagem->y] = PERSONAGEM;
+    //Adiciona a nova coordenada na Pilha
+    adicionaPilha(personagem->caminhos, &ponto);
+
+    if(numeroDirecoes == 0){ //Caminho sem saída ou encruzilhada já percorrida
+        
+        //voltar => procurar uma nova encruzilhada ou encerrar
+        //retira o rastro da matriz
+        //diminui a encruzilhada e encerra
+        //adiciona um bloqueio 
+    }else if(numeroDirecoes == 1){ //Caminho reto
+        matriz[x][y] = CAMINHO_PERCORRIDO; //coloca um rastro no mapa
+    }else{ //Encruzilhada
+
+        //verifica se algum ponto disponivel é o ponto que estava (voltando)
     }
 
     return 0;
+}
+
+void apagaCaminhos(){
+    for(int i = 0; i < tamanhoLabirinto; i++){
+        free(caminhos[i]);
+    }
+
+    free(caminhos);
+}
+
+void mostraMatriz(){
+    printf("\nMATRIZ AUXILIAR DE CAMINHOS\n\n");
+
+    for(int i = 0; i < tamanhoLabirinto; i++){
+        for(int j = 0; j < tamanhoLabirinto; j++){
+            printf("%d ", caminhos[i][j]);
+        }
+        printf("\n");
+    }
 }

@@ -4,7 +4,6 @@ Implementações das funções para a estrtura de uma pilha.
 #include <stdlib.h>
 #include <stdio.h>
 #include "pilha.h"
-#include "tabuleiro.h"
 
 Pilha* criaPilha(){
     Pilha* nova = (Pilha *) malloc(sizeof(Pilha));
@@ -45,7 +44,7 @@ Ponto* retiraPilha(Pilha* pilha) {
 
     if(ehPilhaVazia(pilha)){
         printf("Não é possível retirar um elemento da pilha vazia.\n");
-        return 0; // vazia
+        return 0;
     }
 
     Celula* celulaTopo = pilha->topo;

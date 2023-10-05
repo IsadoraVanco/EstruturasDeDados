@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "tools.h"
 
 //Define o sistema que está utilizando
@@ -24,6 +25,6 @@ void clear(){
     system("cls");
     #else
     //linux
-    // clear();
+    system("clear");
     #endif
 }
