@@ -30,7 +30,7 @@ int push(Stack* stack, int data) {
     nova->next = stack->top;
 
     stack->top = nova;
-    stack->length += 1;
+    stack->length++;
 
     return 0;
 }
@@ -46,8 +46,8 @@ int pop(Stack* stack) {
     Celula* topCel = stack->top;
 
     stack->top = topCel->next;
-    stack->length -= 1; // um a menos;
-    free(topCel); // adeus celula
+    stack->length--;
+    free(topCel);
 
     printf("%d\n", valor);
     return valor;
