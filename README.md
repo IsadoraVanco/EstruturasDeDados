@@ -6,7 +6,8 @@ Para exemplos e exercícios marcados como 2º Semestre, os créditos vão para p
 
 ## Conteúdo
 
-* **Filas**: Estrtura de Dados I
-* **Listas**: Estrtura de Dados I
-* **Pilhas**: Estrtura de Dados I
-* **TAD**: Estrtura de Dados I
+* **Árvores:** Estrutura de Dados I
+* **Filas:** Estrutura de Dados I
+* **Listas:** Estrutura de Dados I
+* **Pilhas:** Estrutura de Dados I
+* **TAD:** Estrutura de Dados I
