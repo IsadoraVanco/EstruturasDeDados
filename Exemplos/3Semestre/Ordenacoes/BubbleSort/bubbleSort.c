@@ -1,15 +1,14 @@
-/*
-    Bubble Sort
+/**
+ * @file bubbleSort.c
+ * @brief Bubble Sort implementado
 */
-#include <stdio.h>
 
-/*
-Recebe o endereço de um vetor de inteiros, 
-e sua quantidade n. Ordena o vetor de forma 
-crescente utilizando o algoritmo do 
-Bubble Sort.
-*/
+#include <stdio.h>
+#include "bubbleSort.h"
+
 void bubbleSort(int* v, int n) {
+    printf("=> Bubble Sort\n");
+
     int i, j, aux, contador = 0;
 
     for (i = n - 1; i > 0; i--) {
@@ -27,18 +26,14 @@ void bubbleSort(int* v, int n) {
     printf("Trocas realizadas: %d \n", contador);
 }
 
-/*
-Recebe o endereço de um vetor de inteiros, 
-e sua quantidade n. Ordena o vetor de forma 
-crescente utilizando o algoritmo do 
-Bubble Sort de forma otimizada.
-*/
 void bubbleSortOtimizado(int* v, int n) {
+    printf("=> Bubble Sort (otimizado)\n");
+
     int i, j, aux, troca;
 
     for (i = n - 1 ; i > 0; i--) {
         troca = 0;
-        for (j = 0; j < fim; j++) {
+        for (j = 0; j < n; j++) {
             if (v[j] > v[j + 1]) {
                 aux = v[j];
                 v[j] = v[j + 1];

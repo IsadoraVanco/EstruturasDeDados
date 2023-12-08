@@ -1,7 +1,10 @@
-/*
-    Selection Sort
+/**
+ * @file selectionSort.c
+ * @brief Implementação do Selection Sort
 */
+
 #include <stdio.h>
+#include "selectionSort.h"
 
 void troca(int *xp, int *yp) {
     int temp = *xp;
@@ -9,13 +12,9 @@ void troca(int *xp, int *yp) {
     *yp = temp;
 }
 
-/*
-Recebe o endereço de um vetor de inteiros, 
-e sua quantidade n. Ordena o vetor de forma 
-crescente utilizando o algoritmo do 
-Selection Sort.
-*/
 void selectionSort(int v[], int n) {
+    printf("=> Selection Sort\n");
+    
     int i, j, min, contador = 0;
 
     for (i = 0; i < n-1; i++) {

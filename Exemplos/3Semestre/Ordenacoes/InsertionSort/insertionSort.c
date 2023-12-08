@@ -1,15 +1,13 @@
-/*
-    Insertion Sort
+/**
+ * @file insertionSort.c
+ * @brief Implementação do Insertion Sort
 */
-#include <stdio.h>
 
-/*
-Recebe o endereço de um vetor de inteiros, 
-e sua quantidade n. Ordena o vetor de forma 
-crescente utilizando o algoritmo do 
-Insertion Sort.
-*/
+#include <stdio.h>
+#include "insertionSort.h"
+
 void insertionSort(int v[], int n) {
+    printf("=> Insertion Sort\n");
     int i, chave, j, contador = 0;
 
     for (i = 1; i < n; i++) {
