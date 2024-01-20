@@ -10,4 +10,5 @@ Para exemplos e exercícios marcados como 2º Semestre, os créditos vão para p
 * **Filas:** Estrutura de Dados I
 * **Listas:** Estrutura de Dados I
 * **Pilhas:** Estrutura de Dados I
+* **TabelasHash**: Estrutura de Dados II
 * **TAD:** Estrutura de Dados I
