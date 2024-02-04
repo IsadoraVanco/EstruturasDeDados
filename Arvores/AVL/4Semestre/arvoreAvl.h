@@ -1,6 +1,11 @@
 #ifndef _ARVORE_AVL_H_
 #define _ARVORE_AVL_H_
 
+
+/**********************************
+ * Definições e typedefs
+***********************************/
+
 #define true 1
 #define false 0
 
@@ -14,41 +19,65 @@ typedef struct aux {
     int bal;
 } NO, *PONT;
 
+
+/**********************************
+ * Funções Auxiliares
+***********************************/
+
+/**
+ * @brief Calcula o maior valor entre dois inteiros
+ * @param a Um valor inteiro
+ * @param b Outro valor inteiro
+ * @return O maior valor entre a e b
+*/
+int max(int a, int b);
+
+/**
+ * @brief Verifica se a árvore é AVL
+ * @param p O endereço do nó
+ * @return true caso a árvore seja AVL, 
+ * false para caso contrário
+*/
+bool ehAVL(PONT p);
+
 /**********************************
  * Funções básicas
 ***********************************/
 
 /**
-* @brief Inicializa a árvore, através do ponteiro para a raiz.
+* @brief Inicializa a árvore, através do ponteiro duplo para a raíz.
+* @param raiz O endereço do nó raíz da árvore
 */
-void inicializar(PONT * raiz);
+void inicializar(PONT *raiz);
 
 /**
- * @brief Retorna o maior valor entre dois inteiros
+ * @brief Insere um novo nó na árvore 
+ * @param p É o endereço do nó raíz
+ * @param ch O valor a ser inserido
+ * @param alterou Inicialmente é false
 */
-int max(int a, int b);
+void inserirAVL(PONT* p, TIPOCHAVE ch, bool* alterou);
 
 /**
- * @brief Cria um novo nó (aloca memoria e preenche valores)
- * com chave=ch e retorna seu endereco 
+ * @brief Cria um novo nó com chave = ch e retorna seu endereço
+ * @param ch A chave a ser inserida na árvore
+ * @return O endereço do novo nó
 */
 PONT criarNovoNo(TIPOCHAVE ch);
 
 /**
- * @brief Retorna a altura de uma (sub-)arvore
+ * @brief Calcula a altura de uma sub-árvore
+ * @param p O endereço do nó 
+ * @return A altura de uma sub-árvore
 */
 int altura(PONT p);
 
 /**
- * @brief Verifica se árvore é AVL
+ * @brief Atualiza o fator de balanceamento de todos os elementos
+ * @param raiz O nó raíz da árvore
+ * @return O fator de balanceamento do nó 
 */
-bool ehAVL(PONT p);
-
-/* 
-Inserção AVL: p é inicializado com o
-endereco do nó raiz e *alterou com false
-*/
-void inserirAVL(PONT* pp, TIPOCHAVE ch, bool* alterou);
+int atualizarBalanceamentoTotal(PONT raiz);
 
 /**********************************
  * Funções de exibição
@@ -105,10 +134,11 @@ PONT rotacaoR(PONT p);
  * Buscas
 ***********************************/
 
-/* 
-Retorna o endereco do NO que contem chave=ch 
-ou NULL caso a chave nao seja encontrada. 
-(Utiliza busca binaria recursiva)
+/**
+ * @brief Proura por um elemento na árvore de maneira recursiva
+ * @param ch Chave que será buscada
+ * @param raiz Endereço do nó atual/inicial
+ * @return O endereço do elemento procurado caso ache, ou NULL, caso contrário
 */
 PONT buscaBinaria(TIPOCHAVE ch, PONT raiz);
 
