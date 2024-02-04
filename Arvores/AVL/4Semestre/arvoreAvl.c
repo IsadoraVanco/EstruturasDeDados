@@ -33,21 +33,6 @@ int altura(PONT p){
     return (esq > dir)? esq : dir;
 }
 
-int atualizarBalanceamentoTotal(PONT raiz){
-
-    if(raiz->esq == NULL && raiz->dir == NULL){ // Caso base (nó folha)
-        raiz->bal = 0;
-        return 0;
-    }
-
-    //Caso recursivo
-    if(raiz->dir != NULL && raiz->esq != NULL){ //Nó com 2 filhos
-        raiz->bal = altura(raiz->dir) - altura(raiz->esq);
-    }else
-
-    return raiz->bal;
-}
-
 bool ehAVL(PONT p){
 
     if(p->bal > 1 || p->bal < -1){
@@ -55,36 +40,6 @@ bool ehAVL(PONT p){
     }else{
         return true;
     }
-}
-
-/**********************************
- * Inserção
-***********************************/
-
-PONT criarNovoNo(TIPOCHAVE ch){
-    PONT novo = malloc(sizeof(NO));
-    
-    if(novo){
-        novo->bal = 0;
-        novo->chave = ch;
-        novo->esq = NULL;
-        novo->dir = NULL;
-    }else{
-        printf("Erro ao alocar espaço para o novo nó\n");
-    }
-
-    return novo;
-}
-
-void inserirAVL(PONT* p, TIPOCHAVE ch, bool* alterou){
-    *alterou = false;
-
-    PONT novo = criarNovoNo(ch);
-
-    //busca uma posição e insere
-    //verifica se é avl
-    // se não, modifica alterou 
-    // calcula todos os fatores e balanceia
 }
 
 /**********************************
@@ -245,6 +200,30 @@ PONT rotacaoR(PONT p){
 }
 
 /**********************************
+ * Balanceamento
+***********************************/
+
+int atualizarBalanceamentoTotal(PONT raiz){
+
+    if(raiz->esq == NULL && raiz->dir == NULL){ // Caso base (nó folha)
+        raiz->bal = 0;
+        return 0;
+    }
+
+    // Calcula a altura das sub-árvores 
+    int subEsq = altura(raiz->esq);
+    int subDir = altura(raiz->dir);
+
+    raiz->bal = subDir - subEsq;
+
+    //Caso recursivo
+    atualizarBalanceamentoTotal(raiz->esq);
+    atualizarBalanceamentoTotal(raiz->dir);
+
+    return raiz->bal;
+}
+
+/**********************************
  * Buscas
 ***********************************/
 
@@ -302,11 +281,66 @@ PONT maiorAEsquerda(PONT p, PONT *ant){
 }
 
 /**********************************
+ * Inserção
+***********************************/
+
+PONT criarNovoNo(TIPOCHAVE ch){
+    PONT novo = malloc(sizeof(NO));
+    
+    if(novo){
+        novo->bal = 0;
+        novo->chave = ch;
+        novo->esq = NULL;
+        novo->dir = NULL;
+    }else{
+        printf("Erro ao alocar espaço para o novo nó\n");
+        exit(EXIT_FAILURE); // Tratamento de erro 
+    }
+
+    return novo;
+}
+
+void inserirAVL(PONT* p, TIPOCHAVE ch, bool* alterou){
+    *alterou = false;
+
+    PONT atual;
+
+    //Verifica se há um nó com o valor de inserção
+    if(buscaNo(*p, ch, &atual) != NULL){
+        printf("Elemento %d já inserido na árvore\n", ch);
+        return;
+    }
+
+    // Se não, cria um novo nó
+    PONT novo = criarNovoNo(ch);
+
+    // Busca uma posição para inserir
+    while(atual != NULL && atual->chave){
+
+        if(atual->chave > ch){
+            atual = atual->esq;
+        }else{
+            atual = atual->dir;
+        }
+    }
+
+    //atualiza o fator de balanceamento dos itens
+    //verifica se é avl
+    // se não, modifica alterou => rotacionou a arvore
+}
+
+/**********************************
  * Exclusões
 ***********************************/
 
 bool excluirAVL(PONT* raiz, TIPOCHAVE ch, bool* alterou){
-    
+
+
+    // utilizar o maioresquerda para procurar o elemento
+
+    //atualiza o fator de balanceamento dos itens
+    //verifica se é avl
+    // se não, modifica alterou => rotacionou a arvore
 }
 
 void destruirAux(PONT subRaiz){

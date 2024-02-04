@@ -50,38 +50,12 @@ void inicializar(PONT *raiz);
 int altura(PONT p);
 
 /**
- * @brief Atualiza o fator de balanceamento de todos os elementos
- * @param raiz O nó raíz da árvore
- * @return O fator de balanceamento do nó 
-*/
-int atualizarBalanceamentoTotal(PONT raiz);
-
-/**
  * @brief Verifica se a árvore é AVL
  * @param p O endereço do nó
  * @return true caso a árvore seja AVL, 
  * false para caso contrário
 */
 bool ehAVL(PONT p);
-
-/**********************************
- * Inserção
-***********************************/
-
-/**
- * @brief Cria um novo nó com chave = ch e retorna seu endereço
- * @param ch A chave a ser inserida na árvore
- * @return O endereço do novo nó
-*/
-PONT criarNovoNo(TIPOCHAVE ch);
-
-/**
- * @brief Insere um novo nó na árvore 
- * @param p É o endereço do nó raíz
- * @param ch O valor a ser inserido
- * @param alterou Inicialmente é false
-*/
-void inserirAVL(PONT* p, TIPOCHAVE ch, bool* alterou);
 
 /**********************************
  * Exibição
@@ -141,6 +115,17 @@ PONT rotacaoL(PONT p);
 PONT rotacaoR(PONT p);
 
 /**********************************
+ * Balanceamento
+***********************************/
+
+/**
+ * @brief Atualiza o fator de balanceamento de todos os elementos
+ * @param raiz O nó raíz da árvore
+ * @return O fator de balanceamento do nó 
+*/
+int atualizarBalanceamentoTotal(PONT raiz);
+
+/**********************************
  * Buscas
 ***********************************/
 
@@ -169,6 +154,25 @@ PONT buscaNo(PONT raiz, TIPOCHAVE ch, PONT *pai);
  * @return O endereço do maior elemento da sub-árvore
 */
 PONT maiorAEsquerda(PONT p, PONT *ant);
+
+/**********************************
+ * Inserção
+***********************************/
+
+/**
+ * @brief Cria um novo nó com chave = ch e retorna seu endereço
+ * @param ch A chave a ser inserida na árvore
+ * @return O endereço do novo nó
+*/
+PONT criarNovoNo(TIPOCHAVE ch);
+
+/**
+ * @brief Insere um novo nó na árvore 
+ * @param p É o endereço do nó raíz
+ * @param ch O valor a ser inserido
+ * @param alterou Inicialmente é false
+*/
+void inserirAVL(PONT* p, TIPOCHAVE ch, bool* alterou);
 
 /**********************************
  * Exclusões

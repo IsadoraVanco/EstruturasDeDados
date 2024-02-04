@@ -24,7 +24,7 @@ int main(int argc, char const *argv[]){
     bool rotacionou = false;
 
     PONT arvore;
-    inicializar(arvore);
+    inicializar(&arvore);
 
     do{
         mostraMenu();
@@ -39,13 +39,13 @@ int main(int argc, char const *argv[]){
 
         case 1: // Inserir
             valor = leInteiro("=>Valor para inserir: ");
-            inserirAVL(&arvore, valor, &rotacionou);
+            // inserirAVL(&arvore, valor, &rotacionou);
 
             break;
         
         case 2: // Remover
             valor = leInteiro("=>Valor para remover: ");
-            excluirAVL(&arvore, valor, &rotacionou);
+            // excluirAVL(&arvore, valor, &rotacionou);
 
             break;
         
