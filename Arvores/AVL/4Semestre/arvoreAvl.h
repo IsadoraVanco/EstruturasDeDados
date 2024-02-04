@@ -32,14 +32,6 @@ typedef struct aux {
 */
 int max(int a, int b);
 
-/**
- * @brief Verifica se a árvore é AVL
- * @param p O endereço do nó
- * @return true caso a árvore seja AVL, 
- * false para caso contrário
-*/
-bool ehAVL(PONT p);
-
 /**********************************
  * Funções básicas
 ***********************************/
@@ -49,21 +41,6 @@ bool ehAVL(PONT p);
 * @param raiz O endereço do nó raíz da árvore
 */
 void inicializar(PONT *raiz);
-
-/**
- * @brief Insere um novo nó na árvore 
- * @param p É o endereço do nó raíz
- * @param ch O valor a ser inserido
- * @param alterou Inicialmente é false
-*/
-void inserirAVL(PONT* p, TIPOCHAVE ch, bool* alterou);
-
-/**
- * @brief Cria um novo nó com chave = ch e retorna seu endereço
- * @param ch A chave a ser inserida na árvore
- * @return O endereço do novo nó
-*/
-PONT criarNovoNo(TIPOCHAVE ch);
 
 /**
  * @brief Calcula a altura de uma sub-árvore
@@ -79,28 +56,63 @@ int altura(PONT p);
 */
 int atualizarBalanceamentoTotal(PONT raiz);
 
+/**
+ * @brief Verifica se a árvore é AVL
+ * @param p O endereço do nó
+ * @return true caso a árvore seja AVL, 
+ * false para caso contrário
+*/
+bool ehAVL(PONT p);
+
 /**********************************
- * Funções de exibição
+ * Inserção
 ***********************************/
 
-/* 
-Exibe arvore Em Ordem 
+/**
+ * @brief Cria um novo nó com chave = ch e retorna seu endereço
+ * @param ch A chave a ser inserida na árvore
+ * @return O endereço do novo nó
+*/
+PONT criarNovoNo(TIPOCHAVE ch);
+
+/**
+ * @brief Insere um novo nó na árvore 
+ * @param p É o endereço do nó raíz
+ * @param ch O valor a ser inserido
+ * @param alterou Inicialmente é false
+*/
+void inserirAVL(PONT* p, TIPOCHAVE ch, bool* alterou);
+
+/**********************************
+ * Exibição
+***********************************/
+
+/**
+ * @brief Exibe a árvore em Ordem Simétrica utilizando recursão, ou seja, 
+ * sub-árvore esquerda, raíz e sub-árvore direita
+ * @param raiz O endereço do nó a ser imprimido
 */
 void exibirArvoreEmOrdem(PONT raiz);
 
-/* 
-Exibe arvore Pre Ordem 
+/**
+ * @brief Exibe a árvore em Pré-Ordem utilizando recursão, ou seja, 
+ * raíz, sub-árvore esquerda e sub-árvore direita
+ * @param raiz O endereço do nó a ser imprimido
 */
 void exibirArvorePreOrdem(PONT raiz);
 
-/* 
-Exibe arvore Pos Ordem 
+/**
+ * @brief Exibe a árvore em Pós-Ordem utilizando recursão, ou seja, 
+ * sub-árvore esquerda, sub-árvore direita e raíz
+ * @param raiz O endereço do nó a ser imprimido
 */
 void exibirArvorePosOrdem(PONT raiz);
 
-/* 
-Exibe arvore Em Ordem 
-(com parenteses para os filhos) 
+
+/**
+ * @brief Exibe a árvore em Ordem Simétrica utilizando recursão, ou seja, 
+ * sub-árvore esquerda, raíz e sub-árvore direita. Mostra a relação dos nós com parêntesis
+ * @param raiz O endereço do nó a ser imprimido
 */
 void exibirArvore(PONT raiz);
 
@@ -114,19 +126,17 @@ void exibirArvore2(PONT raiz, TIPOCHAVE chavePai);
  * Rotações
 ***********************************/
 
-/* 
-Rotações à direita (LL e LR)
-Retornará o endereço do nó que será a
-nova raiz da subárvore originalmente
-iniciada por p 
+/**
+ * @brief Faz a rotação de nós desbalanceados à esquerda da árvore
+ * @param p O endereço do nó onde será feita a rotação
+ * @return O endereço da nova raíz
 */
 PONT rotacaoL(PONT p);
 
-/* 
-Rotações à esquerda (RR e RL)
-Retornará o endereço do nó que será a
-nova raiz da subárvore originalmente
-iniciada por p 
+/**
+ * @brief Faz a rotação de nós desbalanceados à direita da árvore
+ * @param p O endereço do nó onde será feita a rotação
+ * @return O endereço da nova raíz
 */
 PONT rotacaoR(PONT p);
 
@@ -135,22 +145,28 @@ PONT rotacaoR(PONT p);
 ***********************************/
 
 /**
- * @brief Proura por um elemento na árvore de maneira recursiva
- * @param ch Chave que será buscada
+ * @brief Proura por um elemento na árvore de maneira recursiva, utilizando busca binária
  * @param raiz Endereço do nó atual/inicial
+ * @param ch Chave que será buscada
  * @return O endereço do elemento procurado caso ache, ou NULL, caso contrário
 */
-PONT buscaBinaria(TIPOCHAVE ch, PONT raiz);
+PONT buscaBinaria(PONT raiz, TIPOCHAVE ch);
 
-/* 
-Busca binária não recursiva devolvendo o nó pai 
+/**
+ * @brief Procura por um elemento na árvore de maneira iterativa, utilizando busca binária
+ * @param raiz O nó raíz da árvore
+ * @param ch Chave a ser procurada
+ * @param pai Endereço do nó que é pai do nó a ser procurado
+ * @return O endereço do nó pai do elemento a ser encontrado
 */
 PONT buscaNo(PONT raiz, TIPOCHAVE ch, PONT *pai);
 
-/* 
-Auxilir da funcao excluirChave,
-procura a maior chave menor que a chave
-que serah excluida 
+/**
+ * @brief Procura o maior elemento dentro da sub-árvore, de forma recursiva.
+ * OBS: Auxiliar a função de exclusão
+ * @param p Endereço do nó raíz
+ * @param ant Endereço do nó anterior
+ * @return O endereço do maior elemento da sub-árvore
 */
 PONT maiorAEsquerda(PONT p, PONT *ant);
 
@@ -163,15 +179,16 @@ Exclui a chave com valor igual a ch
 */
 bool excluirAVL(PONT* raiz, TIPOCHAVE ch, bool* alterou);
 
-/* 
-Funcao auxiliar na destruicao
-(liberacao da memoria) de uma arvore 
+/**
+ * @brief Apaga toda a estrutura da sub-árvore.
+ * OBS: Auxilia a função de limpeza da árvore
+ * @param subRaiz O endereço da raíz da sub-árvore
 */
 void destruirAux(PONT subRaiz);
 
-/* 
-Libera toda memoria de uma arvore e
-coloca NULL no valor da raiz 
+/**
+ * @brief Libera todo o espaço ocupado na memória pela árvore e atribui NULL à raíz
+ * @param raiz O endereço do nó raíz
 */
 void destruirArvore(PONT * raiz);
 
