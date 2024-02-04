@@ -125,25 +125,22 @@ No* balancear(No* raiz){
 
 No* inserir(No* raiz, int valor){
 
-    if(raiz == NULL){ // Árvore vazia (caso base)
+    if(raiz == NULL) // árvore vazia
         return criaNo(valor);
+    else{ // inserção será à esquerda ou à direita
+        if(valor < raiz->valor)
+            raiz->esquerda = inserir(raiz->esquerda, valor);
+        else if(valor > raiz->valor)
+            raiz->direita = inserir(raiz->direita, valor);
+        else
+            printf("\nInsercao nao realizada!\nO elemento %d a existe!\n", valor);
     }
 
-    if(valor < raiz->valor){ // Casos recursivos
-        raiz->esquerda = inserir(raiz->esquerda, valor);
-    }else if(valor > raiz->valor){
-        raiz->direita = inserir(raiz->direita, valor);
-    }else{
-        printf("O valor %d já existe na árvore\n", valor);
-
-        return raiz;
-    }
-
-    // Verifica a necessidade de rebalancear a árvore
-    raiz = balancear(raiz);
-
-    // Recalcula a altura de todos os nós entre a raíz e o novo nó inserido
+    // Recalcula a altura de todos os nós entre a raiz e o novo nó inserido
     raiz->altura = maior(alturaNo(raiz->esquerda), alturaNo(raiz->direita)) + 1;
+
+    // verifica a necessidade de rebalancear a árvore
+    raiz = balancear(raiz);
 
     return raiz;
 }   
@@ -153,67 +150,56 @@ No* inserir(No* raiz, int valor){
  ***************************************************************/
 
 No* remover(No *raiz, int valor){
-    
-    //Casos bases
-    if(raiz == NULL){ //Valor não encontrado
-        printf("Valor %d não encontrado na árvore\n", valor);
-        
+    if(raiz == NULL){
+        printf("Valor nao encontrado!\n");
         return NULL;
-    }else if(raiz->valor == valor){ //Valor encontrado
-
-        if(raiz->direita == NULL && raiz->esquerda == NULL){    // Nó folha
-            free(raiz);
-            printf("Elemento folha (%d) removido da árvore\n", raiz->valor);
-
-            return NULL;
-        }else if(raiz->direita != NULL && raiz->esquerda != NULL){ // Nó com 2 filhos
-            //Procura o maior da sub-esquerda
-            No *auxiliar = raiz->esquerda;
-
-            while(auxiliar->direita != NULL){
-                auxiliar = auxiliar->direita;
+    } else { // procura o nó a remover
+        if(raiz->valor == valor) {
+            // remove nós folhas (nós sem filhos)
+            if(raiz->esquerda == NULL && raiz->direita == NULL) {
+                free(raiz);
+                printf("Elemento folha removido: %d !\n", valor);
+                return NULL;
             }
-
-            //Troca os valores da raíz e valor encontrado
-            raiz->valor = auxiliar->valor;
-
-            free(auxiliar);
-            //Adiciona o valor a ser removido na posição encontrada
-            // auxiliar->valor = valor;
-
-            // raiz->esquerda = remover(raiz->esquerda, valor);
-            // raiz->direita = remover(raiz->direita, valor);
-            printf("Elemento com dois filhos (%d) removido\n", raiz->valor);
-            
-            return raiz;
-        }else{ // Nó com um filho
-            //Procura o lado com filho
-            No *auxiliar;
-            
-            if(raiz->esquerda != NULL){
-                auxiliar = raiz->esquerda;
-            }else{
-                auxiliar = raiz->direita;
+            else{
+                // remover nós que possuem 2 filhos
+                if(raiz->esquerda != NULL && raiz->direita != NULL){
+                    No *aux = raiz->esquerda;
+                    while(aux->direita != NULL)
+                        aux = aux->direita;
+                    raiz->valor = aux->valor;
+                    aux->valor = valor;
+                    printf("Elemento trocado: %d !\n", valor);
+                    raiz->esquerda = remover(raiz->esquerda, valor);
+                    return raiz;
+                }
+                else{
+                    // remover nós que possuem apenas 1 filho
+                    No *aux;
+                    if(raiz->esquerda != NULL)
+                        aux = raiz->esquerda;
+                    else
+                        aux = raiz->direita;
+                    free(raiz);
+                    printf("Elemento com 1 filho removido: %d !\n", valor);
+                    return aux;
+                }
             }
-
-            free(raiz);
-            printf("Elemento com um filho (%d) retirado\n", raiz->valor);
-
-            return auxiliar;
+        } else {
+            if(valor < raiz->valor)
+                raiz->esquerda = remover(raiz->esquerda, valor);
+            else
+                raiz->direita = remover(raiz->direita, valor);
         }
+
+        // Recalcula a altura de todos os nós entre a raiz e o novo nó inserido
+        raiz->altura = maior(alturaNo(raiz->esquerda), alturaNo(raiz->direita)) + 1;
+
+        // verifica a necessidade de rebalancear a árvore
+        raiz = balancear(raiz);
+
+        return raiz;
     }
-
-    //Casos recursivos
-    if(raiz->valor > valor){ 
-        raiz->esquerda = remover(raiz->esquerda, valor);
-    }else if(raiz->valor < valor){
-        raiz->direita = remover(raiz->direita, valor);
-    }
-
-    // Depois que voltar da recursão
-    raiz->altura = maior(alturaNo(raiz->esquerda), alturaNo(raiz->direita)) + 1;
-
-    return balancear(raiz);
 }
 
 /***************************************************************
