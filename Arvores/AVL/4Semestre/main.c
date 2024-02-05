@@ -6,9 +6,14 @@
 #include "arvoreAvl.h"
 
 /**
- * @brief Mostra o menu de opções
+ * @brief Mostra o menu principal de opções
 */
-void mostraMenu();
+void mostraMenuPrincipal();
+
+/**
+ * @brief MOstra o menu de opções de impressões
+*/
+void mostraMenuImpressao();
 
 /**
  * @brief Lê um número inteiro e o retorna
@@ -27,7 +32,7 @@ int main(int argc, char const *argv[]){
     inicializar(&arvore);
 
     do{
-        mostraMenu();
+        mostraMenuPrincipal();
         opcao = leInteiro("=>Comando: ");
 
         switch (opcao){
@@ -39,30 +44,65 @@ int main(int argc, char const *argv[]){
 
         case 1: // Inserir
             valor = leInteiro("=>Valor para inserir: ");
-            // inserirAVL(&arvore, valor, &rotacionou);
+            inserirAVL(&arvore, valor, &rotacionou);
 
             break;
         
         case 2: // Remover
             valor = leInteiro("=>Valor para remover: ");
-            // excluirAVL(&arvore, valor, &rotacionou);
+            excluirAVL(&arvore, valor, &rotacionou);
 
             break;
         
         case 3:  // Imprimir
-            printf("Imprimindo árvore:\n");
-            //começando com o nivel 1
-            imprimir(raiz, 1);
+            mostraMenuImpressao();
+            valor = leInteiro("=>Escolha um método de impressão: ");
 
+            printf("\n\tImprimindo árvore:\n");
+
+            switch(valor){
+            case 1:
+                exibirArvoreEmOrdem(arvore);
+
+                break;
+
+            case 2:
+                exibirArvorePreOrdem(arvore);
+
+                break;    
+            
+            case 3:
+                exibirArvorePosOrdem(arvore);
+
+                break;  
+            
+            case 4:
+                exibirArvore(arvore);
+
+                break;  
+            
+            case 5:
+                exibirArvore2(arvore, -1);
+
+                break;  
+            
+            default:
+                printf("Opção inválida");
+
+                break;
+            }
+
+            printf("\n\n");
             break;
 
         case 4: // Buscar
             valor = leInteiro("=>Valor para buscar: ");
-            elemento = buscaBinaria(&arvore, valor);
+            elemento = buscaBinaria(arvore, valor);
 
             if(elemento){
                 printf("Elemento %d encontrado no endereço %p\n", valor, elemento);
-                printf("O nó pai está em %p e vale %d\n", buscaNo(&arvore, valor, &elemento), elemento->chave);
+                printf("A altura do nó é de %d\n", altura(elemento));
+                // printf("O nó pai está em %p e vale %d\n", buscaNo(arvore, valor, &elemento), elemento->chave);
             }
 
             break;
@@ -77,14 +117,24 @@ int main(int argc, char const *argv[]){
     return 0;
 }
 
-void mostraMenu(){
-    printf("*******************\n");
-    printf("\tÁrvore AVL\n\n");
+void mostraMenuPrincipal(){
+    printf("***************************\n");
+    printf("\tÁrvore AVL\n");
+    printf("***************************\n\n");
     printf("[0]Sair\n");
     printf("[1]Inserir\n");
     printf("[2]Remover\n");
     printf("[3]Imprimir\n");
     printf("[4]Buscar\n\n");
+}
+
+void mostraMenuImpressao(){
+    printf("===================\n");
+    printf("[1]Simétrica\n");
+    printf("[2]Pré-Ordem\n");
+    printf("[3]Pós-Ordem\n");
+    printf("[4]Inteira\n");
+    printf("[5]Inteira com pais\n\n");
 }
 
 int leInteiro(char *texto){

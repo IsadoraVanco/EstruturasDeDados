@@ -30,7 +30,7 @@ int altura(PONT p){
     int esquerda = altura(p->esq) + 1;
     int direita = altura(p->dir) + 1;
 
-    return (esq > dir)? esq : dir;
+    return (esquerda > direita)? esquerda : direita;
 }
 
 bool ehAVL(PONT p){
@@ -76,26 +76,23 @@ void exibirArvorePosOrdem(PONT raiz){
 void exibirArvore(PONT raiz){
 
     if(raiz != NULL){
-        printf("(");
         exibirArvorePreOrdem(raiz->esq);
         printf("%d ", raiz->chave);
         exibirArvorePreOrdem(raiz->dir);
-        printf(")");
     }
 }
 
 void exibirArvore2(PONT raiz, TIPOCHAVE chavePai){
-    if(raiz){
-        imprimir(raiz->direita, nivel + 1);
-        printf("\n\n");
-
-        for(int i = 0; i < nivel; i++){
-            printf("\t");
+    //chavepai deve começar com -1
+    if (raiz != NULL) {
+        if (chavePai == -1) {
+            printf("[%d] (%d)\n", raiz->chave, raiz->bal);
+        } else {
+            printf("[%d] (%d) - Pai: %d\n", raiz->chave, raiz->bal, chavePai);
         }
 
-        printf("%d", raiz->valor);
-        
-        imprimir(raiz->esquerda, nivel + 1);
+        exibirArvore2(raiz->esq, raiz->chave);
+        exibirArvore2(raiz->dir, raiz->chave);
     }
 }
 
@@ -223,6 +220,18 @@ int atualizarBalanceamentoTotal(PONT raiz){
     return raiz->bal;
 }
 
+PONT balancear(PONT *raiz) {
+    int fator = (*raiz)->bal;
+
+    if (fator < -1) {
+        *raiz = rotacaoL(*raiz);
+    } else if (fator > 1) {
+        *raiz = rotacaoR(*raiz);
+    }
+
+    return *raiz;
+}
+
 /**********************************
  * Buscas
 ***********************************/
@@ -232,15 +241,16 @@ PONT buscaBinaria(PONT raiz, TIPOCHAVE ch){
     // Casos bases 
     if(raiz == NULL){ // Não encontrado
         printf("Elemento (%d) não encontrado\n", ch);
+        return NULL;
     }else if(raiz->chave == ch){ //Encontrado
         return raiz;
     }
 
     //Casos recursivos
     if(raiz->chave > ch){
-        buscaBinaria(ch, raiz->esq);
+        buscaBinaria(raiz->esq, ch);
     }else if(raiz->chave < ch){
-        buscaBinaria(ch, raiz->dir);
+        buscaBinaria(raiz->dir, ch);
     }
 
 }
@@ -301,32 +311,37 @@ PONT criarNovoNo(TIPOCHAVE ch){
 }
 
 void inserirAVL(PONT* p, TIPOCHAVE ch, bool* alterou){
-    *alterou = false;
+        
+    //Caso base
+    if(*p == NULL){
 
-    PONT atual;
+        *p = criarNovoNo(ch);
+    }else{ 
+        if(ch < (*p)->chave){ //Caso recursivo
 
-    //Verifica se há um nó com o valor de inserção
-    if(buscaNo(*p, ch, &atual) != NULL){
-        printf("Elemento %d já inserido na árvore\n", ch);
-        return;
-    }
+            inserirAVL(&(*p)->esq, ch, alterou);
+        }else if(ch > (*p)->chave){
 
-    // Se não, cria um novo nó
-    PONT novo = criarNovoNo(ch);
+            inserirAVL(&(*p)->dir, ch, alterou);
+        }else{ // Valor já existe na árvore
+            printf("Elemento %d já inserido na árvore\n", ch);
+            *alterou = false;
 
-    // Busca uma posição para inserir
-    while(atual != NULL && atual->chave){
-
-        if(atual->chave > ch){
-            atual = atual->esq;
-        }else{
-            atual = atual->dir;
+            return;
         }
-    }
 
-    //atualiza o fator de balanceamento dos itens
-    //verifica se é avl
-    // se não, modifica alterou => rotacionou a arvore
+        // Atualiza o fator de balanceamento do nó raíz
+        (*p)->bal = altura((*p)->dir) - altura((*p)->esq);
+
+        // Verifica se não é AVL para balancear
+        if(!ehAVL(*p)){
+            *p = balancear(p);
+            *alterou = true;
+        }
+
+        // Não rotacionou
+        *alterou = false;
+    }
 }
 
 /**********************************
@@ -334,6 +349,63 @@ void inserirAVL(PONT* p, TIPOCHAVE ch, bool* alterou){
 ***********************************/
 
 bool excluirAVL(PONT* raiz, TIPOCHAVE ch, bool* alterou){
+    
+    if (*raiz == NULL) {
+        printf("Valor %d não encontrado na árvore\n", ch);
+
+        *alterou = false; // Valor não encontrado
+        return false;
+    }
+
+    if (ch < (*raiz)->chave) {
+        if (excluirAVL(&(*raiz)->esq, ch, alterou)) {
+            // Subárvore esquerda foi alterada
+            (*raiz)->bal = altura((*raiz)->dir) - altura((*raiz)->esq);
+            *raiz = balancear(raiz);
+            return true;
+        }
+    } else if (ch > (*raiz)->chave) {
+        if (excluirAVL(&(*raiz)->dir, ch, alterou)) {
+            // Subárvore direita foi alterada
+            (*raiz)->bal = altura((*raiz)->dir) - altura((*raiz)->esq);
+            *raiz = balancear(raiz);
+            return true;
+        }
+    } else {
+        // Nó a ser removido encontrado
+        PONT temp;
+
+        if ((*raiz)->esq == NULL) {
+            // Nó com no máximo 1 filho à direita ou sem filhos
+            temp = *raiz;
+            *raiz = (*raiz)->dir;
+            free(temp);
+            *alterou = true;
+            return true;
+        } else if ((*raiz)->dir == NULL) {
+            // Nó com no máximo 1 filho à esquerda
+            temp = *raiz;
+            *raiz = (*raiz)->esq;
+            free(temp);
+            *alterou = true;
+            return true;
+        } else {
+            // Nó com dois filhos
+            PONT suc = (*raiz)->dir;
+
+            while (suc->esq != NULL) {
+                suc = suc->esq;
+            }
+
+            (*raiz)->chave = suc->chave;
+            excluirAVL(&(*raiz)->dir, suc->chave, alterou);
+            (*raiz)->bal = altura((*raiz)->dir) - altura((*raiz)->esq);
+            *raiz = balancear(raiz);
+            return true;
+        }
+    }
+
+    return false; // Nó não encontrado nesta subárvore
 
 
     // utilizar o maioresquerda para procurar o elemento
@@ -345,7 +417,11 @@ bool excluirAVL(PONT* raiz, TIPOCHAVE ch, bool* alterou){
 
 void destruirAux(PONT subRaiz){
 
-    if(subRaiz->esq == NULL && subRaiz->dir == NULL){ //Caso base (nó folha)
+    //Casos bases
+    if(subRaiz == NULL){ // não é nó
+        return;
+    }else if(subRaiz->esq == NULL && subRaiz->dir == NULL){ // nó folha
+        printf("Elemento follha %d removido\n", subRaiz->chave);
         free(subRaiz);
         return;
     }
@@ -362,13 +438,17 @@ void destruirAux(PONT subRaiz){
         }
     }
 
+    // printf("Elemento %d removido\n", subRaiz->chave);
     free(subRaiz);
 }
 
 void destruirArvore(PONT *raiz){
 
-    destruirAux((*raiz)->esq);
-    destruirAux((*raiz)->dir);
-
-    *raiz = NULL;
+    // Se a árvore foi inicializada
+    if(*raiz != NULL){
+        destruirAux((*raiz)->esq);
+        destruirAux((*raiz)->dir);
+        free(*raiz);
+        *raiz = NULL;
+    }
 }

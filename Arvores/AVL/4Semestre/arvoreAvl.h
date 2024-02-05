@@ -82,7 +82,6 @@ void exibirArvorePreOrdem(PONT raiz);
 */
 void exibirArvorePosOrdem(PONT raiz);
 
-
 /**
  * @brief Exibe a árvore em Ordem Simétrica utilizando recursão, ou seja, 
  * sub-árvore esquerda, raíz e sub-árvore direita. Mostra a relação dos nós com parêntesis
@@ -94,7 +93,6 @@ void exibirArvore(PONT raiz);
 Exibe arvore Pre-Ordem indicando pai de cada no 
 */
 void exibirArvore2(PONT raiz, TIPOCHAVE chavePai);
-
 
 /**********************************
  * Rotações
@@ -178,8 +176,14 @@ void inserirAVL(PONT* p, TIPOCHAVE ch, bool* alterou);
  * Exclusões
 ***********************************/
 
-/* 
-Exclui a chave com valor igual a ch
+/**
+ * @brief Exclui o elemento que possui a chave ch
+ * @param raiz O endereço do nó raíz
+ * @param ch Valor do elemento a ser procurado
+ * @param alterou Recebe false caso a árvore não seja rotacionada, 
+ * e true, caso contrário
+ * @return True caso encontre o elemento na árvore, false, 
+ * para caso contrário
 */
 bool excluirAVL(PONT* raiz, TIPOCHAVE ch, bool* alterou);
 
@@ -194,6 +198,6 @@ void destruirAux(PONT subRaiz);
  * @brief Libera todo o espaço ocupado na memória pela árvore e atribui NULL à raíz
  * @param raiz O endereço do nó raíz
 */
-void destruirArvore(PONT * raiz);
+void destruirArvore(PONT *raiz);
 
 #endif
