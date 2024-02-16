@@ -58,21 +58,24 @@ int main(int argc, char const *argv[]){
             mostraMenuImpressao();
             valor = leInteiro("=>Escolha um método de impressão: ");
 
-            printf("\n\tImprimindo árvore:\n");
+            printf("\n\tImprimindo árvore:\n\n");
 
             switch(valor){
             case 1:
                 exibirArvoreEmOrdem(arvore);
+                printf("\n");
 
                 break;
 
             case 2:
                 exibirArvorePreOrdem(arvore);
+                printf("\n");
 
                 break;    
             
             case 3:
                 exibirArvorePosOrdem(arvore);
+                printf("\n");
 
                 break;  
             
@@ -92,16 +95,16 @@ int main(int argc, char const *argv[]){
                 break;
             }
 
-            printf("\n\n");
             break;
 
         case 4: // Buscar
             valor = leInteiro("=>Valor para buscar: ");
+            printf("\n");
             elemento = buscaBinaria(arvore, valor);
 
             if(elemento){
-                printf("Elemento %d encontrado no endereço %p\n", valor, elemento);
-                printf("A altura do nó é de %d\n", altura(elemento));
+                printf("Endereço: %p\n", elemento);
+                printf("A altura do nó é %d\n", altura(elemento));
                 // printf("O nó pai está em %p e vale %d\n", buscaNo(arvore, valor, &elemento), elemento->chave);
             }
 
@@ -118,7 +121,7 @@ int main(int argc, char const *argv[]){
 }
 
 void mostraMenuPrincipal(){
-    printf("***************************\n");
+    printf("\n***************************\n");
     printf("\tÁrvore AVL\n");
     printf("***************************\n\n");
     printf("[0]Sair\n");
@@ -129,7 +132,7 @@ void mostraMenuPrincipal(){
 }
 
 void mostraMenuImpressao(){
-    printf("===================\n");
+    printf("===================\n\n");
     printf("[1]Simétrica\n");
     printf("[2]Pré-Ordem\n");
     printf("[3]Pós-Ordem\n");
