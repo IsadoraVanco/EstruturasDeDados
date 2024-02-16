@@ -30,7 +30,7 @@ int altura(PONT p){
     int esquerda = altura(p->esq) + 1;
     int direita = altura(p->dir) + 1;
 
-    return (esquerda > direita)? esquerda : direita;
+    return max(esquerda, direita);
 }
 
 bool ehAVL(PONT p){
@@ -74,19 +74,19 @@ void exibirArvorePosOrdem(PONT raiz){
 }
 
 void exibirArvore(PONT raiz){
-    //chavepai deve começar com -1
-    if (raiz != NULL) {
-        printf("[%d] Balanceamento(%d) Altura(%d)\n", raiz->chave, raiz->bal, altura(raiz));
 
+    if (raiz != NULL) {
         exibirArvore(raiz->esq);
+        printf("[%d] Balanceamento(%d) Altura(%d)\n", raiz->chave, raiz->bal, altura(raiz));
         exibirArvore(raiz->dir);
     }
 }
 
 void exibirArvore2(PONT raiz, TIPOCHAVE chavePai){
-    //chavepai deve começar com -1
+
+    // A chave pai deve começar com -1
     if (raiz != NULL) {
-        if (chavePai == -1) {
+        if(chavePai == -1){
             printf("[%d] Balanceamento(%d) Altura(%d) - Raíz\n", raiz->chave, raiz->bal, altura(raiz));
         } else {
             printf("[%d] Balanceamento(%d) Altura(%d) - Pai[%d]\n", raiz->chave, raiz->bal, altura(raiz), chavePai);
@@ -203,16 +203,13 @@ PONT rotacaoR(PONT p){
 
 int atualizarBalanceamentoTotal(PONT raiz){
 
-    if(raiz->esq == NULL && raiz->dir == NULL){ // Caso base (nó folha)
+    // Caso base (nó folha)
+    if(raiz->esq == NULL && raiz->dir == NULL){ 
         raiz->bal = 0;
         return 0;
     }
 
-    // Calcula a altura das sub-árvores 
-    int subEsq = altura(raiz->esq);
-    int subDir = altura(raiz->dir);
-
-    raiz->bal = subDir - subEsq;
+    atualizaBalanceamento(raiz);
 
     //Caso recursivo
     atualizarBalanceamentoTotal(raiz->esq);
@@ -221,12 +218,16 @@ int atualizarBalanceamentoTotal(PONT raiz){
     return raiz->bal;
 }
 
-PONT balancear(PONT *raiz) {
+void atualizaBalanceamento(PONT p){
+    p->bal = altura(p->dir) - altura(p->esq);
+}
+
+PONT balancear(PONT *raiz){
     int fator = (*raiz)->bal;
 
-    if (fator < -1) {
+    if(fator < -1){
         *raiz = rotacaoL(*raiz);
-    } else if (fator > 1) {
+    } else if(fator > 1){
         *raiz = rotacaoR(*raiz);
     }
 
@@ -273,6 +274,14 @@ PONT buscaNo(PONT raiz, TIPOCHAVE ch, PONT *pai){
     }
 
     if(auxiliar->chave == ch){
+        printf("Valor (%d) encontrado\n", ch);
+
+        if(*pai != NULL){
+            printf("Valor do pai (%d)\n", (*pai)->chave);
+        }else{
+            printf("Nó sem pai :(\n");
+        }
+
         return *pai;
     }
 
@@ -326,23 +335,23 @@ void inserirAVL(PONT* p, TIPOCHAVE ch, bool* alterou){
 
             inserirAVL(&(*p)->dir, ch, alterou);
         }else{ // Valor já existe na árvore
-            printf("Elemento %d já inserido na árvore!\n", ch);
+            printf("Elemento (%d) já inserido na árvore\n", ch);
             *alterou = false;
 
             return;
         }
 
         // Atualiza o fator de balanceamento do nó raíz
-        (*p)->bal = altura((*p)->dir) - altura((*p)->esq);
+        atualizaBalanceamento(*p);
 
         // Verifica se não é AVL para balancear
         if(!ehAVL(*p)){
             *p = balancear(p);
             *alterou = true;
+        }else{
+            // Não rotacionou
+            *alterou = false;
         }
-
-        // Não rotacionou
-        *alterou = false;
     }
 }
 
@@ -352,70 +361,78 @@ void inserirAVL(PONT* p, TIPOCHAVE ch, bool* alterou){
 
 bool excluirAVL(PONT* raiz, TIPOCHAVE ch, bool* alterou){
     
-    if (*raiz == NULL) {
-        printf("Valor %d não encontrado na árvore\n", ch);
+    // Valor não encontrado
+    if(*raiz == NULL){
+        printf("Valor (%d) não encontrado na árvore\n", ch);
 
-        *alterou = false; // Valor não encontrado
+        *alterou = false;
         return false;
     }
 
-    if (ch < (*raiz)->chave) {
-        if (excluirAVL(&(*raiz)->esq, ch, alterou)) {
-            // Subárvore esquerda foi alterada
-            (*raiz)->bal = altura((*raiz)->dir) - altura((*raiz)->esq);
+    // Casos recursivos
+    if(ch < (*raiz)->chave){
+        if(excluirAVL(&(*raiz)->esq, ch, alterou)){
+            // Recalcula balanceamento
+            atualizaBalanceamento(*raiz);
+            // Verifica se precisa balancear a árvore
             *raiz = balancear(raiz);
+
+            *alterou = true;
             return true;
         }
-    } else if (ch > (*raiz)->chave) {
-        if (excluirAVL(&(*raiz)->dir, ch, alterou)) {
-            // Subárvore direita foi alterada
-            (*raiz)->bal = altura((*raiz)->dir) - altura((*raiz)->esq);
+    }else if(ch > (*raiz)->chave){
+        if(excluirAVL(&(*raiz)->dir, ch, alterou)){
+            // Recalcula balanceamento
+            atualizaBalanceamento(*raiz);
+            // Verifica se precisa balancear a árvore
             *raiz = balancear(raiz);
+
+            *alterou = true;
             return true;
         }
-    } else {
-        // Nó a ser removido encontrado
+    }else{
+        // Valor encontrado
         PONT temp;
 
-        if ((*raiz)->esq == NULL) {
-            // Nó com no máximo 1 filho à direita ou sem filhos
+        if((*raiz)->esq == NULL){   // Nó com até 1 filho na direita
             temp = *raiz;
             *raiz = (*raiz)->dir;
             free(temp);
+
             *alterou = true;
             return true;
-        } else if ((*raiz)->dir == NULL) {
-            // Nó com no máximo 1 filho à esquerda
+        }else if((*raiz)->dir == NULL){  // Nó com até 1 filho na esquerda
             temp = *raiz;
             *raiz = (*raiz)->esq;
             free(temp);
+
             *alterou = true;
             return true;
-        } else {
-            // Nó com dois filhos
-            PONT suc = (*raiz)->dir;
+        }else{    // Nó com dois filhos
+            PONT maiorEsq = maiorAEsquerda((*raiz)->esq, &temp);
 
-            while (suc->esq != NULL) {
-                suc = suc->esq;
-            }
+            (*raiz)->chave = maiorEsq->chave;
+            excluirAVL(&(*raiz)->esq, maiorEsq->chave, alterou);            
 
-            (*raiz)->chave = suc->chave;
-            excluirAVL(&(*raiz)->dir, suc->chave, alterou);
-            (*raiz)->bal = altura((*raiz)->dir) - altura((*raiz)->esq);
+            // Recalcula balanceamento
+            atualizaBalanceamento(*raiz);
+            // Verifica se precisa balancear a árvore
             *raiz = balancear(raiz);
+
+            *alterou = true;
             return true;
         }
     }
 
-    return false; // Nó não encontrado nesta subárvore
+    return false; // Valor não encontrado 
 }
 
 void destruirAux(PONT subRaiz){
 
     //Casos bases
-    if(subRaiz == NULL){ // não é nó
+    if(subRaiz == NULL){ // Não é nó
         return;
-    }else if(subRaiz->esq == NULL && subRaiz->dir == NULL){ // nó folha
+    }else if(subRaiz->esq == NULL && subRaiz->dir == NULL){ // Nó folha
         // printf("Elemento follha %d removido\n", subRaiz->chave);
         free(subRaiz);
         return;
@@ -443,6 +460,7 @@ void destruirArvore(PONT *raiz){
     if(*raiz != NULL){
         destruirAux((*raiz)->esq);
         destruirAux((*raiz)->dir);
+
         free(*raiz);
         *raiz = NULL;
     }

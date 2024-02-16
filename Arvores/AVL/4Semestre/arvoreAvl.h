@@ -84,13 +84,18 @@ void exibirArvorePosOrdem(PONT raiz);
 
 /**
  * @brief Exibe a árvore em Ordem Simétrica utilizando recursão, ou seja, 
- * sub-árvore esquerda, raíz e sub-árvore direita. Mostra a relação dos nós com parêntesis
+ * sub-árvore esquerda, raíz e sub-árvore direita. Mostra a relação dos 
+ * nós com parêntesis
  * @param raiz O endereço do nó a ser imprimido
 */
 void exibirArvore(PONT raiz);
 
-/* 
-Exibe arvore Pre-Ordem indicando pai de cada no 
+/**
+ * @brief Exibe a árvore em Pré Ordem utilizando recursão, ou seja, 
+ * raíz, sub-árvore esquerda e sub-árvore direita. Mostra a relação dos 
+ * nós e seus pais
+ * @param raiz O endereço do nó a ser imprimido
+ * @param chavepai O valor da chave do nó pai
 */
 void exibirArvore2(PONT raiz, TIPOCHAVE chavePai);
 
@@ -118,10 +123,23 @@ PONT rotacaoR(PONT p);
 
 /**
  * @brief Atualiza o fator de balanceamento de todos os elementos
- * @param raiz O nó raíz da árvore
+ * @param raiz O nó raíz da sub-árvore
  * @return O fator de balanceamento do nó 
 */
 int atualizarBalanceamentoTotal(PONT raiz);
+
+/**
+ * @brief Atualiza o fator de balanceamento de um elemento
+ * @param p O endereço de um nó
+*/
+void atualizaBalanceamento(PONT p);
+
+/**
+ * @brief Verifica se é preciso balancear a sub-árvore
+ * @param raiz O endereço de um nó
+ * @return O endereço na nova raíz
+*/
+PONT balancear(PONT *raiz);
 
 /**********************************
  * Buscas
@@ -146,7 +164,7 @@ PONT buscaNo(PONT raiz, TIPOCHAVE ch, PONT *pai);
 
 /**
  * @brief Procura o maior elemento dentro da sub-árvore, de forma recursiva.
- * OBS: Auxiliar a função de exclusão
+ * OBS: Auxiliar da função de exclusão
  * @param p Endereço do nó raíz
  * @param ant Endereço do nó anterior
  * @return O endereço do maior elemento da sub-árvore
