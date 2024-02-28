@@ -59,7 +59,7 @@ ArvoreRubroNegra *inicializarArvore();
  * @param no O endereço do nó 
  * @return A altura de uma sub-árvore
 */
-int altura(Node *no);
+int altura(ArvoreRubroNegra *arvore, Node *no);
 
 /*************************************************************
  * Exibição
@@ -71,7 +71,7 @@ int altura(Node *no);
  * nós e seus pais
  * @param no O endereço do nó a ser imprimido
 */
-void exibirArvore(Node *no);
+void exibirArvore(ArvoreRubroNegra *arvore, Node *no);
 
 /**
  * @brief Cria um arquivo Png a partir de um .dot com todos os elementos 
@@ -85,7 +85,7 @@ void criarImagemArvore(ArvoreRubroNegra *arvore);
  * @param arquivo Endereço do arquivo .dot
  * @param no Nó que será registrado no .dot
  */
-void adicionarNodeArquivo(ARQUIVODOT *arquivo, Node *no);
+void adicionarNodeArquivo(ARQUIVODOT *arquivo, ArvoreRubroNegra *arvore, Node *no);
 
 /*************************************************************
  * Buscas
@@ -97,9 +97,9 @@ void adicionarNodeArquivo(ARQUIVODOT *arquivo, Node *no);
  * @param chave Chave que será buscada
  * @return O endereço do elemento procurado caso ache, ou NULL, caso contrário
 */
-Node *buscaBinaria(Node *raiz, TIPO_CHAVE chave);
+Node *buscaBinaria(ArvoreRubroNegra *arvore, Node *raiz, TIPO_CHAVE chave);
 
-Node *encontraMenor(Node *p, Node *ant);
+Node *encontraMenor(ArvoreRubroNegra *arvore, Node *p, Node *ant);
 
 /*************************************************************
  * Rotações
@@ -158,7 +158,7 @@ void correcaoDireita(ArvoreRubroNegra *arvore, Node **no, Node *pai, Node *avo);
  * @param chave A chave a ser inserida na árvore
  * @return O endereço do novo nó
 */
-Node *criarNovoNo(TIPO_CHAVE chave);
+Node *criarNovoNo(ArvoreRubroNegra *arvore, TIPO_CHAVE chave);
 
 /**
  * @brief Insere um novo nó na árvore 

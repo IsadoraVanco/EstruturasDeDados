@@ -59,7 +59,7 @@ int main(int argc, char const *argv[]){
             printf("\tImprimir árvore\n");
             printf("================================\n\n");
 
-            exibirArvore(arvore->raiz);
+            exibirArvore(arvore, arvore->raiz);
             printf("\n");
             criarImagemArvore(arvore);
 
@@ -68,11 +68,11 @@ int main(int argc, char const *argv[]){
         case 4: // Buscar
             valor = leInteiro("=>Valor para buscar: ");
             printf("\n");
-            elemento = buscaBinaria(arvore->raiz, valor);
+            elemento = buscaBinaria(arvore, arvore->raiz, valor);
 
             if(elemento){
                 printf("Endereço: %p\n", elemento);
-                printf("A altura do nó é %d\n", altura(elemento));
+                printf("A altura do nó é %d\n", altura(arvore, elemento));
                 // printf("O nó pai está em %p e vale %d\n", buscaNo(arvore, valor, &elemento), elemento->chave);
             }
 
