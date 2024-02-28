@@ -121,3 +121,122 @@ void rotacaoL(Arvore *arvore, Node *x){
     y->esquerda = x;        // Coloca x à esquerda de y
     x->pai = y;
 }
+
+void troca(Arvore *arvore, Node *u, Node *v){
+    if(u->pai == NULL){
+        arvore->raiz = v;
+    }else if(u == u->pai->esquerda){
+        u->pai->esquerda = v;
+    }else{
+        u->pai->direita = v;
+    }
+
+    v->pai = u->pai;
+}
+
+void apagar(Arvore *arvore, Node *z){
+    Node *y = z;
+    Node *x;
+
+    int corY = y->cor;
+
+    if(z->esquerda == NULL){
+        x = z->direita;
+        troca(arvore, z, z->direita);
+    }else if(z->direita == NULL){
+        x = z->esquerda;
+        troca(arvore, z, z->esquerda);
+    }else{
+        y = menor(z->direita);
+        corY = y->cor;
+        x = y->direita;
+
+        if(y->pai == z){
+            x->pai = y;
+        }else{
+            troca(arvore, y, y->direita);
+            y->direita = z->direita;
+            y->direita->pai = y;
+        }
+
+        troca(arvore, z, y);
+        y->esquerda = z->esquerda;
+        y->esquerda->pai = y;
+        y->cor = z->cor;
+    }
+
+    if(corY == preto){
+        corrigeApagar(arvore, x);
+    }
+    
+}
+
+void corrigeApagar(Arvore *arvore, Node *x){
+    
+    while(x != arvore->raiz && x->cor == preto){
+        if(x == x->pai->esquerda){      // filho da esquerda
+            w = x->pai->direita;
+            
+            if(w->cor == vermelho){ // Caso 1
+                // o irmão de x é vermelho
+                w->cor = preto;
+                x->pai->cor = vermelho;
+                rotacaoL(arvore, x->pai);
+                w = x->pai->direita;
+            }
+
+            if(w->esquerda->cor == preto && w->direita->cor == preto){ // Caso 2
+                // o irmaão de x é preto e os filhos são pretos
+                w->cor = vermelho;
+                x = x->pai;
+            }else if(w->direita->cor == preto){     // Caso 3
+                // o irmão de x é preto, o filho da esquerda de w é vermelho 
+                // e o filho da direita de w é preto
+                w->esquerda->cor = preto;
+                w->cor = preto;
+                rotacaoR(arvore, w);
+                w = x->pai->direita;
+            }else{      // Caso 4
+            // O irmão de x é preto, o filho à direita de w é vermelho
+                w->cor = x->pai->cor;
+                x->pai->cor = preto;
+                w->direita->cor = preto;
+                rotacaoL(arvore, x->pai);
+                x = arvore->raiz;
+            }
+
+        }else{      // filho da direita
+            w = x->pai->esquerda;
+            
+            if(w->cor == vermelho){ // Caso 1
+                // o irmão de x é vermelho
+                w->cor = preto;
+                x->pai->cor = vermelho;
+                rotacaoL(arvore, x->pai);
+                w = x->pai->esquerda;
+            }
+
+            if(w->esquerda->cor == preto && w->direita->cor == preto){ // Caso 2
+                // o irmaão de x é preto e os filhos são pretos
+                w->cor = vermelho;
+                x = x->pai;
+            }else if(w->esquerda->cor == preto){     // Caso 3
+                // o irmão de x é preto, o filho da esquerda de w é vermelho 
+                // e o filho da direita de w é preto
+                w->direita->cor = preto;
+                w->cor = preto;
+                rotacaoR(arvore, w);
+                w = x->pai->esquerda;
+            }else{      // Caso 4
+            // O irmão de x é preto, o filho à direita de w é vermelho
+                w->cor = x->pai->cor;
+                x->pai->cor = preto;
+                w->esquerda->cor = preto;
+                rotacaoL(arvore, x->pai);
+                x = arvore->raiz;
+            }
+        }
+
+        x->cor = preto;
+    }
+}

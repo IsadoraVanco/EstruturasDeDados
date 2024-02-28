@@ -8,7 +8,7 @@ OUT = out/
 $(shell mkdir -p $(OUT))
 
 # Arquivos .c
-FONTES = main.c rubroNegra.c ../Ferramentas/Diretorios/diretorios.c ../Ferramentas/Dot/dot.c
+FONTES = main.c rubroNegra.c ../../Ferramentas/Diretorios/diretorios.c ../../Ferramentas/Dot/dot.c
 
 # Arquivos .h (iguais os fontes, exceto o main)
 HEADERS = $(filter-out main.h, $(FONTES:.c=.h))
@@ -34,7 +34,7 @@ $(PROJETO): $(FONTES) $(HEADERS)
 # 	$(CC) $(CFLAGS) -c $< -o $@ 
 # Cria os arquivos objeto
 $(OUT)%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@ 
+	$(CC) $(CFLAGS) -c $< -o ../$@ 
 
 # Inclui as dependências dos arquivos objeto
 -include $(OBJETOS:.o=.d)
@@ -46,7 +46,7 @@ clean:
 
 # Regra para executar o programa
 run: all
-	./$(PROJETO)
+	../$(PROJETO)
 
 # Regra para executar o programa com o Valgrind
 valgrind: all

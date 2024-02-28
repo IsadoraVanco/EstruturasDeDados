@@ -50,52 +50,18 @@ int main(int argc, char const *argv[]){
         
         case 2: // Remover
             valor = leInteiro("=>Valor para remover: ");
+            apagar(arvore, valor);
 
             break;
         
         case 3:  // Imprimir
-            // mostraMenuImpressao();
-            // valor = leInteiro("=>Escolha um método de impressão: ");
+            printf("\n================================\n");
+            printf("\tImprimir árvore\n");
+            printf("================================\n\n");
 
-            printf("\n\tImprimindo árvore:\n\n");
             exibirArvore(arvore->raiz);
             printf("\n");
             criarImagemArvore(arvore);
-
-            // switch(valor){
-            // case 1:
-            //     exibirArvoreEmOrdem(arvore);
-            //     printf("\n");
-
-            //     break;
-
-            // case 2:
-            //     exibirArvorePreOrdem(arvore);
-            //     printf("\n");
-
-            //     break;    
-            
-            // case 3:
-            //     exibirArvorePosOrdem(arvore);
-            //     printf("\n");
-
-            //     break;  
-            
-            // case 4:
-            //     exibirArvore(arvore);
-
-            //     break;  
-            
-            // case 5:
-            //     exibirArvore2(arvore, -1);
-
-            //     break;  
-            
-            // default:
-            //     printf("Opção inválida");
-
-            //     break;
-            // }
 
             break;
 
@@ -123,23 +89,14 @@ int main(int argc, char const *argv[]){
 }
 
 void mostraMenuPrincipal(){
-    printf("\n***************************\n");
-    printf("\tÁrvore AVL\n");
-    printf("***************************\n\n");
+    printf("\n******************************************\n");
+    printf("\tÁrvore Vermelha e Preta\n");
+    printf("******************************************\n\n");
     printf("[0]Sair\n");
     printf("[1]Inserir\n");
     printf("[2]Remover\n");
     printf("[3]Imprimir\n");
     printf("[4]Buscar\n\n");
-}
-
-void mostraMenuImpressao(){
-    printf("===================\n\n");
-    printf("[1]Simétrica\n");
-    printf("[2]Pré-Ordem\n");
-    printf("[3]Pós-Ordem\n");
-    printf("[4]Inteira\n");
-    printf("[5]Inteira com pais\n\n");
 }
 
 int leInteiro(char *texto){

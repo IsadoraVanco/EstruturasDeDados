@@ -27,6 +27,7 @@ typedef struct no {
 
 typedef struct arvore {
     Node *raiz;
+    Node *folhasNulas;
     int quantidadeElementos;
 }ArvoreRubroNegra;
 
@@ -98,6 +99,8 @@ void adicionarNodeArquivo(ARQUIVODOT *arquivo, Node *no);
 */
 Node *buscaBinaria(Node *raiz, TIPO_CHAVE chave);
 
+Node *encontraMenor(Node *p, Node *ant);
+
 /*************************************************************
  * Rotações
 *************************************************************/
@@ -167,6 +170,12 @@ void inserir(ArvoreRubroNegra *arvore, TIPO_CHAVE chave);
 /*************************************************************
  * Exclusões
 *************************************************************/
+
+void troca(ArvoreRubroNegra *arvore, Node *u, Node *v);
+
+void apagar(ArvoreRubroNegra *arvore, TIPO_CHAVE chave);
+
+void corrigeApagar(ArvoreRubroNegra *arvore, Node *x);
 
 /**
  * @brief Apaga toda a estrutura da sub-árvore.
