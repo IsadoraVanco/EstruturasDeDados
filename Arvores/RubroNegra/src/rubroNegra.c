@@ -85,18 +85,18 @@ int alturaNegra(ArvoreRubroNegra *arvore, Node *no){
 }
 
 // Algoritmo do livro
-void troca(ArvoreRubroNegra *arvore, Node *u, Node *v){
-    printf("->Troca nós (%d) e (%d)\n", u->chave, v->chave);
+void troca(ArvoreRubroNegra *arvore, Node *pai, Node *filho){
+    printf("->Troca nós pai (%d) e filho (%d)\n", pai->chave, filho->chave);
 
-    if(u->pai == NULL || u->pai == arvore->folhasNulas){
-        arvore->raiz = v;
-    }else if(u == u->pai->esquerda){
-        u->pai->esquerda = v;
-    }else{
-        u->pai->direita = v;
+    if(pai->pai == NULL || pai->pai == arvore->folhasNulas){ // É raíz
+        arvore->raiz = filho;
+    }else if(pai == pai->pai->esquerda){ // O pai é filho da esquerda
+        pai->pai->esquerda = filho;
+    }else{      // O pai é filho da direita
+        pai->pai->direita = filho;  
     }
 
-    v->pai = u->pai;            // Será?
+    filho->pai = pai->pai;
 }
 
 int calculaCustos(){
@@ -135,11 +135,11 @@ void exibirArvore(ArvoreRubroNegra *arvore, Node *no){
 void criarImagemArvore(ArvoreRubroNegra *arvore){
 
     if(criaPasta("outputs")){
-        printf("(Ou pasta já criada!)\n\n");
+        printf("(Ou pasta já criada!)\n");
     }
 
     char nome[50];
-    sprintf(nome, "./outputs/arvoreRubro-%d", qtdPrints);
+    sprintf(nome, "./outputs/arvoreRN-%d", qtdPrints);
 
     // Cria o arquivo da árvore.dot
     ARQUIVODOT *arvoreArquivo = criarNovoArquivo(nome);
@@ -218,7 +218,7 @@ Node *buscaBinaria(ArvoreRubroNegra *arvore, Node *raiz, TIPO_CHAVE chave){
 
 Node *encontraMenor(ArvoreRubroNegra *arvore, Node *p, Node *ant){
 
-    if(p->esquerda != NULL || p->esquerda != arvore->folhasNulas){
+    if(p->esquerda != NULL && p->esquerda != arvore->folhasNulas){
         ant = p;
 
         return encontraMenor(arvore, p->esquerda, ant);
@@ -233,56 +233,60 @@ Node *encontraMenor(ArvoreRubroNegra *arvore, Node *p, Node *ant){
 *************************************************************/
 
 // Utilizando o algoritmo do livro do Thomas Cormen
-void rotacaoEsquerda(ArvoreRubroNegra *arvore, Node *x){
-    Node *y = x->direita;   // Define y
+void rotacaoEsquerda(ArvoreRubroNegra *arvore, Node *pai){
+    // Nó é filho da direita
+    Node *no = pai->direita;   
 
-    printf("x = %d e y = %d\n", x->chave, y->chave);
+    printf("RL: pai = %d e no = %d\n", pai->chave, no->chave);
 
-    x->direita = y->esquerda;   // Transforma a subárvore à esquerda  ??
+    // Transforma a subárvore à esquerda 
+    pai->direita = no->esquerda;   
 
-    if(y->esquerda != arvore->folhasNulas && y->direita != NULL){    // Se y possui um filho à esquerda
-        y->esquerda->pai = x;
+    // Se o nó possui um filho à esquerda
+    if(no->esquerda != arvore->folhasNulas && no->direita != NULL){
+        no->esquerda->pai = pai;
     }
 
-    y->pai = x->pai;            // Liga o pai de x a y
-    printf("%d x pai\n", x->pai->chave);
+    no->pai = pai->pai;           
+    printf("RL: avo = %d\n", pai->pai->chave);
 
-    if(x->pai == arvore->folhasNulas){
-        printf("raiz\n");
-        arvore->raiz = y;
-    }else if(x == x->pai->esquerda){
-        x->pai->esquerda = y;
+    if(pai->pai == arvore->folhasNulas){
+        printf("RL: O pai é raiz\n");
+        arvore->raiz = no;
+    }else if(pai == pai->pai->esquerda){
+        pai->pai->esquerda = no;
     }else{
-        x->pai->direita = y;
+        pai->pai->direita = no;
     }
 
-    y->esquerda = x;        // Coloca x à esquerda de y
-    x->pai = y;
+    no->esquerda = pai;     
+    pai->pai = no;
 }
 
 // Utilizando o algoritmo do livro do Thomas Cormen
-void rotacaoDireita(ArvoreRubroNegra *arvore, Node *x){
-    Node *y = x->esquerda;   // Define y
+void rotacaoDireita(ArvoreRubroNegra *arvore, Node *pai){
+    // Nó é filho da esquerda
+    Node *no = pai->esquerda;   
 
-    printf("x = %d e y = %d\n", x->chave, y->chave);
-    x->esquerda = y->direita; // Transforma a subárvore à esquerda  ??
+    printf("RR: pai = %d e no = %d\n", pai->chave, no->chave);
+    pai->esquerda = no->direita; 
 
-    if(y->direita != arvore->folhasNulas && y->direita != NULL){    // Se y possui um filho à esquerda
-        y->direita->pai = x;
+    if(no->direita != arvore->folhasNulas && no->direita != NULL){    // Se y possui um filho à esquerda
+        no->direita->pai = pai;
     }
 
-    y->pai = x->pai;            // Liga o pai de x a y
+    no->pai = pai->pai; 
 
-    if(x->pai == arvore->folhasNulas){
-        arvore->raiz = y;
-    }else if(x == x->pai->direita){
-        x->pai->direita = y;
+    if(pai->pai == arvore->folhasNulas){
+        arvore->raiz = no;
+    }else if(pai == pai->pai->direita){
+        pai->pai->direita = no;
     }else{
-        x->pai->esquerda = y;
+        pai->pai->esquerda = no;
     }
 
-    y->direita = x;        // Coloca x à esquerda de y
-    x->pai = y;
+    no->direita = pai;       
+    pai->pai = no;
 }
 
 /*************************************************************
@@ -332,8 +336,12 @@ void correcaoEsquerda(ArvoreRubroNegra *arvore, Node **no, Node *pai, Node *avo)
             rotacaoEsquerda(arvore, pai);
             printf("1. Rotaciona o pai para a esquerda;\n");
 
-            // (*no) = (*no)->esquerda; // Desce a verificação em 1 nível e cai no caso 3 => será?
-            printf("2. Vai para o caso 3;\n");
+            (*no) = (*no)->esquerda; 
+            pai = (*no)->pai;
+            avo = pai->pai;
+            printf("2. Desce a verificação para o pai (%d);\n", pai->chave);
+
+            printf("3. Vai para o caso 3;\n");
         }
         
         // Caso 3 
@@ -391,8 +399,12 @@ void correcaoDireita(ArvoreRubroNegra *arvore, Node **no, Node *pai, Node *avo){
             rotacaoDireita(arvore, pai);
             printf("1. Rotaciona o pai para a direita;\n");
 
-            // (*no) = (*no)->direita; // Desce a verificação em 1 nível e cai no caso 3 => será?
-            printf("2. Vai para o caso 3;\n");
+            (*no) = (*no)->direita; 
+            pai = (*no)->pai;
+            avo = pai->pai;
+            printf("2. Desce a verificação para o pai (%d);\n", pai->chave); 
+
+            printf("3. Vai para o caso 3;\n");
         }
             
         // Caso 3
@@ -535,15 +547,15 @@ void apagar(ArvoreRubroNegra *arvore, TIPO_CHAVE chave){
 
         aux->pai = deletado->pai;
 
-        if(deletado->pai == arvore->raiz){
+        if(deletado->pai == arvore->folhasNulas){
             printf("* É raíz\n");
 
             arvore->raiz = arvore->folhasNulas;
-            // free(deletado);
 
         }else{
             printf("* É folha\n");
-
+            
+            // Atribui as folhas nulas para o pai 
             if(deletado->pai->esquerda == deletado){
                 // Nó era filho da esquerda
                 deletado->pai->esquerda = arvore->folhasNulas;
@@ -553,16 +565,18 @@ void apagar(ArvoreRubroNegra *arvore, TIPO_CHAVE chave){
             }
         }
 
-    }else if(deletado->esquerda == NULL || deletado->esquerda == arvore->folhasNulas){
+    }else if(deletado->esquerda == arvore->folhasNulas){
         printf("* O nó possui um filho a direita\n");
-    
+
+        // Aux é o filho da direita do deletado
         aux = deletado->direita;
         aux->pai = deletado->pai;
 
         troca(arvore, deletado, aux);
-    }else if(deletado->direita == NULL || deletado->direita == arvore->folhasNulas){
+    }else if(deletado->direita == arvore->folhasNulas){
         printf("* O nó possui um filho a esquerda\n");
 
+        // Aux é o filho à esquerda do deletado
         aux = deletado->esquerda;
         aux->pai = deletado->pai;
 
@@ -576,7 +590,7 @@ void apagar(ArvoreRubroNegra *arvore, TIPO_CHAVE chave){
         // Guarda a cor do menor
         corInicial = menor->cor;
 
-        // Coloca o menor da direita no lugar do que será deletado
+        // Guarda os filhos a direita do menor
         aux = menor->direita;
 
         if(menor->pai != deletado){
@@ -590,22 +604,24 @@ void apagar(ArvoreRubroNegra *arvore, TIPO_CHAVE chave){
 
         menor->esquerda = deletado->esquerda;
         menor->esquerda->pai = menor;
-        menor->cor = deletado->cor;
+        menor->cor = deletado->cor;  // será?
         menor->pai = deletado->pai;
 
-        troca(arvore, deletado, menor);
+        troca(arvore, deletado, menor); //pra que?
     }
-
+    
     printf("\n");
     criarImagemArvore(arvore);  //teste :)
     
     // Se o nó removido é preto, precisa balancear a arvore (duplo preto)
     if(corInicial == preto){
+        printf("Aux %d\n", aux->chave);
         corrigeApagar(arvore, aux);
     }
 
     // Se o nó é rubro, remove normalmente
     free(deletado);
+    arvore->quantidadeElementos--;
     printf(":: Nó removido\n");
 }
 
@@ -796,30 +812,31 @@ void corrigeApagar(ArvoreRubroNegra *arvore, Node *no){
             }
         }
     }
-    
+
+    printf("cor %d\n", no->cor); 
     no->cor = preto;
 }
 
-void destruirAux(Node *subRaiz){
+void destruirAux(ArvoreRubroNegra *arvore, Node *subRaiz){
 
     //Casos bases
-    if(subRaiz == NULL){ // Não é nó
+    if(subRaiz == NULL || subRaiz == arvore->folhasNulas){ // Não é nó
         return;
-    }else if(subRaiz->esquerda == NULL && subRaiz->direita == NULL){ // Nó folha
-        printf("Elemento follha %d removido\n", subRaiz->chave);
+    }else if(subRaiz->esquerda == arvore->folhasNulas && subRaiz->direita == arvore->folhasNulas){ // Nó folha
+        // printf("Elemento follha %d removido\n", subRaiz->chave);
         free(subRaiz);
         return;
     }
     
     // Casos recursivos
-    if(subRaiz->esquerda != NULL && subRaiz->direita != NULL){ //Nó com 2 filhos 
-        destruirAux(subRaiz->esquerda);
-        destruirAux(subRaiz->direita);
+    if(subRaiz->esquerda != arvore->folhasNulas && subRaiz->direita != arvore->folhasNulas){ //Nó com 2 filhos 
+        destruirAux(arvore, subRaiz->esquerda);
+        destruirAux(arvore, subRaiz->direita);
     }else{  // Nó com um filho
-        if(subRaiz->esquerda != NULL){
-            destruirAux(subRaiz->esquerda);
+        if(subRaiz->esquerda != arvore->folhasNulas){
+            destruirAux(arvore, subRaiz->esquerda);
         }else{
-            destruirAux(subRaiz->direita);
+            destruirAux(arvore, subRaiz->direita);
         }
     }
 
@@ -831,12 +848,12 @@ void destruirArvore(ArvoreRubroNegra *arvore){
 
     // Se a árvore foi inicializada
     if(arvore->quantidadeElementos > 0){
-        destruirAux(arvore->raiz->esquerda);
-        destruirAux(arvore->raiz->direita);
+        destruirAux(arvore, arvore->raiz->esquerda);
+        destruirAux(arvore, arvore->raiz->direita);
 
         free(arvore->raiz);
     }
 
+    free(arvore->folhasNulas);
     free(arvore);
-    // printf("Árvore apagada\n");
 }

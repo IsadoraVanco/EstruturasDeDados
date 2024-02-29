@@ -108,16 +108,16 @@ Node *encontraMenor(ArvoreRubroNegra *arvore, Node *p, Node *ant);
 /**
  * @brief Faz a rotação de nós desbalanceados à esquerda da árvore
  * @param arvore O endereço da árvore
- * @param x O nó a ser rotacionado
+ * @param pai O nó a ser rotacionado
 */
-void rotacaoEsquerda(ArvoreRubroNegra *arvore, Node *x);
+void rotacaoEsquerda(ArvoreRubroNegra *arvore, Node *pai);
 
 /**
  * @brief Faz a rotação de nós desbalanceados à direita da árvore
  * @param arvore O endereço da árvore
- * @param x O nó a ser rotacionado
+ * @param pai O nó a ser rotacionado
 */
-void rotacaoDireita(ArvoreRubroNegra *arvore, Node *x);
+void rotacaoDireita(ArvoreRubroNegra *arvore, Node *pai);
 
 /*************************************************************
  * Correções
@@ -182,7 +182,7 @@ void corrigeApagar(ArvoreRubroNegra *arvore, Node *x);
  * OBS: Auxilia a função de limpeza da árvore
  * @param subRaiz O endereço da raíz da sub-árvore
 */
-void destruirAux(Node *subRaiz);
+void destruirAux(ArvoreRubroNegra *arvore, Node *subRaiz);
 
 /**
  * @brief Libera todo o espaço ocupado na memória pela árvore e atribui NULL à raíz
