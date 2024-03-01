@@ -185,9 +185,9 @@ void criarImagemArvore(ArvoreRubroNegra *arvore){
     }
     
     if(arvore->raiz->cor == vermelho){
-        adicionarNovoNode(arvoreArquivo, valor, valor, "", "#b81e1e", "#d02222", "black");
+        adicionarNovoNode(arvoreArquivo, valor, valor, "circle", "#b81e1e", "#d02222", "black");
     }else{
-        adicionarNovoNode(arvoreArquivo, valor, valor, "", "#333232", "#3f3f3f", "white");
+        adicionarNovoNode(arvoreArquivo, valor, valor, "circle", "#333232", "#3f3f3f", "white");
     }
 
     // Adiciona recursivamente os outros nós
@@ -208,9 +208,9 @@ void adicionarNodeArquivo(ARQUIVODOT *arquivo, ArvoreRubroNegra *arvore, Node *n
         sprintf(valorFilho, "%d", no->chave);
 
         if(no->cor == vermelho){
-            adicionarNovoNode(arquivo, valorFilho, valorFilho, "", "#b81e1e", "#d02222", "black");
+            adicionarNovoNode(arquivo, valorFilho, valorFilho, "circle", "#b81e1e", "#d02222", "black");
         }else{
-            adicionarNovoNode(arquivo, valorFilho, valorFilho, "", "#333232", "#3f3f3f", "white");
+            adicionarNovoNode(arquivo, valorFilho, valorFilho, "circle", "#333232", "#3f3f3f", "white");
         }
 
         criarConexaoNodes(arquivo, TIPO_ARVORE, valorPai, valorFilho, "");
@@ -576,26 +576,32 @@ void inserir(ArvoreRubroNegra *arvore, TIPO_CHAVE chave){
 void corrigeApagar(ArvoreRubroNegra *arvore, Node *no){
 
     while(no != arvore->raiz && no->cor == preto){
-        printf("Verificando nó preto (%d) para exclusão...\n", no->chave);
+        // printf("\n");
+        // criarImagemArvore(arvore);  //teste :)
+
+        printf("\nVerificando nó preto (%d) para exclusão...\n", no->chave);
         
         printf("\n***** Caso 3 (DUPLO PRETO) *****\n");
         
+        // printf("pai do nó = %d\n", no->pai->chave);
         if(no == no->pai->esquerda){      // filho da esquerda
             printf("* Nó (%d) é filho da esquerda\n", no->chave);
             
-            corrigirApagarEsquerda(arvore, no);
+            corrigirApagarEsquerda(arvore, &no);
         }else{      // filho da direita
             printf("* Nó (%d) é filho da direita\n", no->chave);
         
-            corrigirApagarDireita(arvore, no);
+            corrigirApagarDireita(arvore, &no);
         }
+            // printf("=> no no loop %d\n", no->chave);
     }
 
     no->cor = preto;
 }
 
-void corrigirApagarEsquerda(ArvoreRubroNegra *arvore, Node *no){
-    Node *irmao = no->pai->direita;
+void corrigirApagarEsquerda(ArvoreRubroNegra *arvore, Node **no){
+    // printf("* irmão do Nó (%d) \n", (*no)->pai->direita->chave);
+    Node *irmao = (*no)->pai->direita;
     
     if(irmao->cor == vermelho){     // Caso 3.1
         printf("\n*** Caso 3.1 (esquerda) ***\n");
@@ -604,16 +610,16 @@ void corrigirApagarEsquerda(ArvoreRubroNegra *arvore, Node *no){
 
         printf("\n=> Procedimentos:\n\n");
         
-        no->pai->cor = vermelho;
+        (*no)->pai->cor = vermelho;
         printf("1. Pai fica vermelho;\n");
 
         irmao->cor = preto;
         printf("2. Irmão fica preto;\n");
 
-        rotacaoEsquerda(arvore, no->pai);
+        rotacaoEsquerda(arvore, (*no)->pai);
         printf("3. Rotaciona o pai para a esquerda;\n");
 
-        irmao = no->pai->direita;      
+        irmao = (*no)->pai->direita;      
         printf("4. Sobe a verificação para (%d);\n", irmao->chave);
         printf("5. Vai para o caso 3.2, 3.3 ou 3.4\n");
 
@@ -631,8 +637,8 @@ void corrigirApagarEsquerda(ArvoreRubroNegra *arvore, Node *no){
         irmao->cor = vermelho;
         printf("1. Irmão fica rubro;\n");
 
-        no = no->pai;
-        printf("2. Sobe a verificação para o pai (%d);\n", no->chave);
+        (*no) = (*no)->pai;
+        printf("2. Sobe a verificação para o pai (%d);\n", (*no)->chave);
 
     }else{
         // Caso 3.3
@@ -653,7 +659,7 @@ void corrigirApagarEsquerda(ArvoreRubroNegra *arvore, Node *no){
             rotacaoDireita(arvore, irmao);
             printf("3. Rotaciona o irmão para a direita;\n");
 
-            irmao = no->pai->direita; 
+            irmao = (*no)->pai->direita; 
             printf("4. Atualiza o irmão (%d);\n", irmao->chave);
             printf("5. Vai para o caso 3.4;\n");
         } 
@@ -666,24 +672,29 @@ void corrigirApagarEsquerda(ArvoreRubroNegra *arvore, Node *no){
 
         printf("\n=> Procedimentos:\n\n");
         
-        irmao->cor = no->pai->cor;
+        Node *pai = (*no)->pai;
+        // printf("no pai %d\n", pai->chave);
+
+        irmao->cor = pai->cor;
         printf("1. O irmão copia a cor do pai;\n");
 
-        no->pai->cor = preto;
+        pai->cor = preto;
         irmao->direita->cor = preto;
         printf("2. O pai e o sobrinho da direita ficam preto;\n");
 
-        rotacaoEsquerda(arvore, no->pai);
+        rotacaoEsquerda(arvore, pai);
         printf("3. Rotaciona o pai para a esquerda;\n");
 
-        no = arvore->raiz;         
-        printf("4. Atualiza a nova raíz (%d);\n", no->chave);
+        // no = pai->pai;
+        // printf("no pai %d\n", no->chave);
+        (*no) = arvore->raiz;         
+        printf("4. Atualiza a cor da raíz (%d);\n", (*no)->chave);
     }
 }
 
-void corrigirApagarDireita(ArvoreRubroNegra *arvore, Node *no){
+void corrigirApagarDireita(ArvoreRubroNegra *arvore, Node **no){
 
-    Node *irmao = no->pai->esquerda;
+    Node *irmao = (*no)->pai->esquerda;
     
     if(irmao->cor == vermelho){ // Caso 3.1
         printf("\n*** Caso 3.1 (direita) ***\n");
@@ -692,16 +703,16 @@ void corrigirApagarDireita(ArvoreRubroNegra *arvore, Node *no){
 
         printf("\n=> Procedimentos:\n\n");
         
-        no->pai->cor = vermelho;
+        (*no)->pai->cor = vermelho;
         printf("1. Pai fica rubro;\n");
 
         irmao->cor = preto;
         printf("2. Irmão fica preto;\n");
 
-        rotacaoDireita(arvore, no->pai);
+        rotacaoDireita(arvore, (*no)->pai);
         printf("3. Rotaciona o pai para a direita;\n");
 
-        irmao = no->pai->esquerda;       // será?
+        irmao = (*no)->pai->esquerda;       // será?
         printf("4. Sobe a verificação para (%d);\n", irmao->chave);
         printf("5. Vai para o caso 3.2, 3.3 ou 3.4\n");
 
@@ -716,8 +727,8 @@ void corrigirApagarDireita(ArvoreRubroNegra *arvore, Node *no){
         irmao->cor = vermelho;
         printf("1. Irmão fica rubro;\n");
 
-        no = no->pai;
-        printf("2. Sobe a verificação para o pai (%d);\n", no->chave);
+        (*no) = (*no)->pai;
+        printf("2. Sobe a verificação para o pai (%d);\n", (*no)->chave);
 
     }else{
         // Caso 3.3
@@ -738,7 +749,7 @@ void corrigirApagarDireita(ArvoreRubroNegra *arvore, Node *no){
             rotacaoEsquerda(arvore, irmao);
             printf("3. Rotaciona o irmão para a esquerda;\n");
 
-            irmao = no->pai->esquerda;       // Será?
+            irmao = (*no)->pai->esquerda;       // Será?
             printf("4. Atualiza o irmão (%d);\n", irmao->chave);
             printf("5. Vai para o caso 3.4;\n");
         } 
@@ -751,18 +762,22 @@ void corrigirApagarDireita(ArvoreRubroNegra *arvore, Node *no){
 
         printf("\n=> Procedimentos:\n\n");
         
-        irmao->cor = no->pai->cor;
+        Node *pai = (*no)->pai;
+
+        irmao->cor = pai->cor;
         printf("1. O irmão copia a cor do pai;\n");
 
-        no->pai->cor = preto;
+        pai->cor = preto;
         irmao->esquerda->cor = preto;
         printf("2. O pai e o sobrinho da esquerda ficam preto;\n");
-
-        rotacaoDireita(arvore, no->pai);
+        rotacaoDireita(arvore, pai);
         printf("3. Rotaciona o pai para a direita;\n");
 
-        no = arvore->raiz;           // esta certo? 
-        printf("4. Atualiza a nova raíz (%d);\n", no->chave);
+        // (*no) = pai->pai;
+        // printf("no pai %d\n", pai->chave);
+
+        (*no) = arvore->raiz;         
+        printf("4. Atualiza a cor da raíz (%d);\n", (*no)->chave);
     }
 }
 

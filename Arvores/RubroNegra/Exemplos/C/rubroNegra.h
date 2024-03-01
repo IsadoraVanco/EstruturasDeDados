@@ -234,14 +234,14 @@ void corrigeApagar(ArvoreRubroNegra *arvore, Node *no);
  * @param arvore O endereço da árvore
  * @param no O endereço do nó a ser analisado
  */
-void corrigirApagarEsquerda(ArvoreRubroNegra *arvore, Node *no);
+void corrigirApagarEsquerda(ArvoreRubroNegra *arvore, Node **no);
 
 /**
  * @brief Corrige o nó da árvore que caiu no caso da direita
  * @param arvore O endereço da árvore
  * @param no O endereço do nó a ser analisado
  */
-void corrigirApagarDireita(ArvoreRubroNegra *arvore, Node *no);
+void corrigirApagarDireita(ArvoreRubroNegra *arvore, Node **no);
 
 /*************************************************************
  * Exclusões
