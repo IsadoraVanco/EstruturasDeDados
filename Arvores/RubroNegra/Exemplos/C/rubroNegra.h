@@ -4,7 +4,7 @@
 #ifndef _ARVORE_RUBRO_NEGRA_H_
 #define _ARVORE_RUBRO_NEGRA_H_
 
-#include "../../Ferramentas/Dot/dot.h"
+#include "Ferramentas/Dot/dot.h"
 
 /************************************************************
  * Definições e typedefs
@@ -55,11 +55,43 @@ int max(int a, int b);
 ArvoreRubroNegra *inicializarArvore();
 
 /**
+ * @brief Troca a posição de dois nós
+ * @param arvore O endereço da árvore
+ * @param pai O endereço do nó mais acima
+ * @param filho O endereço do nó mais abaixo
+ */
+void trocar(ArvoreRubroNegra *arvore, Node *pai, Node *filho);
+
+/**
  * @brief Calcula a altura de uma sub-árvore
- * @param no O endereço do nó 
+ * @param arvore O endereço da árvore
+ * @param no O endereço do nó corrente
  * @return A altura de uma sub-árvore
 */
 int altura(ArvoreRubroNegra *arvore, Node *no);
+
+/**
+ * @brief Calcula a altura negra de uma sub-árvore
+ * @param arvore O endereço da árvore
+ * @param no O endereço do nó corrente
+ * @return A altura negra de uma sub-árvore
+ */
+int alturaNegra(ArvoreRubroNegra *arvore, Node *no);
+
+/**
+ * @brief Conta a quantidade de nós pretos e vermelhos da árvore
+ * @param arvore O endereço da árvore
+ * @param no O endereço do nó
+ * @param noPreto O endereço para retornar a quantidade de nós pretos
+ * @param noVermelho O endereço para retornar a quantidade de nós veremlhos
+ */
+void contarNos(ArvoreRubroNegra *arvore, Node *no, int *noPreto, int *noVermelho);
+
+/**
+ * @brief Calcula a porcentagem de nós pretos e vermelhos da árvore
+ * @param arvore O endereço da árvore
+ */
+void obterPorcentagemCores(ArvoreRubroNegra *arvore);
 
 /*************************************************************
  * Exibição
@@ -69,6 +101,7 @@ int altura(ArvoreRubroNegra *arvore, Node *no);
  * @brief Exibe a árvore em Pré Ordem utilizando recursão, ou seja, 
  * raíz, sub-árvore esquerda e sub-árvore direita. Mostra a relação dos 
  * nós e seus pais
+ * @param arvore O endereço da árvore
  * @param no O endereço do nó a ser imprimido
 */
 void exibirArvore(ArvoreRubroNegra *arvore, Node *no);
@@ -83,6 +116,7 @@ void criarImagemArvore(ArvoreRubroNegra *arvore);
 /**
  * @brief Adiciona os nós da árvore no arquivo .dot
  * @param arquivo Endereço do arquivo .dot
+ * @param arvore O endereço da árvore
  * @param no Nó que será registrado no .dot
  */
 void adicionarNodeArquivo(ARQUIVODOT *arquivo, ArvoreRubroNegra *arvore, Node *no);
@@ -92,14 +126,30 @@ void adicionarNodeArquivo(ARQUIVODOT *arquivo, ArvoreRubroNegra *arvore, Node *n
 *************************************************************/
 
 /**
+ * @brief Calcula o custo médio de uma busca na árvore
+ * @param arvore O endereço de uma árvore
+ * @param valor O valor a ser buscado
+ * @return O número de comparaçoes feitas para encontrar o valor
+ */
+int calcularCustosBusca(ArvoreRubroNegra *arvore, int valor);
+
+/**
  * @brief Proura por um elemento na árvore de maneira recursiva, utilizando busca binária
+ * @param arvore O endereço de uma árvore
  * @param raiz Endereço do nó atual/inicial
  * @param chave Chave que será buscada
  * @return O endereço do elemento procurado caso ache, ou NULL, caso contrário
 */
 Node *buscaBinaria(ArvoreRubroNegra *arvore, Node *raiz, TIPO_CHAVE chave);
 
-Node *encontraMenor(ArvoreRubroNegra *arvore, Node *p, Node *ant);
+/**
+ * @brief Encontra o menor valor dentro de uma sub-árvore
+ * @param arvore O endereço da árvore
+ * @param no O endereço do nó corrente 
+ * @param ant O endereço do nó anterior
+ * @return O endereço do menor valor
+ */
+Node *encontrarMenor(ArvoreRubroNegra *arvore, Node *no, Node *ant);
 
 /*************************************************************
  * Rotações
@@ -129,7 +179,7 @@ void rotacaoDireita(ArvoreRubroNegra *arvore, Node *pai);
  * @param novo O endereço do novo nó inserido e o que está sendo 
  * analisado
  */
-void arrumaInsercao(ArvoreRubroNegra *arvore, Node *novo);
+void corrigirInsercao(ArvoreRubroNegra *arvore, Node *novo);
 
 /**
  * @brief Corrige a árvore do lado esquerdo
@@ -138,7 +188,7 @@ void arrumaInsercao(ArvoreRubroNegra *arvore, Node *novo);
  * @param pai O endereço do pai do nó
  * @param avo O endereço do avô do nó
  */
-void correcaoEsquerda(ArvoreRubroNegra *arvore, Node **no, Node *pai, Node *avo);
+void corrigirInsercaoEsquerda(ArvoreRubroNegra *arvore, Node **no, Node *pai, Node *avo);
 
 /**
  * @brief Corrige a árvore do lado direito
@@ -147,14 +197,15 @@ void correcaoEsquerda(ArvoreRubroNegra *arvore, Node **no, Node *pai, Node *avo)
  * @param pai O endereço do pai do nó
  * @param avo O endereço do avô do nó
  */
-void correcaoDireita(ArvoreRubroNegra *arvore, Node **no, Node *pai, Node *avo);
+void corrigirInsercaoDireita(ArvoreRubroNegra *arvore, Node **no, Node *pai, Node *avo);
 
 /*************************************************************
  * Inserção
 *************************************************************/
 
 /**
- * @brief Cria um novo nó com chave = ch e retorna seu endereço
+ * @brief Cria um novo nó com o valor da chave e retorna seu endereço
+ * @param arvore É o endereço da árvore
  * @param chave A chave a ser inserida na árvore
  * @return O endereço do novo nó
 */
@@ -162,27 +213,53 @@ Node *criarNovoNo(ArvoreRubroNegra *arvore, TIPO_CHAVE chave);
 
 /**
  * @brief Insere um novo nó na árvore 
- * @param arvore É o endereço das informações da árvore
+ * @param arvore É o endereço da árvore
  * @param chave O valor a ser inserido
 */
 void inserir(ArvoreRubroNegra *arvore, TIPO_CHAVE chave);
 
 /*************************************************************
+ * Correções de exclusões
+*************************************************************/
+
+/**
+ * @brief Corrige a exclusão de um elemento da árvore
+ * @param arvore O endereço da árvore
+ * @param no O endereço do nó a ser analisado
+ */
+void corrigeApagar(ArvoreRubroNegra *arvore, Node *no);
+
+/**
+ * @brief Corrige o nó da árvore que caiu no caso da esquerda
+ * @param arvore O endereço da árvore
+ * @param no O endereço do nó a ser analisado
+ */
+void corrigirApagarEsquerda(ArvoreRubroNegra *arvore, Node *no);
+
+/**
+ * @brief Corrige o nó da árvore que caiu no caso da direita
+ * @param arvore O endereço da árvore
+ * @param no O endereço do nó a ser analisado
+ */
+void corrigirApagarDireita(ArvoreRubroNegra *arvore, Node *no);
+
+/*************************************************************
  * Exclusões
 *************************************************************/
 
-void troca(ArvoreRubroNegra *arvore, Node *u, Node *v);
-
+/**
+ * @brief Remove um elemento da árvore
+ * @param arvore O endereço da árvore
+ * @param chave O valor a ser removido
+ */
 void apagar(ArvoreRubroNegra *arvore, TIPO_CHAVE chave);
 
-void corrigeApagar(ArvoreRubroNegra *arvore, Node *x);
-
 /**
- * @brief Apaga toda a estrutura da sub-árvore.
- * OBS: Auxilia a função de limpeza da árvore
+ * @brief Apaga toos os nós de uma subárvore
+ * @param arvore O endereço das informações da árvore
  * @param subRaiz O endereço da raíz da sub-árvore
 */
-void destruirAux(ArvoreRubroNegra *arvore, Node *subRaiz);
+void destruirNos(ArvoreRubroNegra *arvore, Node *subRaiz);
 
 /**
  * @brief Libera todo o espaço ocupado na memória pela árvore e atribui NULL à raíz

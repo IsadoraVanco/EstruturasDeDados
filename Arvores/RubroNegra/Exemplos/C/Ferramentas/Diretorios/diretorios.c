@@ -7,11 +7,11 @@
 
 
 int criaPasta(char* nomePasta){
-    printf("Criando pasta %s...\n", nomePasta);
+    printf("Criando pasta '%s'...\n", nomePasta);
 
     #ifdef _WIN32
         if (mkdir(nomePasta) != 0) {
-            printf("ERRO ao criar pasta\n");
+            printf("ERRO ao criar pasta ou pasta já criada\n");
 
             return 1;
         }
@@ -20,7 +20,7 @@ int criaPasta(char* nomePasta){
     #else
         //0777 é o número octal de permissões para as mudanças na pasta (Linux)
         if (mkdir(nomePasta, 0777) != 0) {
-            printf("ERRO ao criar pasta\n");
+            printf("ERRO ao criar pasta ou pasta já criada\n");
 
             return 1;
         }

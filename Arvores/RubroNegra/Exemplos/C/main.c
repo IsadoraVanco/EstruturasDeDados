@@ -11,9 +11,10 @@
 void mostraMenuPrincipal();
 
 /**
- * @brief MOstra o menu de opções de impressões
-*/
-void mostraMenuImpressao();
+ * @brief Mostra o cabeçalho para o inicio da opção
+ * @param texto O texto que ficará no cabeçalho
+ */
+void mostraOpcao(char *texto);
 
 /**
  * @brief Lê um número inteiro e o retorna
@@ -29,8 +30,6 @@ int main(int argc, char const *argv[]){
     ArvoreRubroNegra *arvore = inicializarArvore();
     Node *elemento;
 
-    printf("arvore %d, %p\n", arvore->quantidadeElementos, arvore->raiz);
-
     do{
         mostraMenuPrincipal();
         opcao = leInteiro("=>Comando: ");
@@ -44,22 +43,24 @@ int main(int argc, char const *argv[]){
 
         case 1: // Inserir
             valor = leInteiro("=>Valor para inserir: ");
+
+            mostraOpcao("Inserir Elemento");
             inserir(arvore, valor);
 
             break;
         
         case 2: // Remover
             valor = leInteiro("=>Valor para remover: ");
+
+            mostraOpcao("Remover Elemento");
             apagar(arvore, valor);
 
             break;
         
         case 3:  // Imprimir
-            printf("\n================================\n");
-            printf("\tImprimir árvore\n");
-            printf("================================\n\n");
-
+            mostraOpcao("Imprimir árvore");
             exibirArvore(arvore, arvore->raiz);
+
             printf("\n");
             criarImagemArvore(arvore);
 
@@ -68,20 +69,19 @@ int main(int argc, char const *argv[]){
         case 4: // Buscar
             valor = leInteiro("=>Valor para buscar: ");
 
-            printf("================================\n");
-            printf("\tBusca árvore\n");
-            printf("================================\n");
-            elemento = buscaBinaria(arvore, arvore->raiz, valor);
+            mostraOpcao("Busca na árvore");
+            calcularCustosBusca(arvore, valor);
 
-            if(elemento){
-                printf("Endereço: %p\n", elemento);
-                printf("A altura do nó é %d\n", altura(arvore, elemento));
-            }
+            break;
+
+        case 5: // Obtem porcentagem de cores
+            mostraOpcao("Porcentagem da árvore");
+            obterPorcentagemCores(arvore);
 
             break;
         
         default:
-            printf("Opção invalida. Digite novamente\n");
+            printf("=>Opção invalida. Digite novamente.\n");
             break;
         }
 
@@ -98,7 +98,15 @@ void mostraMenuPrincipal(){
     printf("[1]Inserir\n");
     printf("[2]Remover\n");
     printf("[3]Imprimir\n");
-    printf("[4]Buscar\n\n");
+    printf("[4]Buscar\n");
+    printf("[5]Porcentagem de cores\n");
+    printf("\n");
+}
+
+void mostraOpcao(char *texto){
+    printf("\n=====================================\n");
+    printf("\t%s\n", texto);
+    printf("=====================================\n\n");
 }
 
 int leInteiro(char *texto){
