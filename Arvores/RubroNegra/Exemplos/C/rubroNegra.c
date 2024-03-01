@@ -576,14 +576,16 @@ void inserir(ArvoreRubroNegra *arvore, TIPO_CHAVE chave){
 void corrigeApagar(ArvoreRubroNegra *arvore, Node *no){
 
     while(no != arvore->raiz && no->cor == preto){
-        // printf("\n");
-        // criarImagemArvore(arvore);  //teste :)
 
-        printf("\nVerificando nó preto (%d) para exclusão...\n", no->chave);
+        // Saída bonitinha :)
+        if(no == arvore->folhasNulas){
+            printf("\nVerificando caso para nó folha...\n");
+        }else{
+            printf("\nVerificando nó preto (%d) para exclusão...\n", no->chave);
+        }
         
         printf("\n***** Caso 3 (DUPLO PRETO) *****\n");
         
-        // printf("pai do nó = %d\n", no->pai->chave);
         if(no == no->pai->esquerda){      // filho da esquerda
             printf("* Nó (%d) é filho da esquerda\n", no->chave);
             
@@ -593,7 +595,6 @@ void corrigeApagar(ArvoreRubroNegra *arvore, Node *no){
         
             corrigirApagarDireita(arvore, &no);
         }
-            // printf("=> no no loop %d\n", no->chave);
     }
 
     no->cor = preto;
