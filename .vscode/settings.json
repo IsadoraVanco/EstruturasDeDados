@@ -2,5 +2,13 @@
     "C_Cpp.errorSquiggles": "disabled",
     "files.associations": {
         "pilha.h": "c"
-    }
+    },
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/home/isadora/faculdade/EstruturasDeDados/output",
+            "binaryPath": "/home/isadora/faculdade/EstruturasDeDados/output/ted",
+            "binaryArgs": []
+        }
+    ],
+    "cmake.configureOnOpen": false
 }
