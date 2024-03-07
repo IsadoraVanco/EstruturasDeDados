@@ -9,10 +9,12 @@ Para exemplos e exercícios marcados como 2º Semestre, os créditos vão para p
 * **Árvores:** Estrutura de Dados I e II
     - AVL
     - Binária
+    - Red Black
 * **Filas:** Estrutura de Dados I
+* **Heaps:** Estrutura de Dados II
 * **Listas:** Estrutura de Dados I
-    - Encadeada simples
-    - Duplamente encadeada
+    - Encadeada simples (desordenada)
+    - Duplamente encadeada (desordenada e ordenada)
 * **Pilhas:** Estrutura de Dados I
 * **Tabelas Hash**: Estrutura de Dados II
 * **TAD:** Estrutura de Dados I
