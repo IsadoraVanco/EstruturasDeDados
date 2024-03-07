@@ -52,20 +52,20 @@ int heapVazio(Heap *heap){
     return heap->qtdElementos <= 0;
 }
 
-// void construirHeap(Heap *heap){ 
-//     int quantidade = heap->qtdElementos;
+void construirHeap(Heap *heap){ 
+    int quantidade = heap->qtdElementos;
     
-//     // Verifica apenas os nós de dentro
-//     if(heap->tipo == MAXIMO){
-//         for(int i = quantidade; i >= 1; i--){
-//             subirPrioridade(heap, i);
-//         }
-//     }else{
-//         for(int i = quantidade; i >= 1; i--){
-//             subirTempo(heap, i);
-//         }
-//     }
-// }
+    // Verifica apenas os nós de dentro
+    if(heap->tipo == MAXIMO){
+        for(int i = quantidade; i >= 1; i--){
+            subirPrioridade(heap, i);
+        }
+    }else{
+        for(int i = quantidade; i >= 1; i--){
+            subirTempo(heap, i);
+        }
+    }
+}
 
 /************************************************************
  * Imprimir
@@ -91,8 +91,8 @@ void imprimirProcessos(Heap *heap){
 int buscarProcesso(Heap *heap, int id){
     for(int i = 1; i <= heap->qtdElementos; i++){
         if(heap->heap[i].pid == id){
-            printf("-> Processo[%d] encontrado no índice %d\n", id, i);
-            printf("-> Tempo de espera[%d] Prioridade[%d]\n", heap->heap[i].tempoEspera, heap->heap[i].prioridade);
+            printf("-> Processo [%d] encontrado no índice %d\n", id, i);
+            printf("-> Tempo de espera [%d] Prioridade [%d]\n", heap->heap[i].tempoEspera, heap->heap[i].prioridade);
             return i;
         }
     }
@@ -152,10 +152,6 @@ void descerPrioridade(Heap *heap, int indice){
     if(maior != indice){
         // Troca os nós
         printf("-> Nó (%d) desce e pai (%d) sobe\n", heap->heap[indice].pid, heap->heap[maior].pid);
-        
-        // Processo *temp = &(heap->heap[indice]);
-        // heap->heap[indice] = heap->heap[maior];
-        // heap->heap[maior] = *temp;
 
         int tempPid = heap->heap[indice].pid;
         int tempTempo = heap->heap[indice].tempoEspera;
@@ -186,9 +182,6 @@ void subirTempo(Heap *heap, int indice){
             // Troca os nós
             printf("-> Nó (%d) sobe e pai (%d) desce\n", heap->heap[indice].pid, heap->heap[noPai].pid);
             
-            // Processo *temp = &(heap->heap[indice]);
-            // heap->heap[indice] = heap->heap[noPai];
-            // heap->heap[noPai] = *temp;
             int tempPid = heap->heap[indice].pid;
             int tempTempo = heap->heap[indice].tempoEspera;
             int tempPrioridade = heap->heap[indice].prioridade;
@@ -226,10 +219,6 @@ void descerTempo(Heap *heap, int indice){
         // Troca os nós
         printf("-> Nó (%d) desce e pai (%d) sobe\n", heap->heap[indice].pid, heap->heap[menor].pid);
         
-        // Processo *temp = &(heap->heap[indice]);
-        // heap->heap[indice] = heap->heap[menor];
-        // heap->heap[menor] = *temp;
-
         // trocar para ponteiros :)
         int tempPid = heap->heap[indice].pid;
         int tempTempo = heap->heap[indice].tempoEspera;
@@ -265,7 +254,7 @@ void inserirProcesso(Heap *heap, int prioridade, int tempo){
     heap->heap[quantidade].pid = heap->totalElementos;
     heap->heap[quantidade].prioridade = prioridade;
     heap->heap[quantidade].tempoEspera = tempo;
-    printf("-> novo PID %d Prioridade %d tempo %d\n", heap->heap[quantidade].pid, heap->heap[quantidade].prioridade, heap->heap[quantidade].tempoEspera);
+    // printf("-> novo PID %d Prioridade %d tempo %d\n", heap->heap[quantidade].pid, heap->heap[quantidade].prioridade, heap->heap[quantidade].tempoEspera);
 
     // Verifica se precisa subir o valor
     if(heap->tipo == MAXIMO){
@@ -312,53 +301,55 @@ int removerProcessoTopo(Heap *heap){
     return valor;
 }
 
-// void removerProcesso(Heap *heap, int id){
-//     if(heapVazio(heap)){
-//         printf("-> Não há elementos no Heap\n");
-//         return;
-//     }
+void removerProcesso(Heap *heap, int id){
+    if(heapVazio(heap)){
+        printf("-> Não há elementos no Heap\n");
+        return;
+    }
 
-//     int idAchado = buscarProcesso(heap, id);
+    int idAchado = buscarProcesso(heap, id);
 
-//     if(idAchado <= 0){
-//        return;
-//     }
+    if(idAchado <= 0){
+       return;
+    }
 
-//     int quantidade = heap->qtdElementos;
+    int quantidade = heap->qtdElementos;
 
-//     // Move os elementos para a esquerda tapando os buracos
-//     for(int i = idAchado; i < quantidade; i++){
-//         heap->heap[i].pid = heap->heap[i + 1].pid;
-//         heap->heap[i].prioridade = heap->heap[i + 1].prioridade;
-//         heap->heap[i].tempoEspera = heap->heap[i + 1].tempoEspera;
-//     }
+    // Move os elementos para a esquerda tapando os buracos
+    for(int i = idAchado; i < quantidade; i++){
+        heap->heap[i].pid = heap->heap[i + 1].pid;
+        heap->heap[i].prioridade = heap->heap[i + 1].prioridade;
+        heap->heap[i].tempoEspera = heap->heap[i + 1].tempoEspera;
+    }
 
-//     // Diminui a quantidade de elementos do total
-//     heap->heap = (Processo *) realloc(heap->heap, sizeof(Processo) * (quantidade + 1));
-//     heap->qtdElementos--;
+    // Diminui a quantidade de elementos do total
+    heap->heap = (Processo *) realloc(heap->heap, sizeof(Processo) * (quantidade + 1));
+    heap->qtdElementos--;
 
-//     // Transforma em heap denovo
-//     construirHeap(heap);
+    // Transforma em heap denovo
+    construirHeap(heap);
 
-//     printf("->Processo [%d] removido do meio do Heap\n", id);
-// }
+    printf("->Processo [%d] removido do meio do Heap\n", id);
+}
 
-// void removerProcessoTopoAmbos(Heap *prioridades, Heap *tempos){
-//     int pid;
+void removerProcessoTopoAmbos(Heap *prioridades, Heap *tempos){
+    int pid;
     
-//     // Se a última remoção foi feita no heap de prioridades
-//     if(removerPrioridades){
-//         printf("-> Remove do topo de Tempo de Espera\n\n");
-//         pid = removerProcessoTopo(tempos);
-//         removerProcesso(prioridades, pid);
-//         removerPrioridades = 0;
-//     }else{
-//         printf("-> Remove do topo de Prioridade\n\n");
-//         pid = removerProcessoTopo(prioridades);
-//         removerProcesso(tempos, pid);
-//         removerPrioridades = 1;
-//     }
-// }
+    // Se a última remoção foi feita no heap de prioridades
+    if(removerPrioridades){
+        printf("-> Remove do topo de Tempo de Espera\n\n");
+        pid = removerProcessoTopo(tempos);
+        printf("\n-> Remove do meio de Prioridade\n\n");
+        removerProcesso(prioridades, pid);
+        removerPrioridades = 0;
+    }else{
+        printf("-> Remove do topo de Prioridade\n\n");
+        pid = removerProcessoTopo(prioridades);
+        printf("\n-> Remove do meio de Tempo de Espera\n\n");
+        removerProcesso(tempos, pid);
+        removerPrioridades = 1;
+    }
+}
 
 void destruirProcessos(Heap *heap){
 

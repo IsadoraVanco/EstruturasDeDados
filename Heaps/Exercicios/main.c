@@ -35,7 +35,7 @@ int main(int argc, char const *argv[]){
 
     do{
         mostraMenuPrincipal();
-        opcao = leInteiro("=>Comando: ");
+        opcao = leInteiro("=> Comando: ");
         valor1 = 0;
         valor2 = 0;
 
@@ -49,11 +49,11 @@ int main(int argc, char const *argv[]){
 
         case 1: // Inserir
             while(valor1 <= 0){
-                valor1 = leInteiro("=>Prioridade do processo: ");
+                valor1 = leInteiro("=> Prioridade do processo: ");
             }
 
             while(valor2 <= 0){
-                valor2 = leInteiro("=>Tempo de espera do processo: ");
+                valor2 = leInteiro("=> Tempo de espera do processo: ");
             }
 
             mostraOpcao("Inserir Processo");
@@ -64,9 +64,7 @@ int main(int argc, char const *argv[]){
         
         case 2: // Remover
             mostraOpcao("Remover processo");
-            removerProcessoTopo(prioridades);
-            removerProcessoTopo(tempos);
-            // removerProcessoTopoAmbos(prioridades, tempos);
+            removerProcessoTopoAmbos(prioridades, tempos);
            
             break;
         
@@ -80,18 +78,18 @@ int main(int argc, char const *argv[]){
             break;
 
         case 4: // Buscar
-            valor1 = leInteiro("=>ID do processo: ");
+            valor1 = leInteiro("=> ID do processo: ");
 
             mostraOpcao("Buscar Processo");
             printf("=> Em PRIORIDADE:\n");
             buscarProcesso(prioridades, valor1);
-            printf("=> Em TEMPO:\n");
+            printf("\n=> Em TEMPO:\n");
             buscarProcesso(tempos, valor1);
 
             break;
         
         default:
-            printf("=>Opção invalida. Digite novamente.\n");
+            printf("=> Opção invalida. Digite novamente.\n");
             break;
         }
 
@@ -104,11 +102,11 @@ void mostraMenuPrincipal(){
     printf("\n******************************************\n");
     printf("\tGerenciador de processos\n");
     printf("******************************************\n\n");
-    printf("[0]Sair\n");
-    printf("[1]Inserir\n");
-    printf("[2]Remover\n");
-    printf("[3]Imprimir\n");
-    printf("[4]Buscar\n");
+    printf("[0] Sair\n");
+    printf("[1] Inserir\n");
+    printf("[2] Remover\n");
+    printf("[3] Imprimir\n");
+    printf("[4] Buscar\n");
     printf("\n");
 }
 
