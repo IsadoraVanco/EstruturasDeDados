@@ -48,6 +48,7 @@ HashEncadeada *inicializaHash(int qtdElementosConjunto){
 }
 
 int funcaoHash(HashEncadeada *hash, int chave){
+    // Utiliza o método da divisão
     if(chave == 0){
         return 0;
     }else if(chave < 0){

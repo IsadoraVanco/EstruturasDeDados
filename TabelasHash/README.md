@@ -16,6 +16,44 @@ São implementadas com vetores e listas encadeadas em algumas situações.
     - Uma solução para isto é adicionar o elemento de chave repetida no proximo espaço vazio.
     - Outra solução é implementar uma tabela de listas encadeadas, assim, todos os elementos de mesma chave estarão na lista.
 
+## Funções de Espalhamento (Hash)
+
+### Método da divisão
+
+* Fácil e eficiente, por isso muito empregado.
+* A chave x é dividida pela dimensão da tabela m, e o resto da divisão é usado como endereço-base. Isto é, 
+        ```
+        h(x) = h mod m
+        ```
+        resultando em endereços no intervalo [0, m – 1]
+* Alguns valores de m são melhores que outros.
+* Se m é um número par, h(x) será par quando x for par e ímpar quando x for ímpar. Não é uma boa solução.
+* Se m for uma potência de 2, h(x) dependerá apenas de alguns dígitos de x. A situação é pior.
+* Existem alguns critérios que têm sido aplicados com bons resultados práticos.
+* Escolher m de modo que seja um número primo não próximo a uma potência de 2.
+* Escolher m tal que não possua divisores primos menores que 20.
+
+### Método da dobra
+
+* Suponha a chave como uma sequência de dígitos escritos num pedaço de papel.
+* O método em questão consiste em “dobrar” esse papel, de maneira que os dígitos se sobreponham.
+* Esses devem ser somados sem levar em consideração o “vai um”.
+* Pode ser utilizado com números binários, com a operação de OU Exclusivo
+
+### Método da multiplicação
+
+* Apresenta algumas variações, sendo a mais conhecida o método do “meio do quadrado”.
+* A chave é multiplicada por ela mesma.
+* O resultado é armazenada em palavra de memória de b bits.
+* O número de bits necessário para forma o endereço-base de uma chave é então retirado dos b bits.
+* Descartando-se os bits excessivos da extrema direita e da extrema esquerda.
+
+## No repositório
+
 Aqui temos:
 * **Exemplos**:
-    - **C**: Exemplos de outras fontes
+      - **DuploHash**: Tabela com duplo Hash
+      - **EncadeadaSeparada**: Tabela com lista encadeada simples
+      - **Simples**: Tabela simples
+* **Exercicios**:
+      - **GerenciamentoInventario**: Um sistema de gerenciamento de inventário

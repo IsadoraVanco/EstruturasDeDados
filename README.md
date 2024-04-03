@@ -12,9 +12,17 @@ Para exemplos e exercícios marcados como 2º Semestre, os créditos vão para p
     - Red Black
 * **Filas:** Estrutura de Dados I
 * **Heaps:** Estrutura de Dados II
+    - Maximo 
+    - Minimo
+    - Misto
 * **Listas:** Estrutura de Dados I
     - Encadeada simples (desordenada)
     - Duplamente encadeada (desordenada e ordenada)
 * **Pilhas:** Estrutura de Dados I
-* **Tabelas Hash**: Estrutura de Dados II
+    - Arranjo
+    - Ligada
+* **Tabelas Hash:** Estrutura de Dados II
+    - Duplo Hash
+    - Encadeamento Separado
+    - Simples
 * **TAD:** Estrutura de Dados I
