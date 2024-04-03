@@ -1,7 +1,8 @@
 {
     "C_Cpp.errorSquiggles": "disabled",
     "files.associations": {
-        "pilha.h": "c"
+        "pilha.h": "c",
+        "stdbool.h": "c"
     },
     "makefile.launchConfigurations": [
         {
