@@ -11,6 +11,8 @@ Para exemplos e exercícios marcados como 2º Semestre, os créditos vão para p
     - Binária
     - Red Black
 * **Filas:** Estrutura de Dados I
+* **Grafos:** Estrutura de Dados II
+    - Matriz de adjacência
 * **Heaps:** Estrutura de Dados II
     - Maximo 
     - Minimo
