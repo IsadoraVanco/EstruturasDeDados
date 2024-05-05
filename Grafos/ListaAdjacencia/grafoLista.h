@@ -41,9 +41,9 @@ GrafoLista *inicializarGrafo(int numeroVertices);
 // ******** IMPRIMIR ****************************************
 
 /**
- * @brief 
- * @param lista 
- * @param vertice
+ * @brief Mostra a lista de arestas que saem de determinado vértice
+ * @param lista O endereço da lista de arestas de um vértice
+ * @param vertice O número identificador do vértice
  */
 void imprimirLista(Aresta **lista, int vertice);
 
@@ -54,10 +54,10 @@ void imprimirLista(Aresta **lista, int vertice);
 void imprimirGrafo(GrafoLista *grafo);
 
 /**
- * @brief 
- * @param arquivo 
- * @param lista 
- * @param vertice 
+ * @brief Adiciona uma aresta no arquivo .dot
+ * @param arquivo O arquivo .dot
+ * @param lista O endereço da lista de arestas de um vértice
+ * @param vertice O número identificador de um vértice
  */
 void adicionarArestaArquivo(ArquivoDot *arquivo, Aresta **lista, int vertice);
 
@@ -71,8 +71,8 @@ void criarImagemGrafo(GrafoLista *grafo, bool variasVersoes);
 // ******** DESTRUIR *****************************************
 
 /**
- * @brief 
- * @param lista 
+ * @brief Libera da memória o espaço ocupado pelas arestas de um vértice
+ * @param lista O endereço da lista de arestas
  */
 void destruirLista(Aresta **lista);
 
@@ -96,10 +96,10 @@ int retornarNumeroArestas(GrafoLista *grafo);
 // ******** BUSCAR *****************************************
 
 /**
- * @brief 
- * @param lista 
- * @param vertice 
- * @return 
+ * @brief Busca uma aresta em uma lista de arestas de um vértice
+ * @param lista O endereço da lista de arestas
+ * @param vertice O número identificador do vértice
+ * @return O endereço da aresta caso a encontre, ou NULL caso não a encontre.
  */
 Aresta *buscarAresta(Aresta **lista, int vertice);
 
@@ -115,19 +115,19 @@ bool verificarArestaExiste(GrafoLista *grafo, int verticeA, int verticeB);
 // ******** INSERIR *****************************************
 
 /**
- * @brief 
- * @param vertice 
- * @param peso 
- * @return 
+ * @brief Aloca um espaço para uma aresta na memória
+ * @param vertice O número do vértice que será ligado
+ * @param peso O peso da ligação entre os vértices
+ * @return O endereço da nova aresta
  */
 Aresta *criarAresta(int vertice, int peso);
 
 /**
- * @brief 
- * @param lista 
- * @param vertice 
- * @param peso 
- * @return 
+ * @brief Insere uma aresta na lista de arestas
+ * @param lista O endereço da lista de arestas de um vértice
+ * @param vertice O número identificador de um vértice
+ * @param peso O peso da lisgação entre os vértices
+ * @return True caso tenha ocorrido tudo certo, false para caso contrário.
  */
 bool inserirLista(Aresta **lista, int vertice, int peso);
 
@@ -143,10 +143,10 @@ void inserirAresta(GrafoLista *grafo, int verticeA, int verticeB, int peso);
 // ******** REMOVER *****************************************
 
 /**
- * @brief 
- * @param lista 
- * @param vertice 
- * @return
+ * @brief Remove uma aresta da lista de arestas
+ * @param lista O endereço da lista de arestas de um vértice
+ * @param vertice O número identificador de um vértice
+ * @return True caso tenha ocorrido tudo certo, false para caso contrário.
  */
 bool removerLista(Aresta **lista, int vertice);
 
@@ -178,9 +178,9 @@ int retornarNumeroVertices(GrafoLista *grafo);
 bool verificarVerticePossuiVizinho(GrafoLista *grafo, int vertice);
 
 /**
- * @brief 
- * @param lista 
- * @return 
+ * @brief Conta quantas arestas um vértice possui saindo dele
+ * @param lista A lista de arestas do vértice
+ * @return A quantidade de arestas da lista
  */
 int retornarTamanhoLista(Aresta **lista);
 

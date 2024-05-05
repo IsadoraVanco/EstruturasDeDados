@@ -13,6 +13,7 @@ Para exemplos e exercícios marcados como 2º Semestre, os créditos vão para p
 * **Filas:** Estrutura de Dados I
 * **Grafos:** Estrutura de Dados II
     - Matriz de adjacência
+    - Lista de adjacência
 * **Heaps:** Estrutura de Dados II
     - Maximo 
     - Minimo
