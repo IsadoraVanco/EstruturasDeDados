@@ -23,7 +23,7 @@
 #define FONTE_HELVETICA "Helvetica"
 
 // Representa o endereço do arquivo .dot
-typedef void *ARQUIVODOT;
+typedef void *ArquivoDot;
 
 /************************************************************
  * Funções básicas
@@ -35,7 +35,7 @@ typedef void *ARQUIVODOT;
  * @param nomeArquivo Nome do arquivo que será criado (sem extensão)
  * @return O endereço do arquivo criado
 */
-ARQUIVODOT criarNovoArquivoDot(char *nomeArquivo);
+ArquivoDot criarNovoArquivoDot(char *nomeArquivo);
 
 /**
  * @brief Inicializa o arquivo com suas propriedades básicas de tipo.
@@ -43,13 +43,13 @@ ARQUIVODOT criarNovoArquivoDot(char *nomeArquivo);
  * @param arquivo O endereço do arquivo criado
  * @param tipo O tipo da estrutura que será representada
 */
-void inicializarDot(ARQUIVODOT arquivo, char *tipo);
+void inicializarDot(ArquivoDot arquivo, char *tipo);
 
 /**
  * @brief Finaliza o arquivo e o fecha.
  * @param arquivo O endereço do arquivo criado
 */
-void finalizarDot(ARQUIVODOT arquivo);
+void finalizarDot(ArquivoDot arquivo);
 
 /************************************************************
  * Funções dos Nodes
@@ -65,7 +65,7 @@ void finalizarDot(ARQUIVODOT arquivo);
  * @param nomeFonte A fonte do texto
  * @param tamanhoFonte O tamanho da fonte do texto
 */
-void configurarNodes(ARQUIVODOT arquivo, char *forma, char *corBorda, 
+void configurarNodes(ArquivoDot arquivo, char *forma, char *corBorda, 
     char *corFundo, char *corFonte, char *nomeFonte, int tamanhoFonte);
 
 /**
@@ -78,7 +78,7 @@ void configurarNodes(ARQUIVODOT arquivo, char *forma, char *corBorda,
  * @param nomeFonte A fonte do texto
  * @param tamanhoFonte O tamanho da fonte do texto
 */
-void adicionarNovoNode(ARQUIVODOT arquivo, char *nome, char *texto, 
+void adicionarNovoNode(ArquivoDot arquivo, char *nome, char *texto, 
     char *forma, char *corBorda, char *corFundo, char *corFonte);
 
 /************************************************************
@@ -95,7 +95,7 @@ void adicionarNovoNode(ARQUIVODOT arquivo, char *nome, char *texto,
  * @param nomeFonte A fonte do texto
  * @param tamanhoFonte O tamanho da fonte do texto
 */
-void configurarEdges(ARQUIVODOT arquivo, char *forma, char *corBorda, 
+void configurarEdges(ArquivoDot arquivo, char *forma, char *corBorda, 
     char *corFundo, char *corFonte, char *nomeFonte, int tamanhoFonte);
 
 /**
@@ -106,7 +106,7 @@ void configurarEdges(ARQUIVODOT arquivo, char *forma, char *corBorda,
  * @param nodeFilho O nome do node filho
  * @param texto Texto que nomeia a conexão
 */
-void criarConexaoNodes(ARQUIVODOT arquivo, char *tipo, char *nodePai, 
+void criarConexaoNodes(ArquivoDot arquivo, char *tipo, char *nodePai, 
     char *nodeFilho, char *texto);
 
 /************************************************************

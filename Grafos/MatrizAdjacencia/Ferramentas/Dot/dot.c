@@ -12,7 +12,7 @@
  * Funções básicas
 *************************************************************/
 
-ARQUIVODOT criarNovoArquivoDot(char *nomeArquivo){
+ArquivoDot criarNovoArquivoDot(char *nomeArquivo){
     char nome[strlen(nomeArquivo) + 5];
     sprintf(nome, "%s.dot", nomeArquivo);
 
@@ -21,12 +21,12 @@ ARQUIVODOT criarNovoArquivoDot(char *nomeArquivo){
     return novo;
 }
 
-void inicializarDot(ARQUIVODOT arquivo, char *tipo){
+void inicializarDot(ArquivoDot arquivo, char *tipo){
     fprintf(arquivo, "%s grafo {\n", tipo);      
     fflush(arquivo);   // Escreve os textos do buffer no arquivo
 }
 
-void finalizarDot(ARQUIVODOT arquivo){
+void finalizarDot(ArquivoDot arquivo){
     fprintf(arquivo, "}\n");      
     fclose(arquivo);   // Escreve os textos do buffer no arquivo
 }
@@ -35,7 +35,7 @@ void finalizarDot(ARQUIVODOT arquivo){
  * Funções dos Nodes
 *************************************************************/
 
-void configurarNodes(ARQUIVODOT arquivo, char *forma, char *corBorda, 
+void configurarNodes(ArquivoDot arquivo, char *forma, char *corBorda, 
     char *corFundo, char *corFonte, char *nomeFonte, int tamanhoFonte){
 
     fprintf(arquivo, "\tnode [shape=\"%s\", style=filled, color=\"%s\" fillcolor=\"%s\" ", forma, corBorda, corFundo);
@@ -43,7 +43,7 @@ void configurarNodes(ARQUIVODOT arquivo, char *forma, char *corBorda,
     fflush(arquivo);   // Escreve os textos do buffer no arquivo
 }
 
-void adicionarNovoNode(ARQUIVODOT arquivo, char *nome, char *texto, 
+void adicionarNovoNode(ArquivoDot arquivo, char *nome, char *texto, 
     char *forma, char *corBorda, char *corFundo, char *corFonte){
     
     fprintf(arquivo, "\t\"%s\" [label= \"%s\" shape=\"%s\" ", nome, texto, forma);
@@ -55,7 +55,7 @@ void adicionarNovoNode(ARQUIVODOT arquivo, char *nome, char *texto,
  * Funções dos Edges
 *************************************************************/
 
-void configurarEdges(ARQUIVODOT arquivo, char *forma, char *corBorda, 
+void configurarEdges(ArquivoDot arquivo, char *forma, char *corBorda, 
     char *corFundo, char *corFonte, char *nomeFonte, int tamanhoFonte){
     
     fprintf(arquivo, "\tedge [shape=\"%s\" color=\"%s\" fillcolor=\"%s\" ",  forma, corBorda, corFundo);
@@ -63,7 +63,7 @@ void configurarEdges(ARQUIVODOT arquivo, char *forma, char *corBorda,
     fflush(arquivo);   // Escreve os textos do buffer no arquivo
 }
 
-void criarConexaoNodes(ARQUIVODOT arquivo, char *tipo, char *nodePai, 
+void criarConexaoNodes(ArquivoDot arquivo, char *tipo, char *nodePai, 
     char *nodeFilho, char *texto){
 
     char conexao[5];

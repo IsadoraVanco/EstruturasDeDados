@@ -29,7 +29,7 @@ int main(int argc, char const *argv[]){
         valorInteiro = lerInteiro("=> Quantidade total esperada de vértices: ");
     }
 
-    Grafo *grafo = inicializarGrafo(valorInteiro);
+    GrafoMatriz *grafo = inicializarGrafoMatriz(valorInteiro);
 
     do{
         mostrarMenuPrincipal();
@@ -37,7 +37,7 @@ int main(int argc, char const *argv[]){
 
         switch (opcao){
         case 0: // Sair
-            destruirGrafo(grafo);
+            destruirGrafoMatriz(grafo);
             printf("Obrigada! Até mais...\n\n");
 
             break;
@@ -49,7 +49,7 @@ int main(int argc, char const *argv[]){
             valorInteiro2 = lerInteiro("=> Vértice B: ");
             valorInteiro3 = lerInteiro("=> Peso: ");
 
-            inserirAresta(grafo, valorInteiro, valorInteiro2, valorInteiro3);
+            inserirArestaMatriz(grafo, valorInteiro, valorInteiro2, valorInteiro3);
             
             break;
         
@@ -59,15 +59,15 @@ int main(int argc, char const *argv[]){
             valorInteiro = lerInteiro("=> Vértice A: ");
             valorInteiro2 = lerInteiro("=> Vértice B: ");
             
-            removerAresta(grafo, valorInteiro, valorInteiro2);
+            removerArestaMatriz(grafo, valorInteiro, valorInteiro2);
 
             break;
         
         case 3:  // Imprimir
             mostrarOpcao("Mostrar grafo");
             
-            imprimirGrafo(grafo);
-            criarImagemGrafo(grafo, false);
+            imprimirGrafoMatriz(grafo);
+            criarImagemGrafoMatriz(grafo, false);
 
             break;
 
@@ -76,14 +76,14 @@ int main(int argc, char const *argv[]){
 
             valorInteiro = lerInteiro("=> Vértice: ");
             
-            verificarVerticePossuiVizinho(grafo, valorInteiro);
+            verificarVerticePossuiVizinhoMatriz(grafo, valorInteiro);
 
             break;
 
         case 5: // Número de arestas
             mostrarOpcao("Número de arestas");
             
-            retornarNumeroArestas(grafo);
+            retornarNumeroArestasMatriz(grafo);
 
             break;
         

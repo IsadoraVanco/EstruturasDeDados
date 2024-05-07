@@ -23,80 +23,69 @@ int qtdPrints = 0;
  * Funções básicas
 *************************************************************/
 
-Grafo *inicializarGrafo(int numeroVertices){
-    Grafo *novo = malloc(sizeof(Grafo));
+GrafoMatriz *inicializarGrafoMatriz(int numeroVertices){
+    GrafoMatriz *novo = malloc(sizeof(GrafoMatriz));
     novo->numeroVertices = numeroVertices;
-    novo->matriz = malloc(sizeof(int) * numeroVertices * numeroVertices);
+    novo->matriz = malloc(sizeof(int *) * numeroVertices);
 
-    int *relacao = novo->matriz;
     for(int i = 0; i < numeroVertices; i++){
-        for(int j = 0; j < numeroVertices; j++){
-            *relacao = 0;
-            relacao++;
-        }
+        novo->matriz[i] = calloc(numeroVertices, sizeof(int));
     }
 
     return novo;
 }
 
-void imprimirGrafo(Grafo *grafo){
+void imprimirGrafoMatriz(GrafoMatriz *grafo){
     int numeroVertices = grafo->numeroVertices;
-    int *relacao = grafo->matriz;
 
     for(int i = 0; i < numeroVertices; i++){
         for(int j = 0; j < numeroVertices; j++){
-            if(*relacao != 0){
-                printf("(%d) v%d -> v%d\n", *relacao, i, j);
+            if(grafo->matriz[i][j] != 0){
+                printf("(%d) v%d -> v%d\n", grafo->matriz[i][j], i, j); 
             }
-            relacao++;
         }
     }
 }
 
-void criarImagemGrafo(Grafo *grafo, bool variasVersoes){
+void criarImagemGrafoMatriz(GrafoMatriz *grafo, bool variasVersoes){
 
     criaPasta("outputs");
 
     char nome[50];
 
     if(variasVersoes){
-        sprintf(nome, "./outputs/grafo-%d", qtdPrints);
+        sprintf(nome, "./outputs/grafoMatriz-%d", qtdPrints);
     }else{
-        sprintf(nome, "./outputs/grafo");
+        sprintf(nome, "./outputs/grafoMatriz");
     }
 
     // Cria o arquivo da árvore.dot
-    ARQUIVODOT *grafoArquivo = criarNovoArquivoDot(nome);
-    // Grafo direcionado
+    ArquivoDot *grafoArquivo = criarNovoArquivoDot(nome);
+    // GrafoMatriz direcionado
     inicializarDot(grafoArquivo, TIPO_ARVORE);
     
+    configurarNodes(grafoArquivo, FORMA_CIRCULO, "black", "#eed108", "black", FONTE_SANS, 12);
+
     // Adiciona as arestas do grafo
     char valor[50]; // :)
-    int *relacao = grafo->matriz;
-
-    configurarNodes(grafoArquivo, FORMA_CIRCULO, "black", "#eed108", "black", FONTE_SANS, 12);
 
     // Configura os vértices
     for(int i = 0; i < grafo->numeroVertices; i++){
         sprintf(valor, "%d", i);
         adicionarNovoNode(grafoArquivo, valor, valor, FORMA_CIRCULO, "black", "#eed108", "black");
-        relacao++;
     }
-
-    relacao = grafo->matriz;
 
     // Faz as conexões
     for(int i = 0; i < grafo->numeroVertices; i++){
         char a[50], b[50]; // :)
         for(int j = 0; j < grafo->numeroVertices; j++){
-            if(*relacao != 0){
-                sprintf(valor, "%d", *relacao);
+            if(grafo->matriz[i][j] != 0){
+                sprintf(valor, "%d", grafo->matriz[i][j]);
                 sprintf(a, "%d", i);
                 sprintf(b, "%d", j);
                 criarConexaoNodes(grafoArquivo, TIPO_ARVORE, a, b, valor);
                 adicionarNovoNode(grafoArquivo, b, b, FORMA_CIRCULO, "black", "#01cda4", "black");
             }
-            relacao++;
         }
     }
 
@@ -106,7 +95,10 @@ void criarImagemGrafo(Grafo *grafo, bool variasVersoes){
     qtdPrints++;
 }
 
-void destruirGrafo(Grafo *grafo){
+void destruirGrafoMatriz(GrafoMatriz *grafo){
+    for(int i = 0; i < grafo->numeroVertices; i++){
+        free(grafo->matriz[i]);
+    }
     free(grafo->matriz);
     free(grafo);
 }
@@ -115,7 +107,7 @@ void destruirGrafo(Grafo *grafo){
  * Funções de arestas
 *************************************************************/
 
-void inserirAresta(Grafo *grafo, int verticeA, int verticeB, int peso){
+void inserirArestaMatriz(GrafoMatriz *grafo, int verticeA, int verticeB, int peso){
     if(verticeA >= grafo->numeroVertices || verticeA < 0 || verticeB >= grafo->numeroVertices || verticeB < 0){
         printf("!! O(s) vértice(s) não existe(m)!\n");
         return;
@@ -124,44 +116,39 @@ void inserirAresta(Grafo *grafo, int verticeA, int verticeB, int peso){
         return;
     }
 
-    int *relacao = grafo->matriz + (grafo->numeroVertices * verticeA) + verticeB;
-    *relacao = peso;
+    grafo->matriz[verticeA][verticeB] = peso;
 
     printf("-> Aresta [%d] v%d -> v%d adicionada\n", peso, verticeA, verticeB);
 }
 
-void removerAresta(Grafo *grafo, int verticeA, int verticeB){
+void removerArestaMatriz(GrafoMatriz *grafo, int verticeA, int verticeB){
     if(verticeA >= grafo->numeroVertices || verticeA < 0 || verticeB >= grafo->numeroVertices || verticeB < 0){
         printf("!! O(s) vértice(s) não existe(m)!\n");
         return;
     }
 
-    int *relacao = grafo->matriz + (grafo->numeroVertices * verticeA) + verticeB;
-    *relacao = 0;
+    grafo->matriz[verticeA][verticeB] = 0;
+
     printf("-> Aresta de v%d -> v%d removida\n", verticeA, verticeB);
 }
 
-bool verificarArestaExiste(Grafo *grafo, int verticeA, int verticeB){
+bool verificarArestaMatrizExiste(GrafoMatriz *grafo, int verticeA, int verticeB){
     if(verticeA >= grafo->numeroVertices || verticeA < 0 || verticeB >= grafo->numeroVertices || verticeB < 0){
         printf("!! O(s) vértice(s) não existe(m)!\n");
         return false;
     }
 
-    int *relacao = grafo->matriz + (grafo->numeroVertices * verticeA) + verticeB;
-    
-    return *relacao == 0;
+    return grafo->matriz[verticeA][verticeB] == 0;
 }
 
-int retornarNumeroArestas(Grafo *grafo){
-    int *relacao = grafo->matriz;
+int retornarNumeroArestasMatriz(GrafoMatriz *grafo){
     int numeroArestas = 0;
 
     for(int i = 0; i < grafo->numeroVertices; i++){
         for(int j = 0; j < grafo->numeroVertices; j++){
-            if(*relacao != 0){
+            if(grafo->matriz[i][j] != 0){
                 numeroArestas++;
             }
-            relacao++;
         }
     }
 
@@ -173,73 +160,52 @@ int retornarNumeroArestas(Grafo *grafo){
  * Funções de vértices
 *************************************************************/
 
-int retornarNumeroVertices(Grafo *grafo){
+int retornarNumeroVerticesMatriz(GrafoMatriz *grafo){
     return grafo->numeroVertices;
 }
 
-bool verificarVerticePossuiVizinho(Grafo *grafo, int vertice){
+bool verificarVerticePossuiVizinhoMatriz(GrafoMatriz *grafo, int vertice){
     if(vertice >= grafo->numeroVertices || vertice < 0){
         printf("!! O vértice não existe!\n");
         return false;
     }
 
-    int *relacao = grafo->matriz;
     int vizinhos = 0;
 
-    // Chegadas
-    for(int i = 0; i < grafo->numeroVertices; i++){
-        relacao += vertice;
-        
-        if(*relacao != 0){
+    for(int i = 0; i < grafo->numeroVertices; i++){        
+        // Chegadas
+        if(grafo->matriz[i][vertice] != 0){
             vizinhos++;
-            printf("[%d] v%d -> v%d\n", *relacao, i, vertice);
-        }
-    }
-
-    relacao = grafo->matriz + (grafo->numeroVertices * vertice);
-
-    // Saidas 
-    for(int i = 0; i < grafo->numeroVertices; i++){
-        if(*relacao != 0 && i != vertice){
+            printf("[%d] v%d -> v%d\n", grafo->matriz[i][vertice], i, vertice);
+        }else if(grafo->matriz[vertice][i] != 0){
+            // Saídas
             vizinhos++;
-            printf("[%d] v%d -> v%d\n", *relacao, vertice, i);
+            printf("[%d] v%d -> v%d\n", grafo->matriz[vertice][i], vertice, i);
         }
-
-        relacao++;
     }
 
     printf("-> O vértice %d possui %d vizinhos\n", vertice, vizinhos); 
 
-    return vizinhos != 0;
+    return vizinhos > 0;
 }
 
-int retornarGrauVertice(Grafo *grafo, int vertice){
+int retornarGrauVerticeMatriz(GrafoMatriz *grafo, int vertice){
     if(vertice >= grafo->numeroVertices || vertice < 0){
         printf("!! O vértice não existe!\n");
         return -1;
     }
 
-    int *relacao = grafo->matriz;
     int grau = 0;
 
-    // Chegadas
-    for(int i = 0; i < grafo->numeroVertices; i++){
-        relacao += vertice;
-        
-        if(*relacao != 0){
+    for(int i = 0; i < grafo->numeroVertices; i++){        
+        // Chegadas
+        if(grafo->matriz[i][vertice] != 0){
             grau++;
         }
-    }
-
-    relacao = grafo->matriz + (grafo->numeroVertices * vertice);
-
-    // Saidas 
-    for(int i = 0; i < grafo->numeroVertices; i++){
-        if(*relacao != 0 && i != vertice){
+        // Saídas
+        if(grafo->matriz[vertice][i] != 0){
             grau++;
         }
-
-        relacao++;
     }
 
     printf("-> O vértice %d possui grau %d\n", vertice, grau); 

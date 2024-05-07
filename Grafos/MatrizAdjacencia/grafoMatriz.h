@@ -1,5 +1,5 @@
 /**
- * @brief Grafo utilizando matriz de adjacência
+ * @brief GrafoMatriz utilizando matriz de adjacência
 */
 #ifndef _GRAFO_MATRIZ_ADJACENCIA_H_
 #define _GRAFO_MATRIZ_ADJACENCIA_H_
@@ -12,9 +12,9 @@
 *************************************************************/
 
 typedef struct grafo{
-    int *matriz;    // Matriz de adjacência
+    int **matriz;    // Matriz de adjacência
     int numeroVertices;
-}Grafo;
+}GrafoMatriz;
 
 /************************************************************
  * Funções básicas
@@ -25,26 +25,26 @@ typedef struct grafo{
  * @param numeroVertices Número máximo de vértices do grafo
  * @return O endereço do grafo
  */
-Grafo *inicializarGrafo(int numeroVertices);
+GrafoMatriz *inicializarGrafoMatriz(int numeroVertices);
 
 /**
  * @brief Mostra o grafo no terminal
  * @param grafo O endereço do grafo
  */
-void imprimirGrafo(Grafo *grafo);
+void imprimirGrafoMatriz(GrafoMatriz *grafo);
 
 /**
  * @brief Cria uma imagem .png do grafo
  * @param grafo O endereço do grafo
  * @param variasVersoes Define se serão criadas uma "sequência" de imagens
  */
-void criarImagemGrafo(Grafo *grafo, bool variasVersoes);
+void criarImagemGrafoMatriz(GrafoMatriz *grafo, bool variasVersoes);
 
 /**
  * @brief Libera da memória o espaço ocupado pelo grafo
  * @param grafo O endereço do grafo
  */
-void destruirGrafo(Grafo *grafo);
+void destruirGrafoMatriz(GrafoMatriz *grafo);
 
 /************************************************************
  * Funções de arestas
@@ -57,7 +57,7 @@ void destruirGrafo(Grafo *grafo);
  * @param verticeB O vértice destino
  * @param peso O peso do caminho
  */
-void inserirAresta(Grafo *grafo, int verticeA, int verticeB, int peso);
+void inserirArestaMatriz(GrafoMatriz *grafo, int verticeA, int verticeB, int peso);
 
 /**
  * @brief Remove uma aresta do grafo
@@ -65,7 +65,7 @@ void inserirAresta(Grafo *grafo, int verticeA, int verticeB, int peso);
  * @param verticeA O vértice fonte
  * @param verticeB O vértice destino
  */
-void removerAresta(Grafo *grafo, int verticeA, int verticeB);
+void removerArestaMatriz(GrafoMatriz *grafo, int verticeA, int verticeB);
 
 /**
  * @brief Verifica se existe uma aresta entre dois vértices
@@ -74,14 +74,14 @@ void removerAresta(Grafo *grafo, int verticeA, int verticeB);
  * @param verticeB O endereço destino
  * @return True caso exista, false para caso contrário
  */
-bool verificarArestaExiste(Grafo *grafo, int verticeA, int verticeB);
+bool verificarArestaMatrizExiste(GrafoMatriz *grafo, int verticeA, int verticeB);
 
 /**
  * @brief Conta quantas arestas existem no grafo
  * @param grafo O endereço do grafo
  * @return O número de arestas
  */
-int retornarNumeroArestas(Grafo *grafo);
+int retornarNumeroArestasMatriz(GrafoMatriz *grafo);
 
 /************************************************************
  * Funções de vértices
@@ -92,7 +92,7 @@ int retornarNumeroArestas(Grafo *grafo);
  * @param grafo O endereço do grafo
  * @return O número de vértices
  */
-int retornarNumeroVertices(Grafo *grafo);
+int retornarNumeroVerticesMatriz(GrafoMatriz *grafo);
 
 /**
  * @brief Verifica se um vértice possui vizinhos
@@ -100,7 +100,7 @@ int retornarNumeroVertices(Grafo *grafo);
  * @param vertice O vértice a ser analisado
  * @return True caso exista vizinhos, false para caso contrário
  */
-bool verificarVerticePossuiVizinho(Grafo *grafo, int vertice);
+bool verificarVerticePossuiVizinhoMatriz(GrafoMatriz *grafo, int vertice);
 
 /**
  * @brief Conta o grau de um vértice
@@ -108,6 +108,6 @@ bool verificarVerticePossuiVizinho(Grafo *grafo, int vertice);
  * @param vertice O vértice a ser analisado
  * @return O grau do vértice
  */
-int retornarGrauVertice(Grafo *grafo, int vertice);
+int retornarGrauVerticeMatriz(GrafoMatriz *grafo, int vertice);
 
 #endif
