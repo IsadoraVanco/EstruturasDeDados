@@ -36,7 +36,7 @@ typedef struct grafo{
  * @param numeroVertices Número máximo de vértices do grafo
  * @return O endereço do grafo
  */
-GrafoLista *inicializarGrafo(int numeroVertices);
+GrafoLista *inicializarGrafoLista(int numeroVertices);
 
 // ******** IMPRIMIR ****************************************
 
@@ -51,7 +51,7 @@ void imprimirLista(Aresta **lista, int vertice);
  * @brief Mostra o grafo no terminal
  * @param grafo O endereço do grafo
  */
-void imprimirGrafo(GrafoLista *grafo);
+void imprimirGrafoLista(GrafoLista *grafo);
 
 /**
  * @brief Adiciona uma aresta no arquivo .dot
@@ -66,7 +66,7 @@ void adicionarArestaArquivo(ArquivoDot *arquivo, Aresta **lista, int vertice);
  * @param grafo O endereço do grafo
  * @param variasVersoes Define se serão criadas uma "sequência" de imagens
  */
-void criarImagemGrafo(GrafoLista *grafo, bool variasVersoes);
+void criarImagemGrafoLista(GrafoLista *grafo, bool variasVersoes);
 
 // ******** DESTRUIR *****************************************
 
@@ -80,7 +80,7 @@ void destruirLista(Aresta **lista);
  * @brief Libera da memória o espaço ocupado pelo grafo
  * @param grafo O endereço do grafo
  */
-void destruirGrafo(GrafoLista *grafo);
+void destruirGrafoLista(GrafoLista *grafo);
 
 /************************************************************
  * Funções de arestas
@@ -91,7 +91,7 @@ void destruirGrafo(GrafoLista *grafo);
  * @param grafo O endereço do grafo
  * @return O número de arestas
  */
-int retornarNumeroArestas(GrafoLista *grafo);
+int retornarNumeroArestasGrafoLista(GrafoLista *grafo);
 
 // ******** BUSCAR *****************************************
 
@@ -110,7 +110,7 @@ Aresta *buscarAresta(Aresta **lista, int vertice);
  * @param verticeB O endereço destino
  * @return True caso exista, false para caso contrário
  */
-bool verificarArestaExiste(GrafoLista *grafo, int verticeA, int verticeB);
+bool verificarArestaExisteGrafoLista(GrafoLista *grafo, int verticeA, int verticeB);
 
 // ******** INSERIR *****************************************
 
@@ -138,7 +138,7 @@ bool inserirLista(Aresta **lista, int vertice, int peso);
  * @param verticeB O vértice destino
  * @param peso O peso do caminho
  */
-void inserirAresta(GrafoLista *grafo, int verticeA, int verticeB, int peso);
+void inserirArestaGrafoLista(GrafoLista *grafo, int verticeA, int verticeB, int peso);
 
 // ******** REMOVER *****************************************
 
@@ -156,7 +156,7 @@ bool removerLista(Aresta **lista, int vertice);
  * @param verticeA O vértice fonte
  * @param verticeB O vértice destino
  */
-void removerAresta(GrafoLista *grafo, int verticeA, int verticeB);
+void removerArestaGrafoLista(GrafoLista *grafo, int verticeA, int verticeB);
 
 /************************************************************
  * Funções de vértices
@@ -167,7 +167,7 @@ void removerAresta(GrafoLista *grafo, int verticeA, int verticeB);
  * @param grafo O endereço do grafo
  * @return O número de vértices
  */
-int retornarNumeroVertices(GrafoLista *grafo);
+int retornarNumeroVerticesGrafoLista(GrafoLista *grafo);
 
 /**
  * @brief Verifica se um vértice possui vizinhos
@@ -190,6 +190,6 @@ int retornarTamanhoLista(Aresta **lista);
  * @param vertice O vértice a ser analisado
  * @return O grau do vértice
  */
-int retornarGrauVertice(GrafoLista *grafo, int vertice);
+int retornarGrauVerticeGrafoLista(GrafoLista *grafo, int vertice);
 
 #endif

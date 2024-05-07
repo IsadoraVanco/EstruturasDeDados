@@ -29,7 +29,7 @@ int main(int argc, char const *argv[]){
         valorInteiro = lerInteiro("=> Quantidade total esperada de vértices: ");
     }
 
-    GrafoLista *grafo = inicializarGrafo(valorInteiro);
+    GrafoLista *grafo = inicializarGrafoLista(valorInteiro);
 
     do{
         mostrarMenuPrincipal();
@@ -37,7 +37,7 @@ int main(int argc, char const *argv[]){
 
         switch (opcao){
         case 0: // Sair
-            destruirGrafo(grafo);
+            destruirGrafoLista(grafo);
             printf("Obrigada! Até mais...\n\n");
 
             break;
@@ -49,7 +49,7 @@ int main(int argc, char const *argv[]){
             valorInteiro2 = lerInteiro("=> Vértice B: ");
             valorInteiro3 = lerInteiro("=> Peso: ");
 
-            inserirAresta(grafo, valorInteiro, valorInteiro2, valorInteiro3);
+            inserirArestaGrafoLista(grafo, valorInteiro, valorInteiro2, valorInteiro3);
             
             break;
         
@@ -59,15 +59,15 @@ int main(int argc, char const *argv[]){
             valorInteiro = lerInteiro("=> Vértice A: ");
             valorInteiro2 = lerInteiro("=> Vértice B: ");
             
-            removerAresta(grafo, valorInteiro, valorInteiro2);
+            removerArestaGrafoLista(grafo, valorInteiro, valorInteiro2);
 
             break;
         
         case 3:  // Imprimir
             mostrarOpcao("Mostrar grafo");
             
-            imprimirGrafo(grafo);
-            criarImagemGrafo(grafo, false);
+            imprimirGrafoLista(grafo);
+            criarImagemGrafoLista(grafo, false);
 
             break;
 
@@ -83,7 +83,7 @@ int main(int argc, char const *argv[]){
         case 5: // Número de arestas
             mostrarOpcao("Número de arestas");
             
-            retornarNumeroArestas(grafo);
+            retornarNumeroArestasGrafoLista(grafo);
 
             break;
         

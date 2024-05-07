@@ -24,7 +24,7 @@ int qtdPrints = 0;
 
 // ******** INICIALIZAR *************************************
 
-GrafoLista *inicializarGrafo(int numeroVertices){
+GrafoLista *inicializarGrafoLista(int numeroVertices){
     GrafoLista *novo = malloc(sizeof(GrafoLista));
     
     novo->numeroVertices = numeroVertices;
@@ -50,7 +50,7 @@ void imprimirLista(Aresta **lista, int vertice){
     }
 }
 
-void imprimirGrafo(GrafoLista *grafo){
+void imprimirGrafoLista(GrafoLista *grafo){
     int numeroVertices = grafo->numeroVertices;
 
     for(int i = 0; i < numeroVertices; i++){
@@ -75,7 +75,7 @@ void adicionarArestaArquivo(ArquivoDot *arquivo, Aresta **lista, int vertice){
     }
 }
 
-void criarImagemGrafo(GrafoLista *grafo, bool variasVersoes){
+void criarImagemGrafoLista(GrafoLista *grafo, bool variasVersoes){
 
     criaPasta("outputs");
 
@@ -127,7 +127,7 @@ void destruirLista(Aresta **lista){
     }
 }
 
-void destruirGrafo(GrafoLista *grafo){
+void destruirGrafoLista(GrafoLista *grafo){
     for(int i = 0; i < grafo->numeroVertices; i++){
         if(&(grafo->arestas[i]) != NULL){
             destruirLista(&(grafo->arestas[i]));
@@ -143,7 +143,7 @@ void destruirGrafo(GrafoLista *grafo){
  * Funções de arestas
 *************************************************************/
 
-int retornarNumeroArestas(GrafoLista *grafo){
+int retornarNumeroArestasGrafoLista(GrafoLista *grafo){
     printf("-> Total de arestas: %d\n", grafo->quantidadeArestas);
     return grafo->quantidadeArestas;
 }
@@ -164,7 +164,7 @@ Aresta *buscarAresta(Aresta **lista, int vertice){
     return NULL;
 }
 
-bool verificarArestaExiste(GrafoLista *grafo, int verticeA, int verticeB){
+bool verificarArestaExisteGrafoLista(GrafoLista *grafo, int verticeA, int verticeB){
     if(verticeA >= grafo->numeroVertices || verticeA < 0 || verticeB >= grafo->numeroVertices || verticeB < 0){
         printf("!! O(s) vértice(s) não existe(m)!\n");
         return false;
@@ -225,7 +225,7 @@ bool inserirLista(Aresta **lista, int vertice, int peso){
     return true;
 }
 
-void inserirAresta(GrafoLista *grafo, int verticeA, int verticeB, int peso){
+void inserirArestaGrafoLista(GrafoLista *grafo, int verticeA, int verticeB, int peso){
     if(verticeA >= grafo->numeroVertices || verticeA < 0 || verticeB >= grafo->numeroVertices || verticeB < 0){
         printf("!! O(s) vértice(s) não existe(m)!!\n");
         return;
@@ -272,7 +272,7 @@ bool removerLista(Aresta **lista, int vertice){
     return true;
 }
 
-void removerAresta(GrafoLista *grafo, int verticeA, int verticeB){
+void removerArestaGrafoLista(GrafoLista *grafo, int verticeA, int verticeB){
     if(verticeA >= grafo->numeroVertices || verticeA < 0 || verticeB >= grafo->numeroVertices || verticeB < 0){
         printf("!! O(s) vértice(s) não existe(m)!\n");
         return;
@@ -292,7 +292,7 @@ void removerAresta(GrafoLista *grafo, int verticeA, int verticeB){
  * Funções de vértices
 *************************************************************/
 
-int retornarNumeroVertices(GrafoLista *grafo){
+int retornarNumeroVerticesGrafoLista(GrafoLista *grafo){
     return grafo->numeroVertices;
 }
 
@@ -337,7 +337,7 @@ int retornarTamanhoLista(Aresta **lista){
     return quantidade;
 }
 
-int retornarGrauVertice(GrafoLista *grafo, int vertice){
+int retornarGrauVerticeGrafoLista(GrafoLista *grafo, int vertice){
     if(vertice >= grafo->numeroVertices || vertice < 0){
         printf("!! O vértice não existe!\n");
         return -1;
