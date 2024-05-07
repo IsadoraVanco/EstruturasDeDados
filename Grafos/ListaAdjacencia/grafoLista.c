@@ -82,9 +82,9 @@ void criarImagemGrafoLista(GrafoLista *grafo, bool variasVersoes){
     char nome[50];
 
     if(variasVersoes){
-        sprintf(nome, "./outputs/grafo-%d", qtdPrints);
+        sprintf(nome, "./outputs/grafoLista-%d", qtdPrints);
     }else{
-        sprintf(nome, "./outputs/grafo");
+        sprintf(nome, "./outputs/grafoLista");
     }
 
     // Cria o arquivo da árvore.dot
