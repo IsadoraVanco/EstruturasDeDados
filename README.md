@@ -10,6 +10,9 @@ Para exemplos e exercícios marcados como 2º Semestre, os créditos vão para p
     - AVL
     - Binária
     - Red Black
+* **Buscas:** Estrutura de Dados II
+    - Em largura (BFS)
+    - Bellman Ford
 * **Filas:** Estrutura de Dados I
 * **Grafos:** Estrutura de Dados II
     - Matriz de adjacência

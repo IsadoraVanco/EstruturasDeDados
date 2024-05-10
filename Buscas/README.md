@@ -4,5 +4,8 @@ Algoritmos para Buscas em Grafos
 
 * **Breadth First Search (BFS)** - Busca em largura/amplitude
 * **Depth First Search (DFS)** - Busca em profundidade
-* **Dijkstra**
-* **Bellman-Ford**
+
+- Buscas pelo menor caminho
+
+    * **Dijkstra**
+    * **Bellman-Ford**
