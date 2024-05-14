@@ -1,0 +1,2 @@
+digraph grafo {
+	node [shape="circle", style=filled, color="black" fillcolor="#e6fa35" fontcolor="black" fontname="sans-serif" fontsize=12];
